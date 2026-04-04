@@ -1,0 +1,78 @@
+# Architecture Blueprint
+
+## Goal
+Add a maintainable automation layer that imports jobs from RSS feeds and job APIs into the existing WordPress job experience, using the current `wp-job-manager` setup instead of building a parallel jobs system.
+
+## Current Repo Reality
+- WordPress site lives at repo root.
+- `wp-content/plugins/wp-job-manager/` is present, so `job_listing` already exists.
+- `wp-content/themes/divi-child-theme/single-job_listing.php` already customizes single job presentation.
+- `wp-content/themes/divi-child-theme/functions.php` contains site-specific code unrelated to ingestion.
+- GoDaddy/managed-host mu-plugins and caches are present and should not be treated as application code.
+
+## Recommended Custom Code Layout
+```text
+wp-content/
+  plugins/
+    job-aggregator/
+      job-aggregator.php
+      composer.json
+      config/
+        sources.php
+      src/
+        Plugin.php
+        Cron/
+          Scheduler.php
+        Sources/
+          SourceInterface.php
+          AbstractSource.php
+          RssFeedSource.php
+          JoobleApiSource.php
+        Jobs/
+          JobDTO.php
+          Normalizer.php
+          DuplicateChecker.php
+          PostWriter.php
+          Expirer.php
+        Admin/
+          SettingsPage.php
+          RunLogPage.php
+        Support/
+          Logger.php
+          HttpClient.php
+      tests/
+        Unit/
+        Integration/
+        fixtures/
+```
+
+## Responsibility Split
+- Plugin: data ingestion, normalization, deduplication, scheduling, logging, expiry, admin controls, and tests.
+- Child theme: visual rendering for `job_listing` entries and any front-end adjustments specific to the active site.
+- `wp-job-manager`: remains the canonical storage/display layer for job posts unless proven insufficient.
+
+## Data Flow
+1. WP-Cron or a manual admin action triggers aggregation.
+2. Source registry loads enabled RSS/API sources from plugin config.
+3. Each source fetches remote data and maps it into a normalized job DTO.
+4. Duplicate checker decides whether the item is new, updated, or already present.
+5. Post writer creates or updates the `job_listing` post and related meta/taxonomy fields.
+6. Logger stores fetch counts, created/updated/skipped totals, and error details.
+7. A separate expiry routine archives or unpublishes stale listings.
+
+## Key Implementation Decisions
+- Use a source interface so new RSS/API providers can be added without changing the aggregation loop.
+- Use a normalized DTO to isolate remote schema differences from WordPress persistence.
+- Hash stable source fields such as source URL, title, and company for deduplication.
+- Keep secrets out of committed files; read API keys from `wp-config.php` constants or equivalent environment-specific config.
+- Prefer a real server cron hitting `wp-cron.php` in production if reliable scheduling is required.
+
+## Testing Strategy
+- Unit tests for source parsers, normalization, and duplicate hashing.
+- Integration tests for writing `job_listing` posts and updating existing listings.
+- Fixture-based tests for RSS and API payloads so test runs do not depend on live services.
+
+## Non-Goals
+- Do not commit WordPress core, uploads, caches, or host-managed code to this repo.
+- Do not move ingestion logic into the child theme.
+- Do not create a second jobs CPT unless `wp-job-manager` cannot satisfy a validated requirement.

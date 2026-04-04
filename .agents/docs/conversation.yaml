@@ -1,0 +1,276 @@
+---
+title: "WordPress job board automation via RSS and API"
+
+conversations:
+  - user: |
+      I want add an API-based automation process for jobs from jobboards via RSS feeds (like the MyJobMag RSS feed) and API returns (like the Jooble REST API) for job publications to an existing and live WordPress website.
+
+      - To develop locally, I want to build in LocalWP. My plan is to extract website content from the hosting server into a compressed file and import it into a locally-started fresh WP website on LocalWP, then begin local dev. If you know of any better and free workflows for this, let me know.
+
+      - Building locally, how do I setup this functionality, in what folders do I set it up, how can I test it, and what would it look like (i.e. the folder structure, test coverage, and others)?
+
+      - I'll be adding as many RSS feeds and APIs as possible so what's the best approach to do this efficiently while automating publication via WP Cron?
+
+      To help your answers, if they are any use:
+      - I use a Linux Mint, Ubuntu, PC. Building with it.
+      - I'm conversant with the CLI for faster workflows where possible.
+      - Since it's a WP website, I'll be building using PHP.
+      - Tell me any other thing important to this operation I may have forgotten.
+  - assistant: |
+      # WordPress Job Aggregator: Local Development & Implementation Guide
+
+      This guide covers the full workflow — from pulling your live site into LocalWP through to a well-structured, testable plugin for multi-source job aggregation.
+
+      ---
+
+      ## Part 1: Migrating Your Live Site to LocalWP
+
+      Your instinct to export and import is sound, and the standard approach is to use **Duplicator** (free tier) or **All-in-One WP Migration**. Both plugins package your database and files into a single archive that LocalWP can consume after you create a blank local site. That said, here is a cleaner CLI-first workflow that avoids plugin overhead:
+
+      **On the live server (via SSH):**
+      ```bash
+      # Export the database
+      mysqldump -u DB_USER -p DB_NAME > site_backup.sql
+
+      # Archive wp-content (themes, plugins, uploads)
+      tar -czf wp-content-backup.tar.gz wp-content/
+
+      # Download both to your local machine
+      scp user@yourserver.com:~/site_backup.sql .
+      scp user@yourserver.com:~/wp-content-backup.tar.gz .
+      ```
+
+      **In LocalWP:** Create a new blank WordPress site, then replace its `wp-content` with your archive and import the database via the built-in Adminer (LocalWP's database GUI) or the shell tab:
+
+      ```bash
+      mysql -u root -p local < site_backup.sql
+      ```
+
+      Finally, run a search-replace on URLs using WP-CLI, which LocalWP ships with:
+
+      ```bash
+      wp search-replace 'https://yourlivedomain.com' 'http://yourlocalsite.local' --all-tables
+      ```
+
+      This is faster, dependency-free, and gives you full control. **WP-CLI will be your best friend throughout this project** — keep it in mind for every step.
+
+      ---
+
+      ## Part 2: Plugin Architecture & Folder Structure
+
+      Build this as a **custom plugin**, not a theme function. This keeps the logic portable, testable, and independent of your theme. Place everything under:
+
+      ```
+      wp-content/plugins/job-aggregator/
+      ```
+
+      Here is the recommended folder structure:
+
+      ```
+      job-aggregator/
+      ├── job-aggregator.php          # Plugin bootstrap & metadata header
+      ├── composer.json               # Dependency management (e.g. SimplePie, Guzzle)
+      ├── composer.lock
+      ├── vendor/                     # Composer dependencies (gitignored)
+      │
+      ├── src/
+      │   ├── Plugin.php              # Core plugin class; registers hooks & schedules
+      │   ├── PostCreator.php         # Creates/updates WP job posts from normalized data
+      │   ├── DuplicateChecker.php    # Prevents re-publishing the same job
+      │   │
+      │   ├── Sources/
+      │   │   ├── SourceInterface.php # Contract all sources must implement
+      │   │   ├── AbstractSource.php  # Shared retry, logging, error handling logic
+      │   │   ├── RssFeedSource.php   # Generic RSS/Atom parser (covers MyJobMag etc.)
+      │   │   └── JoobleApiSource.php # Jooble REST API integration
+      │   │
+      │   └── Admin/
+      │       ├── SettingsPage.php    # WP admin UI for API keys, feed URLs, toggles
+      │       └── LogViewer.php       # Displays run history & errors in the admin
+      │
+      ├── config/
+      │   └── sources.php             # Declarative list of all RSS feeds and API configs
+      │
+      ├── templates/
+      │   └── admin-log-table.php     # HTML template for the log viewer
+      │
+      ├── tests/
+      │   ├── bootstrap.php           # PHPUnit + WP test environment setup
+      │   ├── Unit/
+      │   │   ├── RssFeedSourceTest.php
+      │   │   ├── JoobleApiSourceTest.php
+      │   │   ├── DuplicateCheckerTest.php
+      │   │   └── PostCreatorTest.php
+      │   └── fixtures/
+      │       ├── myjobmag-feed.xml   # Sample RSS response for offline testing
+      │       └── jooble-response.json
+      │
+      └── phpunit.xml
+      ```
+
+      The `SourceInterface.php` is central to scalability — every new source (RSS or API) implements the same contract, meaning your core aggregation loop never needs to change as you add sources.
+
+      ```php
+      // src/Sources/SourceInterface.php
+      interface SourceInterface {
+          public function fetchJobs(): array;  // Always returns normalized JobDTO[]
+          public function getName(): string;
+          public function isEnabled(): bool;
+      }
+      ```
+
+      ---
+
+      ## Part 3: Multi-Source Configuration & WP Cron Automation
+
+      ### Declarative Source Registry
+
+      Rather than hardcoding sources in PHP logic, define them in `config/sources.php`. Adding a new feed is then a matter of adding one array entry:
+
+      ```php
+      // config/sources.php
+      return [
+          'rss_feeds' => [
+              [
+                  'name'     => 'MyJobMag Nigeria',
+                  'url'      => 'https://www.myjobmag.com/feed',
+                  'enabled'  => true,
+                  'category' => 'Nigeria',
+              ],
+              [
+                  'name'     => 'MyJobMag Ghana',
+                  'url'      => 'https://www.myjobmag.com.gh/feed',
+                  'enabled'  => true,
+                  'category' => 'Ghana',
+              ],
+              // Add more RSS feeds here with zero code changes
+          ],
+          'apis' => [
+              [
+                  'driver'   => 'jooble',
+                  'name'     => 'Jooble',
+                  'api_key'  => defined('JOOBLE_API_KEY') ? JOOBLE_API_KEY : '',
+                  'enabled'  => true,
+                  'params'   => ['keywords' => '', 'location' => 'Nigeria'],
+              ],
+          ],
+      ];
+      ```
+
+      Store sensitive values like API keys in `wp-config.php` as constants (`define('JOOBLE_API_KEY', 'xxx');`), never in the config array directly.
+
+      ### WP Cron Setup
+
+      ```php
+      // src/Plugin.php (excerpt)
+      class Plugin {
+          public function register(): void {
+              register_activation_hook(JOB_AGGREGATOR_FILE, [$this, 'scheduleCron']);
+              register_deactivation_hook(JOB_AGGREGATOR_FILE, [$this, 'clearCron']);
+              add_action('job_aggregator_run', [$this, 'runAggregation']);
+          }
+
+          public function scheduleCron(): void {
+              if (!wp_next_scheduled('job_aggregator_run')) {
+                  wp_schedule_event(time(), 'hourly', 'job_aggregator_run');
+              }
+          }
+
+          public function runAggregation(): void {
+              $sources = $this->sourceRegistry->getEnabledSources();
+              foreach ($sources as $source) {
+                  try {
+                      $jobs = $source->fetchJobs();
+                      foreach ($jobs as $job) {
+                          $this->postCreator->createOrSkip($job);
+                      }
+                  } catch (\Exception $e) {
+                      $this->logger->error($source->getName(), $e->getMessage());
+                  }
+              }
+          }
+      }
+      ```
+
+      One important note: **WP Cron is not a true system cron** — it only fires when someone visits the site. On a low-traffic local or staging environment this can cause missed runs. Disable WP Cron's default behaviour and trigger it via a real system cron instead:
+
+      ```php
+      // In wp-config.php
+      define('DISABLE_WP_CRON', true);
+      ```
+
+      ```bash
+      # In your system crontab (crontab -e)
+      */15 * * * * curl -s http://yourlocalsite.local/wp-cron.php?doing_wp_cron > /dev/null 2>&1
+      ```
+
+      This gives you predictable, reliable scheduling both locally and in production.
+
+      ### Duplicate Prevention
+
+      Use a combination of a meta field hash and `post_status` checks to avoid republishing the same job:
+
+      ```php
+      // src/DuplicateChecker.php
+      public function isDuplicate(JobDTO $job): bool {
+          $hash = md5($job->sourceUrl . $job->title . $job->company);
+          $existing = get_posts([
+              'post_type'  => 'job_listing',  // or your CPT slug
+              'meta_key'   => '_job_source_hash',
+              'meta_value' => $hash,
+              'fields'     => 'ids',
+          ]);
+          return !empty($existing);
+      }
+      ```
+
+      ---
+
+      ## Part 4: Testing
+
+      Install PHPUnit and the WordPress test suite via Composer and WP-CLI:
+
+      ```bash
+      # From your plugin directory
+      composer require --dev phpunit/phpunit yoast/phpunit-polyfills
+
+      # Install the WP test library (LocalWP ships with this capability)
+      wp scaffold plugin-tests job-aggregator
+      bash bin/install-wp-tests.sh wordpress_test root root localhost latest
+      ```
+
+      Your tests should cover three areas. **Unit tests** mock HTTP calls and test parsing logic in isolation — use fixtures in `tests/fixtures/` so tests never make real network requests. **Integration tests** verify that `PostCreator` correctly creates WP posts given a normalized `JobDTO`. **Duplicate detection tests** confirm that the same job run twice produces only one post.
+
+      Run the full suite from the plugin root:
+
+      ```bash
+      ./vendor/bin/phpunit --configuration phpunit.xml
+      ```
+
+      ---
+
+      ## Part 5: Things Worth Noting That Are Easy to Overlook
+
+      **Rate limiting and politeness.** RSS feeds and APIs have request limits. Build a minimum interval between requests for the same source (e.g., cache the last-fetched timestamp in a transient) and respect `Retry-After` headers from APIs.
+
+      **Job expiry.** Jobs have a shelf life. Add a scheduled cron task that unpublishes or deletes posts older than a configurable number of days (e.g., 30 or 60), or check the job's `validThrough` field if the source provides it.
+
+      **Custom Post Type.** If your site does not already have a `job_listing` CPT, register one. Consider using the **WP Job Manager** plugin as the CPT layer — it provides a solid, widely-supported schema for job posts and many theme integrations, saving you from building the display layer from scratch.
+
+      **Logging.** Write a lightweight logger that stores run results (source name, jobs fetched, jobs created, errors) to a custom database table or WP options. This makes debugging production issues far easier and gives you an audit trail.
+
+      **Composer autoloading.** Add PSR-4 autoloading to `composer.json` so you never write a `require` statement manually:
+
+      ```json
+      {
+          "autoload": {
+              "psr-4": { "JobAggregator\\": "src/" }
+          }
+      }
+      ```
+
+      Then run `composer dump-autoload` after adding new classes.
+
+      **Environment parity.** Keep `wp-config-local.php` (with local DB credentials and `WP_DEBUG = true`) separate from your production config. Use a `.gitignore` that excludes `vendor/`, `wp-config.php`, and any file containing API keys.
+
+      This architecture scales cleanly: adding a new job board requires only a new entry in `config/sources.php` for RSS feeds, or a new class implementing `SourceInterface` for a non-standard API — nothing else in the core logic changes.

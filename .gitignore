@@ -1,0 +1,82 @@
+# Local machine / editor noise
+.DS_Store
+Thumbs.db
+.codex
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# LocalWP / local debug artifacts
+local-xdebuginfo.php
+*.log
+*.sql
+*.tar
+*.tar.gz
+*.zip
+
+# Environment-specific config
+wp-config.php
+wp-cli.local.yml
+.phpunit.result.cache
+
+# WordPress core: treat as external platform code
+/wp-admin/
+/wp-includes/
+/index.php
+/license.txt
+/readme.html
+/wp-*.php
+/xmlrpc.php
+/.htaccess
+
+# Host and runtime caches
+/wp-content/.analyst_analyst_cache
+/wp-content/.analyst_analyst_cache/
+/wp-content/et-cache/
+/wp-content/cache/
+/wp-content/upgrade/
+/wp-content/wpaas-updates-log/
+/wp-content/debug.log
+/wp-content/*.log
+
+# Generated and placeholder content
+/wp-content/index.php
+/wp-content/plugins/index.php
+/wp-content/themes/index.php
+/wp-content/uploads/
+
+# Host-managed mu-plugins
+/wp-content/mu-plugins/
+
+# Third-party plugins: ignore by default, keep only custom plugin work
+/wp-content/plugins/*
+!/wp-content/plugins/job-aggregator/
+!/wp-content/plugins/job-aggregator/**
+
+# Themes: keep only the active child theme code
+/wp-content/themes/*
+!/wp-content/themes/divi-child-theme/
+!/wp-content/themes/divi-child-theme/**
+
+# Child theme assets that are not useful repo context right now
+/wp-content/themes/divi-child-theme/README.md
+/wp-content/themes/divi-child-theme/screenshot.png
+/wp-content/themes/divi-child-theme/style_bk.css
+/wp-content/themes/divi-child-theme/webfonts/
+
+# Dependency/build output inside custom code
+/vendor/
+/node_modules/
+/wp-content/plugins/job-aggregator/vendor/
+/wp-content/plugins/job-aggregator/node_modules/
+/wp-content/plugins/job-aggregator/build/
+/wp-content/plugins/job-aggregator/dist/
+/wp-content/themes/divi-child-theme/node_modules/
+/wp-content/themes/divi-child-theme/vendor/
+/wp-content/themes/divi-child-theme/build/
+/wp-content/themes/divi-child-theme/dist/
+
+# Non-commit dev files
+/.agents/docs/tmp/conversations/

@@ -1,0 +1,913 @@
+/*
+ Theme Name:   Divi Child Theme
+ Description:  This is a sample child theme
+ Author:       Allwell Agwu-Okoro
+ Author URI:   https://allwell.dev
+ Template:     Divi
+ Version:      2.0
+ License:      GNU General Public License v2 or later
+ License URI:  http://www.gnu.org/licenses/gpl-2.0.html
+ Text Domain:  divi-child-theme
+*/
+
+
+/* ------------------------- Add CSS below this line ------------------------- */
+
+
+@import url('webfonts/font-face.css'); /* import css font-face style - Urbanist */
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Urbanist", system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, Helvetica, sans-serif;
+  color: #0C275C;
+  padding-bottom: 0px;
+  line-height: normal;
+  font-weight: normal;
+}
+
+.font-family_head, .font-family_head h1, .font-family_head h2, .font-family_head h3, .font-family_head h4, .font-family_head h5, .font-family_head div, .font-family_head span, .font-family_head p {
+  font-family: "Urbanist", system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, Helvetica, sans-serif;
+}
+
+body, p, .font-family_body p, .font-family_body, .font-family_body div, .font-family_body span {
+  font-family: "Urbanist", system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, Helvetica, sans-serif;
+}
+
+body {
+  color:#0C275C;
+  font-weight: normal;
+}
+
+
+/* ------------------------- Other CSS below this line ------------------------- */
+
+
+/* start - reboot menu style in Divi header */
+.et_pb_menu--without-logo.al_nav-menu .et_pb_menu__menu>nav>ul>li {
+    margin-top: 0;
+}
+.et_pb_menu--without-logo.al_nav-menu .et_pb_menu__menu>nav>ul>li>a {
+  padding-bottom: 0;
+  padding: 10px 15px; /* optional */
+  border-radius: .3125rem; /* optional */
+}
+
+.al_nav-menu .et-menu a {
+  opacity: 1;
+}
+/* styling Divi header */
+.et_pb_menu.al_nav-menu .et-menu>li {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+/* css reboot header for archive pages on divi */
+.et-db #et-boc .et-l .al_nav-menu.et_pb_menu--without-logo .et_pb_menu__menu>nav>ul>li>a, .et-db #et-boc .et-l .al_nav-menu .et-menu li>a {
+  margin-top: 0;
+  padding-bottom: 12px;
+}
+.et-db #et-boc .et-l .al_nav-menu.et_pb_menu--without-logo .et_pb_menu__menu>nav>ul>li {
+  margin-top: 0;
+}
+.et-db #et-boc .et-l .al_nav-menu.et_pb_menu .et-menu a:hover {
+  opacity: 1;
+}
+/* style header for archive pages on divi */
+.et-db #et-boc .et-l .al_nav-menu.et_pb_menu .et-menu>li {
+  padding-inline: 2.5px;
+}
+.et-db #et-boc .et-l .al_nav-menu.et_pb_menu_0_tb_header.et_pb_menu ul li a {
+  color: #0C275C !important;
+}
+/* end - reboot menu style in Divi header */
+
+/* styling mobile header */
+#header_mobile .al_nav-menu .et_pb_menu_inner_container,
+.et-db #et-boc .et-l #header_mobile .al_nav-menu .et_pb_menu_inner_container {
+  position: static;
+}
+#header_mobile .al_nav-menu .et_mobile_menu,
+.et-db #et-boc .et-l #header_mobile .al_nav-menu .et_mobile_menu {
+  background-color: #D4EDFF !important;
+  border-top: 3px solid #0C275C;
+  border-bottom: 3px solid #0C275C;
+}
+#header_mobile .al_nav-menu .et_mobile_menu li a,
+.et-db #et-boc .et-l #header_mobile .al_nav-menu .et_mobile_menu li a {
+  border-bottom: 1px solid rgba(12, 39, 92, .25);
+}
+#header_mobile .al_nav-menu .et_mobile_menu li:last-child a,
+.et-db #et-boc .et-l #header_mobile .al_nav-menu .et_mobile_menu li:last-child a {
+  border-bottom: none;
+}
+
+/* footer-copyright style */
+.footer-copyright {
+    font-size: .75rem;
+    font-weight: 400;
+    line-height: 1.25;
+    color: #0C275C;
+  }
+  .footer-copyright a {
+    text-decoration: none;
+    font-weight: 600;
+    color: #0C275C;
+  }
+  .footer-copyright a:hover {
+    text-decoration: underline dotted;
+  }
+  @media screen and (max-width: 576px) {
+    .footer-copyright {
+      line-height: 1.5;
+    }
+  }
+
+/* footer - social media icons */
+.al_sm-icons-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 60px;
+}
+.al_sm-icons-wrapper .al_sm-icon {
+  width: 40px;
+  height: 40px;
+  fill: #0C275C;
+}
+@media only screen and (max-width: 767px) {
+  .al_sm-icons-wrapper .al_sm-icon {
+    width: 35px;
+    height: 35px;
+  }
+}
+
+/* styling share, create, solve */
+.al_con-wrapper {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+}
+.al_con-icon-text-wrapper {
+  text-align: center;
+}
+.al_con-icon-wrapper {
+  background-color: #D4EDFF;
+  border-radius: 1.5625rem;
+  width: 250px;
+  height: 250px;
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.al_con-icon-text-wrapper p {
+  margin-top: 30px;
+  font-size: 1.875rem;
+}
+/* styling for tablet */
+@media (max-width: 992px) {
+  .al_con-icon-wrapper {
+    width: 150px;
+    height: 150px;
+  }
+  .al_con-icon-wrapper img {
+    width: 80px;
+  }
+  .al_con-icon-text-wrapper p {
+    margin-top: 15px;
+    font-size: 1.25rem;
+  }
+}
+/* styling for phone */
+@media (max-width: 576px) {
+  .al_con-icon-wrapper {
+    width: 100px;
+    height: 100px;
+    border-radius: 1.25rem;
+  }
+  .al_con-icon-wrapper img {
+    width: 60px;
+  }
+  .al_con-icon-text-wrapper p {
+    margin-top: 10px;
+    font-size: 1.2rem;
+  }
+}
+
+/* styling method chat section */
+.al_mc-wrapper p {
+  margin: 0;
+}
+.al_mc-wrapper {
+  display: flex;
+  flex-direction: column;
+  row-gap: 30px;
+}
+.al_mc-module:nth-child(even) {
+  align-self: end;
+}
+.al_mc-module:nth-child(even) > p {
+  text-align: right;
+}
+.al_mc-quote {
+  padding: 20px 20px 30px 20px;
+  background-color: #D4EDFF;
+  border-radius: 0 1.5625rem 1.5625rem 1.5625rem;
+  
+  width: fit-content;
+  max-width: 850px;
+  margin-bottom: 10px;
+}
+.al_mc-module:nth-child(even) .al_mc-quote {
+  border-radius: 1.5625rem 0 1.5625rem 1.5625rem;
+}
+.al_mc-quote p {
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+.al_mc-module > p {
+  font-size: 1rem;
+  line-height: normal;
+}
+/* styling mobile tablets */
+@media (max-width: 992px) {
+  .al_mc-quote p {
+    line-height: 1.5;
+  }
+}
+/* styling mobile phones */
+@media (max-width: 576px) {
+  .al_mc-quote {
+    border-radius: 0 1.25rem 1.25rem 1.25rem;
+  }
+  .al_mc-module:nth-child(even) .al_mc-quote {
+    border-radius: 1.25rem 0 1.25rem 1.25rem;
+  }
+  .al_mc-quote p {
+    font-size: 1.125rem;
+  }
+}
+
+
+/* styling services section */
+.al_svcs-wrapper p {
+  margin: 0;
+}
+.al_svcs-wrapper {
+  column-count: 2;
+  column-gap: 8rem;
+}
+.al_svcs-container {
+  break-inside: avoid;
+}
+.al_svcs-container:nth-child(odd) {
+  margin-bottom: 60px;
+}
+.al_svcs-icon {
+  padding: 20px;
+  background-color: #D4EDFF;
+  border-radius: 1.562rem;
+  width: fit-content;
+  margin-bottom: 30px;
+}
+.al_svcs-text {
+  padding: 10px;
+}
+.al_svcs-text > p:first-child {
+  margin-bottom: 20px;
+  font-size: 2rem;
+  line-height: normal;
+}
+.al_svcs-text div p {
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 1.35;
+}
+/* responsive styling for mobile tablets and phones */
+@media (max-width: 992px) {
+  .al_svcs-wrapper {
+    column-count: 1;
+  }
+  .al_svcs-container:not(:last-child) {
+    margin-bottom: 60px;
+  }
+  .al_svcs-text > p:first-child {
+    font-size: 1.8rem;
+    font-weight: bold;
+  }
+  .al_svcs-text div p {
+    line-height: 1.5;
+  }
+}
+/* styling mobile phones */
+@media (max-width: 576px) {
+  .al_svcs-container:not(:last-child) {
+    margin-bottom: 30px;
+  }
+  .al_svcs-icon {
+    padding: 15px;
+    border-radius: 1.25rem;
+    margin-bottom: 15px;
+  }
+  .al_svcs-icon img {
+    width: 60px;
+  }
+  .al_svcs-text > p:first-child {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+  }
+  .al_svcs-text {
+    padding: 5px;
+  }
+  .al_svcs-text div p {
+    font-size: 1.125rem;
+  }
+}
+
+
+/* styling team section */
+.al_team-wrapper {
+  text-align: center;
+}
+.al_team-img {
+  width: 200px;
+  margin-bottom: 10px;
+}
+.al_team-member {
+  font-size: 1.25rem;
+  margin-bottom: 10px;
+  text-transform: capitalize;
+  color: #0C275C;
+  font-weight: 700;
+  line-height: normal;
+}
+.al_team-position {
+  font-size: 1rem;
+  text-transform: uppercase;
+  color: #0C275C;
+  margin-bottom: 10px;
+}
+.al_team-member, .al_team-position, .al_team-bio {
+  padding-bottom: 0;
+}
+.al_team-bio {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #0C275C;
+}
+@media (max-width: 992px) {
+  .al_team-bio {
+    font-size: 1.25rem;
+    line-height: 1.5;
+  }
+}
+@media (max-width: 576px) {
+  .al_team-bio {
+    font-size: 1.125rem;
+  }
+}
+
+
+/* styling post grid pagination on blog page */
+.al_post-grid.difl_postgrid .pagination .page-numbers,
+.al_events-cpt-grid.difl_cptgrid .pagination .page-numbers {
+  padding: 5px 14px;
+  border-radius: .25rem;
+  font-weight: 500;
+}
+.al_post-grid.difl_postgrid .pagination .page-numbers.current,
+.al_events-cpt-grid.difl_cptgrid .pagination .page-numbers.current {
+  background-color: #D4EDFF;
+}
+.al_post-grid.difl_postgrid .pagination .page-numbers.next,
+.al_post-grid.difl_postgrid .pagination .page-numbers.prev {
+  position: relative;
+  text-indent: -7px;
+}
+.al_post-grid.difl_postgrid .pagination .page-numbers.prev {
+  text-indent: 7px;
+  margin-right: unset;
+}
+.al_post-grid.difl_postgrid .pagination .page-numbers.next:after,
+.al_post-grid.difl_postgrid .pagination .page-numbers.prev:before,
+.al_events-cpt-grid.difl_cptgrid .pagination .page-numbers.next:after,
+.al_events-cpt-grid.difl_cptgrid .pagination .page-numbers.prev:before {
+  vertical-align: -.05em;
+  transform: scale(2);
+}
+
+/* bolding header text in title banner on archive pages */
+.al_title-banner div.et_pb_text_inner,
+.al_title-banner div.et_pb_text_inner h1 {
+  font-weight: 500;
+}
+
+/* styling contact icon text in contact page */
+.al_contact-icon-flex {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.al_contact-icon-text h3, .al_contact-icon-text p {
+  margin: 0;
+}
+.al_contact-icon-text p,
+.al_contact-icon-text a {
+  color: #0C275C;
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 1.35;
+  padding-bottom: unset;
+}
+@media only screen and (max-width: 767px) {
+  .al_contact-icon-text p,
+  .al_contact-icon-text a {
+    font-size: 1rem;
+  }
+}
+.al_contact-icon-text a {
+  text-decoration: none;
+  display: block;
+}
+@media (max-width: 576px) {
+  .al_contact-icon-flex {
+    gap: 15px;
+  }
+  .al_contact-icon-text p,
+  .al_contact-icon-text a {
+    font-size: 1.125rem;
+    line-height: 1.5;
+  }
+}
+
+/* styling fluent form */
+.al_ff-submit-btn button[type="submit"] {
+  padding: 10px 20px;
+  border-width: 0px;
+  border-radius: 0.3125rem;
+  font-size: 1rem;
+  font-weight: 700;
+  background-color: #187AC0 !important;
+}
+.al_ff-submit-btn button[type="submit"]:hover {
+  opacity: 1 !important;
+}
+.fluentform .ff-el-group:last-child {
+  margin-bottom: unset;
+}
+.fluentform .ff-el-form-control:focus {
+  border-color: #0C275C !important;
+}
+
+/* styling jobs page */
+.al_jobs-page label#remote_position_label,
+.al_jobs-page .search_keywords input,
+.al_jobs-page .search_location input,
+.al_jobs-page .search_submit input,
+.al_jobs-page input.select2-search__field {
+  font-size: .9375rem !important;
+}
+.al_jobs-page .job_filters .search_jobs {
+  padding: 1.2rem;
+}
+.al_jobs-page .job_filters {
+  background: #D4EDFF;
+  border-radius: .3125rem .3125rem 0 0;
+}
+.al_jobs-page .search_keywords input,
+.al_jobs-page .search_location input,
+.al_jobs-page .search_submit input {
+  padding: .5rem;
+}
+.al_jobs-page .search_keywords input,
+.al_jobs-page .search_location input {
+  padding-inline: .8em;
+  border-radius: .25rem;
+}
+.al_jobs-page .search_submit input {
+  border: 2px solid #187AC0;
+  border-radius: .3125rem;
+  background-color: #187AC0;
+  color: #fff;
+}
+.al_jobs-page ul.job_listings {
+  padding: 0;
+  font-size: 1rem;
+}
+.al_jobs-page ul.job_listings li.job_listing {
+  border-bottom: 1px solid rgba(12, 39, 92, .25);
+}
+.al_jobs-page .job_listings {
+  background-color: #fff;
+}
+
+/* styling job submit page */
+.al_job-submit-page .job-manager-form fieldset input.input-text,
+.al_job-submit-page .job-manager-form fieldset input.input-date,
+.al_job-submit-page .job-manager-form fieldset textarea,
+.al_job-submit-page .job-manager-form fieldset select {
+  padding: .5rem .75rem;
+  border-radius: .25rem;
+  font-size: .9375rem !important;
+}
+.al_job-submit-page h2 {
+  margin-bottom: 1rem;
+  margin-top: 1.5rem;
+}
+.al_job-submit-page a {
+  color: #0C275C;
+  text-decoration: underline;
+}
+.al_job-submit-page p input[type="submit"] {
+  font-size: 1rem;
+  line-height: normal;
+  font-weight: 700;
+  padding: 10px 20px;
+  background-color: #187AC0;
+  border-radius: .3125rem;
+  color: #fff;
+  border: none;
+  margin-top: 1rem;
+  cursor: pointer;
+  transition: all 250ms ease;
+}
+.al_job-submit-page p input[type="submit"].secondary {
+  margin-left: 10px;
+  background-color: #D4EDFF;
+  color: #0C275C;
+}
+/* .al_job-submit-page p input[type="submit"]:hover {
+  background-color: rgba(12, 39, 92, .25);
+  color: #0c275c;
+} */
+
+/* styling job submit preview page */
+.al_job-submit-page form#job_preview .job_listing_preview_title {
+  padding: 1rem;
+  background-color: #0C275C;
+}
+.al_job-submit-page form#job_preview .job_listing_preview_title h2 {
+  color: #fff;
+}
+.al_job-submit-page form#job_preview .job_listing_preview_title input[type="submit"].job-manager-button-submit-listing {
+  font-size: 1rem;
+  line-height: normal;
+  font-weight: 700;
+  padding: 10px 30px;
+  background-color: #fff;
+  border-radius: .25rem;
+  color: #0C275C;
+  border: none;
+  cursor: pointer;
+  transition: all 250ms ease;
+  margin-left: .5rem;
+}
+.al_job-submit-page form#job_preview .job_listing_preview_title input[type="submit"].job-manager-button-submit-listing:hover {
+  background-color: rgba(255, 255, 255, 0.35);
+  color: #fff;
+}
+.al_job-submit-page form#job_preview .job_listing_preview_title input[type="submit"].job-manager-button-edit-listing {
+  font-size: 1rem;
+  line-height: normal;
+  font-weight: 700;
+  padding: 10px 30px;
+  background: transparent;
+  border-radius: .25rem;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: all 250ms ease;
+}
+.al_job-submit-page form#job_preview .job_listing_preview_title input[type="submit"].job-manager-button-edit-listing:hover {
+  background-color: #fff;
+  color: #0C275C;
+}
+.al_job-submit-page form#job_preview .job_listing_preview {
+  border-color: #0C275C;
+  padding: 1rem;
+  background: #fff;
+}
+
+/* styling breadcrumbs within job listing page */
+#main-area .al_job-listing-breadcrumbs ul.df-breadcrumbs {
+  padding: 0;
+}
+ul.df-breadcrumbs {
+  flex-wrap: wrap;
+}
+ul.df-breadcrumbs li a,
+ul.df-breadcrumbs li span.df-breadcrumbs-separator-icon,
+ul.df-breadcrumbs li span.df-breadcrumbs-text,
+ul.df-breadcrumbs li span.df-breadcrumbs-separator-text {
+  font-size: .875rem;
+  color: #0C275C;
+}
+.difl_breadcrumbs .et-pb-icon.df-home-icon,
+.difl_breadcrumbs .et-pb-icon.df-inner-icon,
+.et-db #et-boc .et-l .difl_breadcrumbs .et-pb-icon.df-home-icon,
+.et-db #et-boc .et-l .difl_breadcrumbs .et-pb-icon.df-inner-icon {
+  font-size: .875rem;
+  vertical-align: -.05em;
+  margin-right: .13rem;
+}
+.al_job-listing-breadcrumbs ul.df-breadcrumbs .df-breadcrumbs-end .df-breadcrumbs-text {
+  text-decoration: underline;
+}
+.al_job-listing-breadcrumbs .df-breadcrumbs-item,
+.al_job-listing-breadcrumbs .df-breadcrumbs-separator {
+  margin-right: .63rem;
+}
+
+/* styling job listing page */
+#main-area .al_hero-banner-container {
+  padding: 60px 0;
+  background-color: #D4EDFF;
+  border-radius: 0 0 80px 80px;
+}
+body:not(.et-tb) #main-content .container.al_tb {
+  width: auto;
+  max-width: none;
+  padding: 0;
+}
+#main-area .al_hero-banner-container .al_hero-banner {
+  width: 80%;
+  max-width: 1536px;
+  margin: auto;
+}
+#main-area .al_job-listing-page-container {
+  padding: 60px 0;
+}
+#main-area .al_job-listing-page-container .al_job-listing-page-row {
+  margin: auto;
+  width: 100ch;
+}
+.single_job_listing .application,
+.job-manager-application-wrapper .application {
+  margin: 0;
+}
+@media (min-width: 981px) {
+  div#main-area.al_area {
+    padding-bottom: 0;
+  }
+}
+.al_job-listing-page-row .et_post_meta_wrapper:nth-child(1) {
+  margin-bottom: 15px;
+}
+.al_job-listing-page-row .et_post_meta_wrapper h1 {
+  font-weight: 700;
+}
+#main-area .al_job-listing-page-row .entry-content ul.job-listing-meta {
+  padding: 0;
+  margin-bottom: 30px;
+}
+.al_job-listing-page-row .single_job_listing .company {
+  margin-bottom: 30px;
+  background: #fff;
+  box-shadow: unset /* 0 2px 2px rgba(0, 0, 0, .05) */;
+  border-radius: .5rem;
+  border: 1px solid rgba(12, 39, 92, .25);
+}
+.al_job-listing-page-row .single_job_listing .company_header {
+  margin: 0px;
+  min-height: fit-content;
+}
+#main-area.al_area .al_job-listing-page-container div.et_pb_section {
+  padding: 40px;
+  border-radius: .5rem;
+  /* box-shadow: 0 2px 4px rgba(0, 0, 0, .25); */
+  border: 1px solid rgba(12, 39, 92, .25);
+}
+#main-area.al_area .al_job-listing-page-container div.et_pb_section div.et_pb_row {
+  padding: 0;
+  margin: 0;
+  max-width: none;
+  width: auto;
+}
+.al_job-listing-page-row .job_description .et_builder_inner_content,
+.al_job-listing-page-row .job_description .et_builder_inner_content p,
+.al_job-listing-page-row .job_description .et_builder_inner_content a,
+.al_job-listing-page-row .job_description .et_builder_inner_content ul li,
+.al_job-listing-page-row .job_description .et_builder_inner_content ol li {
+  font-size: 1.125rem;
+  line-height: 1.7;
+  color: #0C275C;
+}
+.al_job-listing-page-container div.et_pb_text_inner,
+.al_job-listing-page-container div.et_pb_text_inner p,
+.al_job-listing-page-container div.et_pb_text_inner a,
+.al_job-listing-page-container div.et_pb_text_inner ul,
+.al_job-listing-page-container div.et_pb_text_inner ul li,
+.al_job-listing-page-container div.et_pb_text_inner ol li {
+  font-size: 1.125rem;
+  line-height: 1.7;
+}
+.al_job-listing-page-row .job_description .et_builder_inner_content a {
+  text-decoration: underline;
+}
+.al_job-listing-page-container div.et_pb_text_inner a {
+  text-decoration: underline;
+}
+.al_job-listing-page-container .single_job_listing .application_button {
+  background-color: #187AC0;
+  border-radius: .3125rem;
+  color: #fff;
+  font-weight: 700;
+  border: unset;
+  cursor: pointer;
+}
+.al_job-listing-page-container .single_job_listing .application_details {
+  background-color: #fff;
+  border: 1px solid rgba(12, 39, 92, .25);
+  border-radius: .25rem;
+}
+.al_job-listing-page-container .single_job_listing .application .application_details::before {
+  border-bottom: 10px solid rgba(12, 39, 92, .25);
+}
+.al_job-listing-page-container .single_job_listing .application_details p a {
+  color: #0C275C;
+  text-decoration: underline;
+}
+#main-area .al_job-listing-page-container .single_job_listing ul.meta {
+  list-style-type: none;
+}
+.al_job-listing-page-container .single_job_listing ul.meta li.location,
+.al_job-listing-page-container .single_job_listing ul.meta li.location a {
+  color: #0C275C;
+}
+.al_job-listing-page-container .single_job_listing ul.meta li.location a {
+  text-decoration: underline;
+}
+.al_job-listing-page-container .single_job_listing ul.meta li.date-posted,
+.al_job-listing-page-container .single_job_listing ul.meta li.date-posted time,
+.al_job-listing-page-container .single_job_listing ul.meta li.salary {
+  color: rgba(12, 39, 92, .70);
+}
+.al_job-listing-page-container .single_job_listing .meta li:nth-child(2),
+.al_job-listing-page-container .single_job_listing .meta li:nth-child(3) {
+  margin-right: .6em;
+}
+.al_job-listing-page-container .single_job_listing .company .tagline {
+  color: rgba(12, 39, 92, .70);
+}
+.al_job-listing-page-container .single_job_listing .company .name a {
+  color: #0C275C;
+}
+#main-content .container.al_tb:before {
+  display: none;
+}
+/* new edits to corrected job listing template page */
+.al_job-listing-page-container .entry-content {
+  padding-top: 0;
+}
+#main-area.al_area .et_pb_post {
+  margin-bottom: 0;
+}
+.al_job-listing-page-row .job_description,
+.al_job-listing-page-row .job_description p,
+.al_job-listing-page-row .job_description a,
+.al_job-listing-page-row .job_description ul li,
+.al_job-listing-page-row .job_description ol li {
+  font-size: 1.125rem;
+  line-height: 1.7;
+  color: #0C275C;
+}
+.al_job-listing-page-row .job_description a {
+  text-decoration: underline;
+}
+.al_job-listing-page-row .job_description h1,
+.al_job-listing-page-row .job_description h2,
+.al_job-listing-page-row .job_description h3,
+.al_job-listing-page-row .job_description h4,
+.al_job-listing-page-row .job_description h5,
+.al_job-listing-page-row .job_description h6 {
+  line-height: 1.7;
+}
+/* styling jobs listing page for mobile - Tablet */
+@media (max-width: 992px) {
+  #main-area .al_hero-banner-container,
+  #main-area .al_job-listing-page-container {
+    padding: 40px 0;
+  }
+  #main-area .al_job-listing-page-container .al_job-listing-page-row {
+    width: 80%;
+  }
+  /* #main-content article.status-publish div.et_builder_inner_content .et_pb_section:last-child {
+    min-height: 60vh;
+  } */
+  #main-area .al_job-listing-page-row .job_description {
+    margin-bottom: 0px;
+  }
+}
+/* styling jobs listing page for mobile - Phone */
+@media (max-width: 767px) {
+  #main-area .al_hero-banner-container {
+    border-radius: 0 0 40px 40px;
+  }
+  #main-area .al_hero-banner-container,
+  #main-area .al_job-listing-page-container {
+    padding: 30px 0;
+  }
+  ul.df-breadcrumbs li a,
+  ul.df-breadcrumbs li span.df-breadcrumbs-separator-icon,
+  ul.df-breadcrumbs li span.df-breadcrumbs-text,
+  ul.df-breadcrumbs li span.df-breadcrumbs-separator-text {
+    font-size: .75rem;
+  }
+  #main-area .al_job-listing-page-container .al_job-listing-page-row,
+  #main-area .al_hero-banner-container .al_hero-banner {
+    width: 90%;
+  }
+  .al_job-listing-page-row .et_post_meta_wrapper:nth-child(1),
+  #main-area .al_job-listing-page-row .entry-content ul.job-listing-meta,
+  .al_job-listing-page-row .single_job_listing .company {
+    margin-bottom: 15px;
+  }
+  .al_job-listing-page-row .et_post_meta_wrapper:first-child h1 {
+    font-size: 1.5rem;
+  }
+  .al_job-listing-page-row .job_description,
+  .al_job-listing-page-row .job_description p,
+  .al_job-listing-page-row .job_description a,
+  .al_job-listing-page-row .job_description ul li,
+  .al_job-listing-page-row .job_description ol li {
+    font-size: 1.125rem;;
+  }
+}
+/* correcting h2 font size on Divi */
+@media (max-width: 479px) {
+  .et_pb_post h2 {
+    font-size: 1.25em;
+  }
+}
+
+/* styling news section on mobile pages */
+@media screen and (max-width: 767px) {
+  #news .al_lg-text h2 {
+    font-size: 1.7rem;
+  }
+  #news.et_pb_section .et_pb_row.et_pb_row_5 {
+    margin-bottom: 40px !important;
+  }
+}
+
+/* styling mobile menu open and close icon */
+.et_pb_module.al_nav-menu .mobile_nav.opened .mobile_menu_bar:before,
+.et-db #et-boc .et-l .et_pb_module.al_nav-menu .mobile_nav.opened .mobile_menu_bar:before {
+  content: "\4d";
+  font-size: 2rem;
+}
+.et_pb_module.al_nav-menu .mobile_menu_bar:before,
+.et-db #et-boc .et-l .et_pb_module.al_nav-menu .mobile_menu_bar:before {
+  top: 0;
+}
+.al_nav-menu .mobile_menu_bar:before,
+.et-db #et-boc .et-l .al_nav-menu .mobile_menu_bar:before {
+  transition: all 250ms ease-in-out;
+}
+
+
+/* styling job dashboard section */
+.al_job-db #job-manager-job-dashboard {
+  font-size: 1rem;
+  color: #0C275C;
+
+}
+.al_job-db #job-manager-job-dashboard table {
+  width: 100%;
+  margin-top: 30px;
+}
+.al_job-db #job-manager-job-dashboard td.job_title > a {
+  color: #0C275C;
+  font-weight: 500;
+}
+.al_job-db #job-manager-job-dashboard td.job_title li a.job-dashboard-action-edit,
+.al_job-db #job-manager-job-dashboard td.job_title li a.job-dashboard-action-mark_filled,
+.al_job-db #job-manager-job-dashboard td.job_title li a.job-dashboard-action-duplicate {
+  color: rgba(12, 39, 92, .8);
+}
+.al_job-db #job-manager-job-dashboard table thead th.job_title,
+.al_job-db #job-manager-job-dashboard table thead th.date {
+  text-align: left;
+}
+.al_job-db #job-manager-job-dashboard table tfoot a,
+.al_job-db #job-manager-job-dashboard .account-sign-in a.button {
+  color: #fff;
+  font-weight: 700;
+  padding: 10px 30px;
+  border-radius: .25rem;
+  background-color: #0C275C;
+  line-height: normal;
+  transition: all 250ms ease;
+}
+.al_job-db #job-manager-job-dashboard table tfoot a:hover,
+.al_job-db #job-manager-job-dashboard .account-sign-in a.button:hover {
+  color: #0C275C;
+  background-color: rgba(12, 39, 92, .25);
+}
+.al_job-db #job-manager-job-dashboard table tfoot td {
+  padding-top: 30px;
+}
+.al_job-db #job-manager-job-dashboard .account-sign-in a.button {
+  display: block;
+  width: fit-content;
+  margin-top: 15px;
+}

@@ -1,0 +1,26 @@
+{
+  "name": "allwell/job-aggregator",
+  "description": "Custom WordPress job aggregation plugin for importing RSS and API job listings into WP Job Manager.",
+  "type": "wordpress-plugin",
+  "license": "proprietary",
+  "require": {},
+  "require-dev": {
+    "dealerdirect/phpcodesniffer-composer-installer": "^1.0",
+    "phpunit/phpunit": "^10.5",
+    "squizlabs/php_codesniffer": "^3.10",
+    "wp-coding-standards/wpcs": "^3.1"
+  },
+  "scripts": {
+    "test": "phpunit",
+    "lint": "phpcs --standard=WordPress src job-aggregator.php",
+    "format": "phpcbf --standard=WordPress src job-aggregator.php"
+  },
+  "config": {
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    },
+    "sort-packages": true
+  },
+  "minimum-stability": "stable",
+  "prefer-stable": true
+}

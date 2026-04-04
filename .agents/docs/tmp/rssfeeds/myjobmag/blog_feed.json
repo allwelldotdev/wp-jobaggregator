@@ -1,0 +1,1416 @@
+{
+  "rss": {
+    "@version": "2.0",
+    "@xmlns:atom": "https://www.w3.org/2005/Atom",
+    "channel": {
+      "title": "MyJobMag Blog Feed",
+      "link": "https://www.myjobmag.com/blog",
+      "ttl": "10",
+      "description": "Get the latest job tips, workplace tips and career advice",
+      "lastBuildDate": "Tue, 31 Mar 2026 12:20:04 +0000",
+      "language": "en",
+      "item": [
+        {
+          "title": "30 Contract Staffing Risks That Could Get Your Company Sued",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Candidates"
+          },
+          "link": "https://www.myjobmag.com/blog/30-contract-staffing-risks-that-could-get-your-company-sued",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/30-contract-staffing-risks-that-could-get-your-company-sued"
+          },
+          "pubDate": "Fri, 13 Mar 2026 06:36:01 GMT",
+          "description": "This piece outlines 30 contract staffing risks that have real legal consequences under Nigerian law. If you are a business owner, HR professional, or staffing agency operator, you will find this highly valuable."
+        },
+        {
+          "title": "10 Steps to Building an Effective Talent Pipeline",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Employers"
+          },
+          "link": "https://www.myjobmag.com/blog/10-steps-to-building-an-effective-talent-pipeline",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/10-steps-to-building-an-effective-talent-pipeline"
+          },
+          "pubDate": "Fri, 6 Mar 2026 13:02:35 GMT",
+          "description": "Learn how to keep a list of good candidates ready in advance, before a role becomes vacant. Discover step by step the process of building a talent pipeline that works."
+        },
+        {
+          "title": "2026 / 2027 NEPL / OERNL Joint Venture Tertiary Scholarship Scheme (National Merit Award)",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Scholarships/News"
+          },
+          "link": "https://www.myjobmag.com/blog/2026-2027-nepl-oernl-joint-venture-tertiary-scholarship-scheme-national-merit-award",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/2026-2027-nepl-oernl-joint-venture-tertiary-scholarship-scheme-national-merit-award"
+          },
+          "pubDate": "Tue, 3 Mar 2026 17:10:11 GMT",
+          "description": "The NEPL/OERNL Joint Venture in pursuance of its Corporate Social Responsibility invites suitably qualified applicants for its 2026/2027 Tertiary Scholarship Scheme, commencing Tuesday, March 3, 2026, and concluding on Wednesday, April 1, 2026. For applicants from Non-Host/Transit Communities"
+        },
+        {
+          "title": "2026 / 2027 NEPL / OERNL Joint Venture Tertiary Scholarship Scheme (Host / Transit Communities Merit Award)",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Scholarships/News"
+          },
+          "link": "https://www.myjobmag.com/blog/2026-2027-nepl-oernl-joint-venture-tertiary-scholarship-scheme-host-transit-communities-merit-award",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/2026-2027-nepl-oernl-joint-venture-tertiary-scholarship-scheme-host-transit-communities-merit-award"
+          },
+          "pubDate": "Tue, 3 Mar 2026 17:01:52 GMT",
+          "description": "The NEPL/OERNL Joint Venture in pursuance of its Corporate Social Responsibility invites suitably qualified applicants for its 2026/2027 Tertiary Scholarship Scheme, commencing Tuesday, March 3, 2026, and concluding on Wednesday, April 1, 2026"
+        },
+        {
+          "title": "20 Proven Job Search Tips for Older Workers",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Candidates"
+          },
+          "link": "https://www.myjobmag.com/blog/20-proven-job-search-tips-for-older-workers",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/20-proven-job-search-tips-for-older-workers"
+          },
+          "pubDate": "Tue, 3 Mar 2026 16:17:05 GMT",
+          "description": "The job search tips discussed here are tailored for older workers who are determined to stay competitive and get ahead in the labour market."
+        },
+        {
+          "title": "How to Write An Internship CV (Plus Templates)",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Candidates"
+          },
+          "link": "https://www.myjobmag.com/blog/how-to-write-an-internship-cv-plus-templates",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/how-to-write-an-internship-cv-plus-templates"
+          },
+          "pubDate": "Thu, 26 Feb 2026 19:07:46 GMT",
+          "description": "You will find out in this article how to not just write an internship CV but also build one that positions you as the intern every employer wants to meet. By the end, youÃÂ¢ÃÂÃÂll have the tools to secure your next internship."
+        },
+        {
+          "title": "Background Check Tips Every Employer Should Know",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Employers"
+          },
+          "link": "https://www.myjobmag.com/blog/background-check-tips-every-employer-should-know",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/background-check-tips-every-employer-should-know"
+          },
+          "pubDate": "Thu, 29 Jan 2026 14:12:50 GMT",
+          "description": "The tips highlighted in this piece give you a proper foundation for doing background checks the right way. Conducted after interviews and before onboarding, you can now reduce the risk of costly hiring mistakes."
+        },
+        {
+          "title": "2026 Nigeria Job Search Report",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Employers"
+          },
+          "link": "https://www.myjobmag.com/blog/2026-job-search-index-report",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/2026-job-search-index-report"
+          },
+          "pubDate": "Thu, 15 Jan 2026 09:45:11 GMT",
+          "description": "This report is based on a comprehensive analysis of Nigeria's job market in 2025, including top job roles, counties with the most jobs, industry comparison trends, and more."
+        },
+        {
+          "title": "MyJobMag Earns Its Second Award for Career/Employment Website of the Year",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Candidates"
+          },
+          "link": "https://www.myjobmag.com/blog/myjobmag-earns-its-second-career-website-of-the-year-award",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/myjobmag-earns-its-second-career-website-of-the-year-award"
+          },
+          "pubDate": "Tue, 16 Dec 2025 08:29:21 GMT",
+          "description": "For the second year in a row, MyJobMag has been named Career & Employment Website of the Year at the Nigeria Technology Awards 2025.ÃÂÃÂ"
+        },
+        {
+          "title": "20 Common Onboarding Mistakes HR Managers Should Avoid",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Workplace"
+          },
+          "link": "https://www.myjobmag.com/blog/20-common-onboarding-mistakes-hr-managers-should-avoid",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/20-common-onboarding-mistakes-hr-managers-should-avoid"
+          },
+          "pubDate": "Thu, 11 Dec 2025 14:36:04 GMT",
+          "description": "Find out some common mistakes HR managers make when it comes to onboarding. Avoiding them can make a big difference in employee engagement and retention"
+        },
+        {
+          "title": "Entry-Level Salaries in Nigeria",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Candidates"
+          },
+          "link": "https://www.myjobmag.com/blog/entry-level-salaries-in-nigeria",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/entry-level-salaries-in-nigeria"
+          },
+          "pubDate": "Thu, 4 Dec 2025 10:30:30 GMT",
+          "description": "How much do entry-level staff earn in Nigeria? Find out exact salaries paid in Oil and Gas, Banking, Tech, and several other industries."
+        },
+        {
+          "title": "Tech Jobs in Nigeria and Their Salaries",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Candidates"
+          },
+          "link": "https://www.myjobmag.com/blog/tech-jobs-in-nigeria-and-their-salaries",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/tech-jobs-in-nigeria-and-their-salaries"
+          },
+          "pubDate": "Fri, 21 Nov 2025 11:57:10 GMT",
+          "description": "Discover some of the most in-demand tech jobs in Nigeria and what they actually pay in todayÃÂ¢ÃÂÃÂs market.ÃÂÃÂ"
+        },
+        {
+          "title": "How to Get a Job After NYSC",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Candidates"
+          },
+          "link": "https://www.myjobmag.com/blog/how-corps-members-can-get-jobs-faster-after-nysc",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/how-corps-members-can-get-jobs-faster-after-nysc"
+          },
+          "pubDate": "Wed, 19 Nov 2025 15:19:16 GMT",
+          "description": "Are you about to wear (or already wearing) that uniform and you donÃÂ¢ÃÂÃÂt want to be jobless after POP? This article shows you the exact moves to make now.ÃÂÃÂ"
+        },
+        {
+          "title": "How to Recruit Quality Candidates on a Budget",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Employers"
+          },
+          "link": "https://www.myjobmag.com/blog/how-to-recruit-quality-candidates-on-a-budget-2",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/how-to-recruit-quality-candidates-on-a-budget-2"
+          },
+          "pubDate": "Fri, 7 Nov 2025 16:07:02 GMT",
+          "description": "We cover practical ways to find and hire quality candidates on a budget. By the end, you would have learnt how to make your company stand out and how to build real relationships that bring in the right people for your team."
+        },
+        {
+          "title": "30 Effective Tips To Ace Any Job Interview",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Candidates"
+          },
+          "link": "https://www.myjobmag.com/blog/30-effective-tips-to-ace-any-job-interview",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/30-effective-tips-to-ace-any-job-interview"
+          },
+          "pubDate": "Tue, 28 Oct 2025 11:21:15 GMT",
+          "description": "Discover useful tips, including everything you need to ace any job interview."
+        },
+        {
+          "title": "80 Business Analyst Job Interview Questions and Answers",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Candidates"
+          },
+          "link": "https://www.myjobmag.com/blog/business-analyst-job-interview-questions",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/business-analyst-job-interview-questions"
+          },
+          "pubDate": "Fri, 24 Oct 2025 10:02:31 GMT",
+          "description": "In this article, we will look at the main types of questions you can expect in a business analyst interview and share tips on how to answer them with confidence.ÃÂÃÂ"
+        },
+        {
+          "title": "50 Data Analyst Job Interview Questions and Answers",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Candidates"
+          },
+          "link": "https://www.myjobmag.com/blog/data-analyst-job-interview-questions",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/data-analyst-job-interview-questions"
+          },
+          "pubDate": "Fri, 26 Sep 2025 08:22:30 GMT",
+          "description": "We have compiled 50 of the most frequently asked data analyst interview questions. These questions will give you insights into what employers ask and how to stand out."
+        },
+        {
+          "title": "What To Wear For A Female Job Interview",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Candidates"
+          },
+          "link": "https://www.myjobmag.com/blog/what-to-wear-for-a-female-job-interview",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/what-to-wear-for-a-female-job-interview"
+          },
+          "pubDate": "Thu, 25 Sep 2025 08:14:02 GMT",
+          "description": "In this article, we walk through everything you need to know about dressing for a job interview as a woman. From outfit ideas and grooming tips to what to wear depending on the industry."
+        },
+        {
+          "title": "How to Prepare for Your First Job Interview: Guide for Entry-Level, New Graduates",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Candidates"
+          },
+          "link": "https://www.myjobmag.com/blog/how-to-prepare-for-your-first-job-interview-guide-for-entry-level-new-graduates",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/how-to-prepare-for-your-first-job-interview-guide-for-entry-level-new-graduates"
+          },
+          "pubDate": "Mon, 22 Sep 2025 12:03:15 GMT",
+          "description": "In this guide, we will walk you through everything you need to prepare for your first job interview. From what questions you might be asked, to what you should bring along and the mistakes to avoid, it is all here."
+        },
+        {
+          "title": "How To Make a Good Impression in a Job Interview",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Candidates"
+          },
+          "link": "https://www.myjobmag.com/blog/how-to-make-a-good-impression-in-a-job-interview",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/how-to-make-a-good-impression-in-a-job-interview"
+          },
+          "pubDate": "Mon, 15 Sep 2025 08:40:48 GMT",
+          "description": "In this piece, we walk you through how to make a great impression at any job interview and show youÃÂ¢ÃÂÃÂre the perfect fit."
+        },
+        {
+          "title": "50 Teacher Job Interview Questions and Answers",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Candidates"
+          },
+          "link": "https://www.myjobmag.com/blog/teacher-job-interview-questions",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/teacher-job-interview-questions"
+          },
+          "pubDate": "Thu, 11 Sep 2025 10:46:24 GMT",
+          "description": "This article covers 50 job interview questions and answers for teachers and educators. By the end, you'll know how to think like an interviewer and stand out as the kind of teacher every school wants on their team."
+        },
+        {
+          "title": "Flour Mills of Nigeria Plc - George Coumantaros Post-Graduate Scholarship Program 2025",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Scholarships/News"
+          },
+          "link": "https://www.myjobmag.com/blog/flour-mills-of-nigeria-plc-george-coumantaros-post-graduate-scholarship-program-2025",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/flour-mills-of-nigeria-plc-george-coumantaros-post-graduate-scholarship-program-2025"
+          },
+          "pubDate": "Mon, 1 Sep 2025 16:14:08 GMT",
+          "description": "Flour Mills of Nigeria Plc has been a part of the lives of Nigerians at home and abroad. Our global vision is to be a leading foods company in Africa providing high quality and affordable products in the most convenient ways to consumers through world class brands like Golden Penny Flour, Golden Penny Semovita, Goldenvita, Golden Pasta and Golden Noodle"
+        },
+        {
+          "title": "55 Supervisor Job Interview Questions (Plus Answers)",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Candidates"
+          },
+          "link": "https://www.myjobmag.com/blog/55-supervisor-job-interview-questions-plus-answers",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/55-supervisor-job-interview-questions-plus-answers"
+          },
+          "pubDate": "Fri, 22 Aug 2025 11:07:37 GMT",
+          "description": "Discover 55 common supervisor interview questions, along with sample answers and tips to help show youÃÂ¢ÃÂÃÂre ready to lead."
+        },
+        {
+          "title": "80 Questions To Ask When Interviewing For A Job",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Candidates"
+          },
+          "link": "https://www.myjobmag.com/blog/80-questions-to-ask-when-interviewing-for-a-job",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/80-questions-to-ask-when-interviewing-for-a-job"
+          },
+          "pubDate": "Fri, 22 Aug 2025 10:10:38 GMT",
+          "description": "In this article, we show how to ask the right questions that reveal details about the role, growth opportunities, and potential red flags.ÃÂÃÂ"
+        },
+        {
+          "title": "How Can a Foreigner Work in Nigeria",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Candidates"
+          },
+          "link": "https://www.myjobmag.com/blog/how-can-a-foreigner-work-in-nigeria-1",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/how-can-a-foreigner-work-in-nigeria-1"
+          },
+          "pubDate": "Mon, 18 Aug 2025 07:10:24 GMT",
+          "description": "Learn everything a foreigner needs to work in Nigeria from top industries hiring to Nigeria work permit requirements."
+        },
+        {
+          "title": "Julius Berger Nigeria Plc Undergraduate Scholarship Scheme 2025",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Scholarships/News"
+          },
+          "link": "https://www.myjobmag.com/blog/julius-berger-nigeria-plc-undergraduate-scholarship-scheme-2025",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/julius-berger-nigeria-plc-undergraduate-scholarship-scheme-2025"
+          },
+          "pubDate": "Tue, 12 Aug 2025 09:38:49 GMT",
+          "description": "Julius Berger Nigeria Plc (JBN) is a leading Nigerian company offering holistic services covering the planning, design, engineering, construction, operation, and maintenance of buildings, infrastructure, and industry projects. Julius Berger is a committed partner with a strong track record of reliable high-quality results."
+        },
+        {
+          "title": "How to Prepare for a Job Interview",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Candidates"
+          },
+          "link": "https://www.myjobmag.com/blog/how-to-prepare-for-a-job-interview",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/how-to-prepare-for-a-job-interview"
+          },
+          "pubDate": "Mon, 11 Aug 2025 10:55:35 GMT",
+          "description": "This article walks you through everything you need to do before a job interview. By the end of the article, you will know how to prepare in a way that helps you perform at your best."
+        },
+        {
+          "title": "55 Administrative Assistant Job Interview Questions And Answers",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Candidates"
+          },
+          "link": "https://www.myjobmag.com/blog/administrative-assistant-interview-questions-and-answers",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/administrative-assistant-interview-questions-and-answers"
+          },
+          "pubDate": "Thu, 7 Aug 2025 13:09:18 GMT",
+          "description": "These 55 questions will help you prepare for any administrative assistant job interview with answers to impress the hiring manager."
+        },
+        {
+          "title": "25 Zoom Interview Tips to Get the Job",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Candidates"
+          },
+          "link": "https://www.myjobmag.com/blog/25-zoom-interview-tips",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/25-zoom-interview-tips"
+          },
+          "pubDate": "Mon, 4 Aug 2025 10:58:42 GMT",
+          "description": "Land a job at your next Zoom interview with these tips covering preparation, presentation, setup, and follow-up strategies."
+        },
+        {
+          "title": "40+ Generative AI Prompt Examples for Job Seekers",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Candidates"
+          },
+          "link": "https://www.myjobmag.com/blog/generative-ai-prompt-examples-for-job-seekers",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/generative-ai-prompt-examples-for-job-seekers"
+          },
+          "pubDate": "Wed, 30 Jul 2025 12:33:14 GMT",
+          "description": "These 40+ prompts give you a starting point for resumes, cover letters, job interviews, and everything you need as a job seeker."
+        },
+        {
+          "title": "How to Create an ATS-Friendly Resume That Matches Any Job in 2026 (Free Tool + Templates)",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Candidates"
+          },
+          "link": "https://www.myjobmag.com/blog/how-to-create-an-ats-friendly-resume",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/how-to-create-an-ats-friendly-resume"
+          },
+          "pubDate": "Wed, 23 Jul 2025 07:49:46 GMT",
+          "description": "Bypass any ATS with this free tool. Create an ATS-friendly resume that matches any job in 2026 and boosts your chances of getting hired."
+        },
+        {
+          "title": "Best Universities in Nigeria",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Candidates"
+          },
+          "link": "https://www.myjobmag.com/blog/best-universities-in-nigeria",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/best-universities-in-nigeria"
+          },
+          "pubDate": "Fri, 18 Jul 2025 11:12:48 GMT",
+          "description": "We scored over 20 Nigerian universities across five key metrics: academic reputation, innovation & impact, research output, global presence, and the quality of the learning environment."
+        },
+        {
+          "title": "Why You Are Not Getting Interviews for Jobs and How to Fix It",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Candidates"
+          },
+          "link": "https://www.myjobmag.com/blog/why-you-are-not-getting-interviews-for-jobs",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/why-you-are-not-getting-interviews-for-jobs"
+          },
+          "pubDate": "Thu, 26 Jun 2025 08:02:38 GMT",
+          "description": "Have you been applying for jobs with no interview invitation? Find out why it keeps happening and how to fix it."
+        },
+        {
+          "title": "Unemployment Rates in Africa 2026: Statistics and Country Rankings",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Candidates"
+          },
+          "link": "https://www.myjobmag.com/blog/unemployment-rates-in-africa",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/unemployment-rates-in-africa"
+          },
+          "pubDate": "Wed, 28 May 2025 13:38:10 GMT",
+          "description": "In this article, we unravel the data behind unemployment rates across Africa, ranking countries from the most to the least unemployed.ÃÂÃÂ"
+        },
+        {
+          "title": "90+ Employment Laws & Facts in Nigeria You Need to Know",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Workplace"
+          },
+          "link": "https://www.myjobmag.com/blog/nigerian-employment-laws-facts",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/nigerian-employment-laws-facts"
+          },
+          "pubDate": "Sat, 17 May 2025 13:49:28 GMT",
+          "description": "Find out 90+ essential employment laws and facts every Nigerian employer and employee must know. Stay compliant and informed in the workplace."
+        },
+        {
+          "title": "Remote Work Statistics 2026 - Trends, Stats and Data | MyJobMag",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Candidates"
+          },
+          "link": "https://www.myjobmag.com/blog/remote-work-statistics",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/remote-work-statistics"
+          },
+          "pubDate": "Sat, 17 May 2025 13:19:42 GMT",
+          "description": "Discover all the latest data on Nigeria's remote work from industries hiring the most, number of Nigerians working remotely to salaries."
+        },
+        {
+          "title": "50+ HR Statistics in Nigeria 2026",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Employers"
+          },
+          "link": "https://www.myjobmag.com/blog/hr-statistics-nigeria",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/hr-statistics-nigeria"
+          },
+          "pubDate": "Thu, 8 May 2025 13:21:19 GMT",
+          "description": "Discover all the latest Nigerian HR and workforce data collected across verified sources from hiring to employee engagement and salaries."
+        },
+        {
+          "title": "70 Job Statistics in Nigeria 2026 (Trends, Stats and Facts You Should Know)",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Candidates"
+          },
+          "link": "https://www.myjobmag.com/blog/nigeria-job-statistics",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/nigeria-job-statistics"
+          },
+          "pubDate": "Tue, 6 May 2025 07:57:27 GMT",
+          "description": "Explore key job statistics in Nigeria with data collected from verified sources on topics from unemployment rates & youth employment to salary benchmarks."
+        },
+        {
+          "title": "Skills Gap or Salary Gap: The Truth About NigeriaÃ¢ÂÂs Hiring Struggles",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Candidates"
+          },
+          "link": "https://www.myjobmag.com/blog/skills-gap-or-salary-gap-the-truth-about-nigeria-s-hiring-struggles",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/skills-gap-or-salary-gap-the-truth-about-nigeria-s-hiring-struggles"
+          },
+          "pubDate": "Wed, 30 Apr 2025 07:53:45 GMT",
+          "description": "Is Nigeria struggling with a skills gap or salary gap? Discover the truth behind the country's hiring challenges."
+        },
+        {
+          "title": "Insights from HR Leaders on how AI Will Impact Hiring and HR",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Employers"
+          },
+          "link": "https://www.myjobmag.com/blog/ai-and-the-future-of-hiring-hr",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/ai-and-the-future-of-hiring-hr"
+          },
+          "pubDate": "Thu, 24 Apr 2025 09:43:26 GMT",
+          "description": "20 HR and recruitment leaders share their insights into the future of hiring and the HR industry. These insights arenÃÂ¢ÃÂÃÂt just predictions. They are a blueprint for whatÃÂ¢ÃÂÃÂs coming.ÃÂÃÂ"
+        },
+        {
+          "title": "10 Must-Do Steps to Take After A Layoff",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Workplace"
+          },
+          "link": "https://www.myjobmag.com/blog/10-must-do-steps-to-take-after-being-laid-off",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/10-must-do-steps-to-take-after-being-laid-off"
+          },
+          "pubDate": "Wed, 26 Mar 2025 12:14:22 GMT",
+          "description": "Wondering what to do after a lay off? These steps contains everything you need to get back on track immediately."
+        },
+        {
+          "title": "10 Best Savings and Low-Risk Investments for Nigerian Salary Earners",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Workplace"
+          },
+          "link": "https://www.myjobmag.com/blog/10-best-savings-and-low-risk-investments-for-nigerian-salary-earners",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/10-best-savings-and-low-risk-investments-for-nigerian-salary-earners"
+          },
+          "pubDate": "Fri, 7 Mar 2025 07:22:46 GMT",
+          "description": "Looking to put your salary to good use? Here are the best savings and investments with low risks for you."
+        },
+        {
+          "title": "How to Land Your Dream Job Using AI: Insights from MyJobMag & Zummit Africa Webinar",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Candidates"
+          },
+          "link": "https://www.myjobmag.com/blog/how-to-land-your-dream-job-using-ai-insights-from-myjobmag-zummit-africa-webinar",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/how-to-land-your-dream-job-using-ai-insights-from-myjobmag-zummit-africa-webinar"
+          },
+          "pubDate": "Tue, 4 Mar 2025 04:33:13 GMT",
+          "description": "Learn how to use AI to make your job search easier. Land your desired job with AI. Includes excerpts from our webinar."
+        },
+        {
+          "title": "Highlights of the 2025 MyJobMag Kickstart Scholarship Program",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Candidates"
+          },
+          "link": "https://www.myjobmag.com/blog/highlight-of-the-2025-myjobmag-kickstart-scholarship-program",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/highlight-of-the-2025-myjobmag-kickstart-scholarship-program"
+          },
+          "pubDate": "Fri, 28 Feb 2025 07:50:15 GMT",
+          "description": "The 2025 MyJobMag Career Kickstart Scholarship provided fully-funded digital skills training, data support, and career guidance to empower young Nigerians for the job market. With post-training support, internships, and certifications, the program continues to create real career opportunities and drive economic growth."
+        },
+        {
+          "title": "30 Apps and Websites Every Job Seeker Should Know",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Candidates"
+          },
+          "link": "https://www.myjobmag.com/blog/30-apps-and-websites-every-job-seeker-should-know",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/30-apps-and-websites-every-job-seeker-should-know"
+          },
+          "pubDate": "Tue, 25 Feb 2025 16:19:25 GMT",
+          "description": "Looking for a job in Nigeria? These essential apps and websites like LinkedIn, MySalaryScale, and Scholarships.com will help you find opportunities and make the most of your job search."
+        },
+        {
+          "title": "How to Land a Good Paying Job With a Low GPA",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Candidates"
+          },
+          "link": "https://www.myjobmag.com/blog/how-to-land-a-good-job-with-a-low-gpa",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/how-to-land-a-good-job-with-a-low-gpa"
+          },
+          "pubDate": "Wed, 19 Feb 2025 10:53:23 GMT",
+          "description": "If you finished school with a low GPA, you might feel like you stand no chance in the employment market. But in this article, we break down exactly how to land a good job, no matter what your GPA says."
+        },
+        {
+          "title": "20 RÃÂ©sumÃÂ© Red Flags Every Recruiter Should Watch Out For",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Candidates"
+          },
+          "link": "https://www.myjobmag.com/blog/resume-red-flags-every-recruiter-should-watch-out-for",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/resume-red-flags-every-recruiter-should-watch-out-for"
+          },
+          "pubDate": "Wed, 5 Feb 2025 08:39:54 GMT",
+          "description": "To stand out as a recruiter, you need to be able to quickly spot red flags in resumes. Here are top twenty rÃÂÃÂ©sumÃÂÃÂ© red flags to look out for."
+        },
+        {
+          "title": "20 In-Demand Professional Certifications in 2026",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Candidates"
+          },
+          "link": "https://www.myjobmag.com/blog/in-demand-professional-certifications-in-2025",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/in-demand-professional-certifications-in-2025"
+          },
+          "pubDate": "Tue, 4 Feb 2025 10:30:28 GMT",
+          "description": "Professional certifications are becoming increasingly important. However, not every certification is valued which is why in this piece, we look at some of the most in-demand professional certifications in 2026."
+        },
+        {
+          "title": "20 Biggest Mistakes Graduates Make (And How to Avoid Them)",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Candidates"
+          },
+          "link": "https://www.myjobmag.com/blog/biggest-mistakes-graduates-make-and-how-to-avoid-them",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/biggest-mistakes-graduates-make-and-how-to-avoid-them"
+          },
+          "pubDate": "Fri, 31 Jan 2025 08:29:13 GMT",
+          "description": "Mistakes can cost you a lot in your professional journey. Learn the most common pitfalls for graduates and how to avoid them."
+        },
+        {
+          "title": "Tech Skills That Are Getting Oversaturated",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Candidates"
+          },
+          "link": "https://www.myjobmag.com/blog/tech-skills-that-are-getting-oversaturated",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/tech-skills-that-are-getting-oversaturated"
+          },
+          "pubDate": "Fri, 24 Jan 2025 13:02:01 GMT",
+          "description": "The unprecedented rise in the adoption of tech has led to oversaturation in certain tech fields, making it increasingly difficult for individuals to stand out and secure opportunities. In this article, we cover popular tech skills that are oversaturated."
+        },
+        {
+          "title": "What Are Career Goals and How to Set Them (120+ Examples and Template)",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Candidates"
+          },
+          "link": "https://www.myjobmag.com/blog/what-are-career-goals-and-how-to-set-them-plus-examples-and-template",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/what-are-career-goals-and-how-to-set-them-plus-examples-and-template"
+          },
+          "pubDate": "Wed, 22 Jan 2025 11:32:59 GMT",
+          "description": "Do you find yourself struggling or feeling stuck in your professional life? Do you feel like something is missing in your career? What you need are career goals which are specific objectives you set for your professional life."
+        },
+        {
+          "title": "The MyJobMag Career Kickstart Scholarship 2025 Officially Commences Today!",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Scholarships/News"
+          },
+          "link": "https://www.myjobmag.com/blog/the-myjobmag-career-kickstart-scholarship-2025-officially-commences-today",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/the-myjobmag-career-kickstart-scholarship-2025-officially-commences-today"
+          },
+          "pubDate": "Mon, 20 Jan 2025 12:16:44 GMT",
+          "description": "The MyJobMag Career Kickstart Scholarship is designed to empower job seekers and career changers with the skills, tools, and resources needed to stand out in the competitive job market. We are excited to embark on this journey of career excellence with our participants!"
+        },
+        {
+          "title": "10 Best Careers in Tech Without Coding Skills",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Candidates"
+          },
+          "link": "https://www.myjobmag.com/blog/10-best-careers-in-tech-without-coding-skills",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/10-best-careers-in-tech-without-coding-skills"
+          },
+          "pubDate": "Fri, 17 Jan 2025 09:42:03 GMT",
+          "description": "Looking for tech careers without coding? Here are 10 top-paying roles in the tech industry that donÃÂ¢ÃÂÃÂt require coding skills, from product management to digital marketing."
+        },
+        {
+          "title": "5 Common Office Politics Mistakes That Can Ruin Your Career",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Workplace"
+          },
+          "link": "https://www.myjobmag.com/blog/5-common-office-politics-mistakes-that-can-ruin-your-career",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/5-common-office-politics-mistakes-that-can-ruin-your-career"
+          },
+          "pubDate": "Fri, 17 Jan 2025 09:05:43 GMT",
+          "description": "Office politics is something most of us encounter, but not everyone knows how to handle it effectively. Even if youÃÂ¢ÃÂÃÂre doing great work, the way you handle the social dynamics around the office can impact your career trajectory. Sometimes, small mistakes can lead to big consequences even if you never meant to cause trouble."
+        },
+        {
+          "title": "2025 Nigeria Job Search Report",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Candidates"
+          },
+          "link": "https://www.myjobmag.com/blog/2025-myjobmag-job-search-report-2",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/2025-myjobmag-job-search-report-2"
+          },
+          "pubDate": "Mon, 30 Dec 2024 16:20:55 GMT",
+          "description": "We analysed over 90,000 job positions published on MyJobMag in 2024. The job search market in Nigeria witnessed an 18% YoY increase in 2024, with 90,049 openings published across various industries, including paid and free listings."
+        },
+        {
+          "title": "MyJobMag Wins Career, Employment Website of the Year, NiTA Awards 2024",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Candidates"
+          },
+          "link": "https://www.myjobmag.com/blog/myjobmag-wins-career-employment-website-of-the-year-nita-awards-2024",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/myjobmag-wins-career-employment-website-of-the-year-nita-awards-2024"
+          },
+          "pubDate": "Mon, 23 Dec 2024 08:06:45 GMT",
+          "description": "MyJobMag has been named Career, Employment Website of the Year for 2024 at the 10th edition of the NIGERIA Technology Awards."
+        },
+        {
+          "title": "TotalEnergies International Masters Degree Scholarship 2025 - 2026",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Scholarships/News"
+          },
+          "link": "https://www.myjobmag.com/blog/totaleniergies-nternational-masters-degree-scholarship-2025-2026",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/totaleniergies-nternational-masters-degree-scholarship-2025-2026"
+          },
+          "pubDate": "Tue, 3 Dec 2024 11:41:46 GMT",
+          "description": "TotalEnergies is a broad energy company that produces and markets fuels, natural gas, and electricity. A leading player in the energies industry with activities in more than 130 countries worldwide, we are committed to energy that is more affordable, more reliable, and cleaner, in compliance with the highest safety and environmental standards."
+        },
+        {
+          "title": "MyJobMag Career Kickstart Scholarship 2026",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Scholarships/News"
+          },
+          "link": "https://www.myjobmag.com/blog/myjobmag-career-kickstart-scholarship-2025",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/myjobmag-career-kickstart-scholarship-2025"
+          },
+          "pubDate": "Wed, 6 Nov 2024 20:44:32 GMT",
+          "description": "Are you ready to take your career to the next level but facing financial hurdles? MyJobMag, Nigeria's leading talent development and recruitment company, is excited to bring you the MyJobMag Career Kickstart Scholarship 2026."
+        },
+        {
+          "title": "Federal Ministry of Education Commonwealth Master's Scholarship 2024 - 2025",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Scholarships/News"
+          },
+          "link": "https://www.myjobmag.com/blog/federal-ministry-of-education-commonwealth-master-s-scholarship-2024-2025",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/federal-ministry-of-education-commonwealth-master-s-scholarship-2024-2025"
+          },
+          "pubDate": "Tue, 8 Oct 2024 18:14:43 GMT",
+          "description": "The agency-nominated MasterÃÂ¢ÃÂÃÂs programme is one of three MasterÃÂ¢ÃÂÃÂs programmes offered by the Commonwealth Scholarship Commission.The Commonwealth Scholarship Commission in the UK (CSC) provides the UK government scholarship scheme led by international development objectives. It operates within the framework of the Commonwealth Scholarship and Fellowship Plan (CSFP) and offers a vivid demonstration of the UKÃÂ¢ÃÂÃÂs enduring commitment to the Commonwealth\n\nFunded by the UK Foreign, Commonwealth & Development Office (FCDO), Commonwealth MasterÃÂ¢ÃÂÃÂs Scholarships enable talented and motivated individuals to gain the knowledge and skills required for sustainable development, and are aimed at those who could not otherwise afford to study in the UK."
+        },
+        {
+          "title": "NNPC / SEPLAT Joint Venture (JV) National Undergraduate Scholarship 2024 - 2025",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Scholarships/News"
+          },
+          "link": "https://www.myjobmag.com/blog/nnpc-seplat-joint-venture-jv-national-undergraduate-scholarship-2024-2025",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/nnpc-seplat-joint-venture-jv-national-undergraduate-scholarship-2024-2025"
+          },
+          "pubDate": "Tue, 8 Oct 2024 18:04:36 GMT",
+          "description": "NNPC/SEPLAT Joint Venture has announced the commencement of its 2024 National Undergraduate Scholarship Programme. The scholarship award is open to deserving undergraduate students of Federal and State Universities in Nigeria.\n\nThe SEPLAT JV Scholarship Scheme is one of Seplat's educational Corporate Social Investment programmes and is designed to promote educational development and human capacity building through provision of yearly grants to successful applicants to complete their degree programmes."
+        },
+        {
+          "title": "Beware of Job Scam: Don't Pay to Get a Job",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Candidates"
+          },
+          "link": "https://www.myjobmag.com/blog/beware-of-job-scam-don-t-pay-to-get-a-job",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/beware-of-job-scam-don-t-pay-to-get-a-job"
+          },
+          "pubDate": "Fri, 19 Jul 2024 13:13:43 GMT",
+          "description": "It's crucial to understand that any legitimate employer will never ask you to pay to secure a job."
+        },
+        {
+          "title": "2024 NNPC - SNEPCo National University Scholarship Award",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Scholarships/News"
+          },
+          "link": "https://www.myjobmag.com/blog/application-for-2024-nnpc-snepco-national-university-scholarship-award",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/application-for-2024-nnpc-snepco-national-university-scholarship-award"
+          },
+          "pubDate": "Tue, 28 May 2024 17:34:33 GMT",
+          "description": "The Shell Nigeria Exploration and Production Company Limited (SNEPCO), operator of Oil Mining Lease 118 on behalf of itself and other Co-ventures consisting of Nigerian Agip Exploration, TotalEnergies Nigeria and Esso Exploration and Production Nigeria (Deepwater) Limited under a Production Sharing Contract (PSC) with Nigerian National Petroleum Company Limited (NNPC) hereby invites applications from qualified Nigerian students for the 2024 NNPC - SNEPCo National University Scholarship Programme."
+        },
+        {
+          "title": "NNPCL / Chevron JV National University Scholarship Awards 2024",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Scholarships/News"
+          },
+          "link": "https://www.myjobmag.com/blog/nnpcl-chevron-jv-national-university-scholarship-awards-2024",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/nnpcl-chevron-jv-national-university-scholarship-awards-2024"
+          },
+          "pubDate": "Tue, 28 May 2024 15:34:47 GMT",
+          "description": "Chevron Nigeria Limited (CNL) in collaboration with its Joint Venture (JV) partner,  the Nigerian National Petroleum Company Limited (NNPCL), is offering a number of  University Scholarship Awards to suitably qualified Nigerian students from all States of the Federation."
+        },
+        {
+          "title": "Indemand Jobs That Employers Find Hard to Fill in 2026",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Candidates"
+          },
+          "link": "https://www.myjobmag.com/blog/indemand-jobs-that-employers-find-hard-to-fill",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/indemand-jobs-that-employers-find-hard-to-fill"
+          },
+          "pubDate": "Tue, 9 Jan 2024 10:14:10 GMT",
+          "description": "These are the top jobs that are in demand that pay well in Nigeria. Position for these jobs and earn well in 2026."
+        },
+        {
+          "title": "Jobs That Will Likely Be Replaced By AI",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Candidates"
+          },
+          "link": "https://www.myjobmag.com/blog/jobs-will-likely-be-replaced-by-ai",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/jobs-will-likely-be-replaced-by-ai"
+          },
+          "pubDate": "Sun, 12 Nov 2023 12:41:41 GMT",
+          "description": "This articles contains jobs and careers that will be replaced, impacted and augmented by AI - Artificial Intelligence and what you can do to get ready."
+        },
+        {
+          "title": "The Most In-Demand Jobs in Nigeria Right Now",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Candidates"
+          },
+          "link": "https://www.myjobmag.com/blog/the-most-in-demand-jobs-in-nigeria-right-now",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/the-most-in-demand-jobs-in-nigeria-right-now"
+          },
+          "pubDate": "Fri, 3 Nov 2023 20:43:30 GMT",
+          "description": "View the most in-demand jobs in Nigeria in 2026. Get ready for any of these careers and secure a job in 2026."
+        },
+        {
+          "title": "2023 Job Search Report by MyJobMag",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Candidates"
+          },
+          "link": "https://www.myjobmag.com/blog/job-search-report-by-myjobmag",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/job-search-report-by-myjobmag"
+          },
+          "pubDate": "Tue, 31 Oct 2023 18:35:53 GMT",
+          "description": "Read the Nigeria Job Search Report 2023. We analysed over 62,000 jobs published by 5,629 companies in Nigeria and we shared insights for jobseekers, employers, journalists and leaders."
+        },
+        {
+          "title": "Employer Branding: How to Attract Talents In 2026",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Employers"
+          },
+          "link": "https://www.myjobmag.com/blog/employer-branding-how-to-attract-talents",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/employer-branding-how-to-attract-talents"
+          },
+          "pubDate": "Sun, 22 Oct 2023 15:04:15 GMT",
+          "description": "Learn how to attract strategic talents to your company in 2026. Intentional employer branding ensures the right talents join your company."
+        },
+        {
+          "title": "30 Proven Ways to Make Money Online",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Employers"
+          },
+          "link": "https://www.myjobmag.com/blog/30-proven-ways-to-make-real-money-online",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/30-proven-ways-to-make-real-money-online"
+          },
+          "pubDate": "Thu, 31 Aug 2023 08:20:59 GMT",
+          "description": "This article outlines 30 proven ways to make money online with your phone. From freelancing and taking online surveys to selling products and creating content, there is something for everyone. So whether you're looking for a side hustle or a full-time income, this article has you covered."
+        },
+        {
+          "title": "The Complexities of Nigeria's Unemployment Rates: NBS' Revised Approach Unveiled",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Scholarships/News"
+          },
+          "link": "https://www.myjobmag.com/blog/new-nigeria-s-unemployment-rates-2023-nbs",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/new-nigeria-s-unemployment-rates-2023-nbs"
+          },
+          "pubDate": "Sat, 26 Aug 2023 21:43:45 GMT",
+          "description": "The National Bureau of Statistics (NBS) released a report recently that showed Nigeria's unemployment rate dropped to 4.3% in the secondÃÂÃÂ quarter of 2024ÃÂÃÂ showing a significant decline from the 33.3% unemployment rate reported in 2021."
+        },
+        {
+          "title": "Upskilling and Reskilling: Investing in Your Career",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Employers"
+          },
+          "link": "https://www.myjobmag.com/blog/upskilling-and-reskilling-investing-in-your-career",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/upskilling-and-reskilling-investing-in-your-career"
+          },
+          "pubDate": "Thu, 13 Jul 2023 08:29:33 GMT",
+          "description": "When it comes to thriving in today's ever-changing professional landscape, one question remains crucial: How can we ensure our success? The answer lies in the unwavering commitment to continuous learning."
+        },
+        {
+          "title": "How to Retain Great Employees in Your Organization",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Employers"
+          },
+          "link": "https://www.myjobmag.com/blog/how-to-retain-great-employees-in-your-organization",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/how-to-retain-great-employees-in-your-organization"
+          },
+          "pubDate": "Mon, 10 Jul 2023 10:54:31 GMT",
+          "description": "Employee retention is a critical factor in the success of any organization. When great employees stay, businesses thrive. However, high employee turnover can lead to missed expectations and increased costs. According to industry experts, high employee turnover costs companies an estimated 25% of an employee's annual salary on average."
+        },
+        {
+          "title": "Reducing Bias in Interviews: Promoting Fair and Inclusive Hiring Practices",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Employers"
+          },
+          "link": "https://www.myjobmag.com/blog/reducing-bias-in-interviews",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/reducing-bias-in-interviews"
+          },
+          "pubDate": "Sat, 24 Jun 2023 12:39:39 GMT",
+          "description": "In today's diverse world, organizations strive for inclusive work environments and fair hiring processes. However, interviews can be biased, leading to unfair outcomes and hindering diversity efforts. Bias in interviews refers to unconscious prejudices that influence decision-making. These biases perpetuate inequalities and limit diversity. Addressing bias is crucial for organizations to tap into diverse talents."
+        },
+        {
+          "title": "Top 5 Recruitment Agencies in Nigeria",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Employers"
+          },
+          "link": "https://www.myjobmag.com/blog/top-5-recruitment-agencies-in-nigeria",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/top-5-recruitment-agencies-in-nigeria"
+          },
+          "pubDate": "Wed, 21 Jun 2023 10:29:26 GMT",
+          "description": "In Nigeria, several recruitment agencies have established themselves as leaders in the industry, offering great services and track record of success. In this article, we will explore the top 5 recruitment agencies in Nigeria."
+        },
+        {
+          "title": "Data Entry Work From Home Jobs",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Candidates"
+          },
+          "link": "https://www.myjobmag.com/blog/data-entry-work-from-home-jobs",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/data-entry-work-from-home-jobs"
+          },
+          "pubDate": "Fri, 2 Jun 2023 09:24:38 GMT",
+          "description": "Data Entry has become one of the fastest-growing job opportunities for young persons in Nigeria. If you have a skill in typing and general computer skills, then getting a job in Data Entry may not be a bad idea.ÃÂÃÂ"
+        },
+        {
+          "title": "MTN Scholarship Call for Entries 2023",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Scholarships/News"
+          },
+          "link": "https://www.myjobmag.com/blog/mtn-scholarship-call-for-entries-2023",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/mtn-scholarship-call-for-entries-2023"
+          },
+          "pubDate": "Thu, 18 May 2023 14:47:03 GMT",
+          "description": "MTN Scholarships, a part of our Youth Development Cause, provides an annual platform for recognizing and rewarding dedicated, high performing students across Nigerian Public Tertiary Institutions. We have curated three scholarship categories to cater to the diverse needs of our exceptional scholars:"
+        },
+        {
+          "title": "Guinness Nigeria Undergraduate Scholarship Award",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Scholarships/News"
+          },
+          "link": "https://www.myjobmag.com/blog/guinness-nigeria-undergraduate-scholarship-award",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/guinness-nigeria-undergraduate-scholarship-award"
+          },
+          "pubDate": "Fri, 24 Feb 2023 14:27:23 GMT",
+          "description": "The Guinness Nigeria Undergraduate scholarship scheme supports Guinness NigeriaÃÂ¢ÃÂÃÂs commitment to implementing transformative schemes that foster youth development. The scholarship will provide full tuition for students who are currently studying in Nigerian Universities and Polytechnics. Students from our host communities are encouraged to apply."
+        },
+        {
+          "title": "Best CV Format For Freshers or Your First Job (+ Free Template)",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Candidates"
+          },
+          "link": "https://www.myjobmag.com/blog/best-cv-format-for-freshers-or-your-first-job-free-template",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/best-cv-format-for-freshers-or-your-first-job-free-template"
+          },
+          "pubDate": "Sun, 25 Dec 2022 19:41:05 GMT",
+          "description": "Writing a CV as a fresher can pose quite a challenge mostly because you're fresh out of the university with little to zero work experience and as a fresh graduate looking to land interviews and possibly a good job with great pay, having a well-tailored CV is the first thing you should do."
+        },
+        {
+          "title": "How And When To Include CV Reference",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Employers"
+          },
+          "link": "https://www.myjobmag.com/blog/how-and-when-to-include-cv-reference",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/how-and-when-to-include-cv-reference"
+          },
+          "pubDate": "Tue, 1 Nov 2022 08:58:35 GMT",
+          "description": "You were probably taught that adding references to your curriculum vitae (CV) is an important thing to do but you were most likely not taught how and when to include these references in your CV. Many times, people tend to pay attention to every detail on their CV, from their job experiences to skills and qualifications but when it gets to the reference section, they just put random names and phone numbers with the hope that recruiters wouldn't bother to call or confirm."
+        },
+        {
+          "title": "30 Recruitment Metrics and KPI For Your Organization",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Employers"
+          },
+          "link": "https://www.myjobmag.com/blog/24-recruitment-metrics-and-kpi-for-your-organization",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/24-recruitment-metrics-and-kpi-for-your-organization"
+          },
+          "pubDate": "Wed, 20 Jul 2022 15:14:33 GMT",
+          "description": "Want to improve your recruitment outcomes? Use these 30+ recruitment metrics to improve efficiency, cut costs, and hire better candidates faster."
+        },
+        {
+          "title": "100+ Power Words To Make Your Resume Stand Out",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Candidates"
+          },
+          "link": "https://www.myjobmag.com/blog/100-power-words-to-make-your-resume-stand-out",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/100-power-words-to-make-your-resume-stand-out"
+          },
+          "pubDate": "Wed, 13 Jul 2022 14:27:17 GMT",
+          "description": "This article focuses on providing detailed information on what power words are, their types, benefits, and how and where you can use them in your resume."
+        },
+        {
+          "title": "Olusegun Agagu Foundation Full Scholarships Scheme 2022",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Scholarships/News"
+          },
+          "link": "https://www.myjobmag.com/blog/olusegun-agagu-foundation-full-scholarships-scheme-2022",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/olusegun-agagu-foundation-full-scholarships-scheme-2022"
+          },
+          "pubDate": "Tue, 5 Jul 2022 09:59:57 GMT",
+          "description": "The Olusegun Agagu Foundation, in partnership with the Governing Council of Adeleke University, is accepting applications from students of Okitipupa Local Government Area of Ondo State for full scholarships into the university."
+        },
+        {
+          "title": "20 Recruitment Skills That All Great Recruiters Have",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Workplace"
+          },
+          "link": "https://www.myjobmag.com/blog/recruitment-skills",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/recruitment-skills"
+          },
+          "pubDate": "Mon, 4 Jul 2022 12:07:08 GMT",
+          "description": "Master the art of hiring with key recruitment skills ranging from negotiation to exceptional candidate management."
+        },
+        {
+          "title": "Sir Ahmadu Bello Memorial Foundation Scholarship for Undergraduate and Higher National Diploma Students",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Scholarships/News"
+          },
+          "link": "https://www.myjobmag.com/blog/sir-ahmadu-bello-memorial-foundation-scholarship-for-undergraduate-and-higher-national-diploma-students",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/sir-ahmadu-bello-memorial-foundation-scholarship-for-undergraduate-and-higher-national-diploma-students"
+          },
+          "pubDate": "Wed, 29 Jun 2022 10:17:33 GMT",
+          "description": "The Sir Ahmadu Bello Memorial Foundation (SABMF), as part of its focus on the advancement of education in Northern Nigeria, provides financial support for 200 eligible undergraduates and Higher National Diploma Students of Northern Nigeria origin in accredited public universities and polytechnics in Nigeria annually through the award of scholarships."
+        },
+        {
+          "title": "Trending Jobs For the Week of June 20 - 26, 2022",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Candidates"
+          },
+          "link": "https://www.myjobmag.com/blog/trending-jobs-for-the-week-of-june-20-26-2022",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/trending-jobs-for-the-week-of-june-20-26-2022"
+          },
+          "pubDate": "Fri, 24 Jun 2022 15:19:48 GMT",
+          "description": "These top Companies are hiring. Be among the first to apply."
+        },
+        {
+          "title": "Difference Between Hard Skills Vs Soft Skills (With CV Tips)",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Candidates"
+          },
+          "link": "https://www.myjobmag.com/blog/hard-skills-vs-soft-skills-what-s-the-difference",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/hard-skills-vs-soft-skills-what-s-the-difference"
+          },
+          "pubDate": "Thu, 23 Jun 2022 10:18:41 GMT",
+          "description": "What are hard skills vs soft skills? Learn the differences, see practical examples, and discover how to highlight them on your CV for job success."
+        },
+        {
+          "title": "8 Tips for Effective Communication in the Workplace For HR Professionals",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Employers"
+          },
+          "link": "https://www.myjobmag.com/blog/8-tips-for-effective-communication-in-the-workplace-for-hr-professionals",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/8-tips-for-effective-communication-in-the-workplace-for-hr-professionals"
+          },
+          "pubDate": "Mon, 20 Jun 2022 13:10:22 GMT",
+          "description": "The essence of Human Resources professionals in the workplace cannot be overemphasized. Human Resources is the link between Management and employees. The Human resources professional helps in hiring new talents, onboarding, maintaining employee productivity through a balanced work culture, and driving the company's vision. Therefore, effective means of communication between HR and the employees are needed to achieve good employee performance in the workplace."
+        },
+        {
+          "title": "Trending Jobs For the Week of June 13 - 17, 2022",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Candidates"
+          },
+          "link": "https://www.myjobmag.com/blog/trending-jobs-for-the-week-of-june-13-17-2022",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/trending-jobs-for-the-week-of-june-13-17-2022"
+          },
+          "pubDate": "Fri, 17 Jun 2022 15:41:51 GMT",
+          "description": "Apply to these trending jobs this week and stand a chance of getting an interview next week."
+        },
+        {
+          "title": "Trending Jobs For the Week of June 06 - 10, 2022",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Candidates"
+          },
+          "link": "https://www.myjobmag.com/blog/trending-jobs-for-the-week-of-july-7",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/trending-jobs-for-the-week-of-july-7"
+          },
+          "pubDate": "Fri, 10 Jun 2022 14:33:43 GMT",
+          "description": "These jobs are hot and the companies are actively recruiting this week - June 06 - 10, 2022. You should check them out this week."
+        },
+        {
+          "title": "12 Job Search Advice From HR Experts",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Candidates"
+          },
+          "link": "https://www.myjobmag.com/blog/career-advice-ftom-top-hr-professionals-in-nigeria",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/career-advice-ftom-top-hr-professionals-in-nigeria"
+          },
+          "pubDate": "Mon, 23 May 2022 14:52:35 GMT",
+          "description": "Choosing the right career can be a great deal. Some job seekers, after deciding on what career path to follow, may find it difficult excelling at it. At other times, some may lack the motivation to continue with their career choices. Therefore, gaining insights from those who have experience in human capital either as job seekers or an employees can be very useful."
+        },
+        {
+          "title": "How to Shortlist Faster using MyJobMag Screening Questions",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Employers"
+          },
+          "link": "https://www.myjobmag.com/blog/how-to-shortlist-faster-using-myjobmag-screening-questions",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/how-to-shortlist-faster-using-myjobmag-screening-questions"
+          },
+          "pubDate": "Sat, 9 Apr 2022 15:00:00 GMT",
+          "description": "Screen candidates faster with MyJobMag Screening Questions in minutes. MyJobMag screening questions enables you ask candidates must-have questions."
+        },
+        {
+          "title": "How to hire passive candidates",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Employers"
+          },
+          "link": "https://www.myjobmag.com/blog/how-to-hire-passive-candidates",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/how-to-hire-passive-candidates"
+          },
+          "pubDate": "Wed, 2 Mar 2022 20:46:14 GMT",
+          "description": "Hire passive candidates on MyJobMag. Search candidates by job role, skills, location, education, among others and contact only candidates you are interested in."
+        },
+        {
+          "title": "Welcome to a New Dispensation! - Attend the Study World Exhibition this March",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Scholarships/News"
+          },
+          "link": "https://www.myjobmag.com/blog/welcome-to-a-new-dispensation-attend-the-study-world-exhibition-this-march",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/welcome-to-a-new-dispensation-attend-the-study-world-exhibition-this-march"
+          },
+          "pubDate": "Wed, 2 Mar 2022 13:53:02 GMT",
+          "description": "Have you noticed that life is made up of the decisions you make? Or the decisions you allow people to make for you. Think about it. \n\nResearch shows that one of the most life-changing decisions you can make for yourself is to study in another country that isnÃÂ¢ÃÂÃÂt your home country. And if youÃÂ¢ÃÂÃÂve been following the news, youÃÂ¢ÃÂÃÂll see that the UK & Ireland have welcomed thousands of international students into their universities and, by extension, into their country."
+        },
+        {
+          "title": "Guinness Nigeria Undergraduate Scholarship Scheme",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Scholarships/News"
+          },
+          "link": "https://www.myjobmag.com/blog/guinness-nigeria-undergraduate-scholarship-scheme",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/guinness-nigeria-undergraduate-scholarship-scheme"
+          },
+          "pubDate": "Mon, 28 Feb 2022 15:21:35 GMT",
+          "description": "The Guinness Nigeria Undergraduate scholarship scheme supports Guinness NigeriaÃÂ¢ÃÂÃÂs commitment to implementing transformative schemes that foster youth development. The scholarship will provide full tuition for students who are currently studying in Nigerian Universities and Polytechnics. Students from our host communities are encouraged to apply."
+        },
+        {
+          "title": "How to Write An Application Letter for a Hotel Job in Nigeria",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Candidates"
+          },
+          "link": "https://www.myjobmag.com/blog/how-to-write-an-application-letter-for-a-hotel-job-in-nigeria",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/how-to-write-an-application-letter-for-a-hotel-job-in-nigeria"
+          },
+          "pubDate": "Thu, 27 Jan 2022 13:35:00 GMT",
+          "description": "Hotel jobs are one of the most available jobs in Nigeria because in some cases job candidates are asked to apply within. You may need to write an application letter when you are searching for a hotel job in Nigeria. You would learn how to write an application letter in this article."
+        },
+        {
+          "title": "How to Write an Application Letter in Nigeria for a Teaching Job",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Candidates"
+          },
+          "link": "https://www.myjobmag.com/blog/how-to-write-n-application-letter-in-nigeria-for-a-teaching-job",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/how-to-write-n-application-letter-in-nigeria-for-a-teaching-job"
+          },
+          "pubDate": "Wed, 26 Jan 2022 17:27:59 GMT",
+          "description": "Do you want to apply for a teaching job, but you don't know how to write an application letter? Writing an application letter can be challenging especially if it is your first time. In this article, you would learn everything you need to know to write an application letter."
+        },
+        {
+          "title": "How to Write An Application Letter for a Security Job in Nigeria",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Candidates"
+          },
+          "link": "https://www.myjobmag.com/blog/how-to-write-an-application-letter-for-a-security-job-in-nigeria",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/how-to-write-an-application-letter-for-a-security-job-in-nigeria"
+          },
+          "pubDate": "Mon, 24 Jan 2022 15:35:46 GMT",
+          "description": "Are you about to apply for the post ofÃÂÃÂ Security officerÃÂÃÂ and you don't know how to writeÃÂÃÂ an application letter? Writing a good application letter is the first steps to landing a job.\n\nIn this article, you would learn all you need to know about writing an application letter for a security job."
+        },
+        {
+          "title": "Top 20 Promotional Job Interview Questions and Answers",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Candidates"
+          },
+          "link": "https://www.myjobmag.com/blog/top-20-promotional-job-interview-questions-and-answers",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/top-20-promotional-job-interview-questions-and-answers"
+          },
+          "pubDate": "Wed, 12 Jan 2022 13:07:26 GMT",
+          "description": "Are you looking to move up the career ladder in your current place of employment? Passing the promotional job interview is not as simple as people think, you have to prepare well if you want to pass. If you are confused about how to prepare for your professional interview, then this article is for you.\n\nSee answers to common promotional interview questions and answers."
+        },
+        {
+          "title": "Why You Should Attend MyJobMagÃ¢ÂÂs FREE CV Clinic",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Candidates"
+          },
+          "link": "https://www.myjobmag.com/blog/why-you-should-attend-myjobmag-s-free-cv-clinic",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/why-you-should-attend-myjobmag-s-free-cv-clinic"
+          },
+          "pubDate": "Thu, 16 Dec 2021 12:14:11 GMT",
+          "description": "If you have been applying for different jobs for a while without getting an interview invite, then it is obvious that your CV is not good enough. Join MyJopbMag FREE online CV clinic to create a CV that you would be proud of"
+        },
+        {
+          "title": "Get Answers to Interview Questions You Have Been Meaning to Ask: Join MyJobMag FREE Online Training",
+          "category": {
+            "@domain": "https://www.myjobmag.com",
+            "#text": "Candidates"
+          },
+          "link": "https://www.myjobmag.com/blog/get-answers-to-interview-questions-you-have-been-meaning-to-ask-join-myjobmag-free-online-training",
+          "guid": {
+            "@isPermaLink": "false",
+            "#text": "https://www.myjobmag.com/blog/get-answers-to-interview-questions-you-have-been-meaning-to-ask-join-myjobmag-free-online-training"
+          },
+          "pubDate": "Thu, 4 Nov 2021 13:13:16 GMT",
+          "description": "Get all the answers to job interview questions that you have been wanting to ask a recruiter. We know that there are questions that you would love to ask a recruiter, but you can't get through to them. Join MyJobMag online training and get answers to all the questions you want to ask."
+        }
+      ]
+    }
+  }
+}
