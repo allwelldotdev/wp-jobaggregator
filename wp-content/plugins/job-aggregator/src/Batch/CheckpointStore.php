@@ -6,11 +6,13 @@ use wpdb;
 
 class CheckpointStore {
 	private $wpdb;
+	private $runs_table;
 	private $run_sources_table;
 
 	public function __construct( wpdb $database = null ) {
 		global $wpdb;
 		$this->wpdb              = $database ?: $wpdb;
+		$this->runs_table        = $this->wpdb->prefix . 'job_aggregator_runs';
 		$this->run_sources_table = $this->wpdb->prefix . 'job_aggregator_run_sources';
 	}
 
@@ -193,5 +195,88 @@ class CheckpointStore {
 		$checkpoint = json_decode( $source_state['checkpoint_payload'], true );
 
 		return is_array( $checkpoint ) ? $checkpoint : array();
+	}
+
+	public function list_run_sources( $run_id ) {
+		$sql = $this->wpdb->prepare(
+			"SELECT * FROM {$this->run_sources_table}
+			WHERE run_id = %d
+			ORDER BY id ASC",
+			(int) $run_id
+		);
+
+		return $this->wpdb->get_results( $sql, ARRAY_A );
+	}
+
+	public function list_latest_source_statuses( $limit = 100 ) {
+		$limit = max( 1, min( 500, (int) $limit ) );
+		$sql   = $this->wpdb->prepare(
+			"SELECT rs.*, r.status AS run_status, r.triggered_by, r.started_at
+			FROM {$this->run_sources_table} rs
+			INNER JOIN (
+				SELECT source_key, MAX(run_id) AS latest_run_id
+				FROM {$this->run_sources_table}
+				GROUP BY source_key
+			) latest ON latest.source_key = rs.source_key AND latest.latest_run_id = rs.run_id
+			LEFT JOIN {$this->runs_table} r ON r.id = rs.run_id
+			ORDER BY rs.source_label ASC, rs.source_key ASC
+			LIMIT %d",
+			$limit
+		);
+
+		return $this->wpdb->get_results( $sql, ARRAY_A );
+	}
+
+	public function list_recent_failures( $limit = 30 ) {
+		$limit = max( 1, min( 500, (int) $limit ) );
+		$sql   = $this->wpdb->prepare(
+			"SELECT rs.*, r.status AS run_status, r.triggered_by, r.started_at
+			FROM {$this->run_sources_table} rs
+			LEFT JOIN {$this->runs_table} r ON r.id = rs.run_id
+			WHERE rs.last_error_at IS NOT NULL
+			ORDER BY rs.last_error_at DESC, rs.id DESC
+			LIMIT %d",
+			$limit
+		);
+
+		return $this->wpdb->get_results( $sql, ARRAY_A );
+	}
+
+	public function queue_snapshot_for_run( $run_id ) {
+		$run_id = (int) $run_id;
+		if ( $run_id < 1 ) {
+			return array(
+				'open_count'      => 0,
+				'due_count'       => 0,
+				'waiting_count'   => 0,
+				'next_retry_at'   => '',
+				'next_retry_unix' => 0,
+			);
+		}
+
+		$now_sql = current_time( 'mysql' );
+		$query   = $this->wpdb->prepare(
+			"SELECT
+				SUM(CASE WHEN has_more = 1 AND status IN ('pending','running','waiting_retry') THEN 1 ELSE 0 END) AS open_count,
+				SUM(CASE WHEN has_more = 1 AND status IN ('pending','running','waiting_retry') AND (next_retry_at IS NULL OR next_retry_at <= %s) THEN 1 ELSE 0 END) AS due_count,
+				SUM(CASE WHEN has_more = 1 AND status = 'waiting_retry' THEN 1 ELSE 0 END) AS waiting_count,
+				MIN(CASE WHEN has_more = 1 AND status = 'waiting_retry' THEN next_retry_at ELSE NULL END) AS next_retry_at
+			FROM {$this->run_sources_table}
+			WHERE run_id = %d",
+			$now_sql,
+			$run_id
+		);
+		$row     = $this->wpdb->get_row( $query, ARRAY_A );
+
+		$next_retry_at   = isset( $row['next_retry_at'] ) ? (string) $row['next_retry_at'] : '';
+		$next_retry_unix = ! empty( $next_retry_at ) ? strtotime( $next_retry_at ) : 0;
+
+		return array(
+			'open_count'      => isset( $row['open_count'] ) ? (int) $row['open_count'] : 0,
+			'due_count'       => isset( $row['due_count'] ) ? (int) $row['due_count'] : 0,
+			'waiting_count'   => isset( $row['waiting_count'] ) ? (int) $row['waiting_count'] : 0,
+			'next_retry_at'   => $next_retry_at,
+			'next_retry_unix' => $next_retry_unix > 0 ? (int) $next_retry_unix : 0,
+		);
 	}
 }

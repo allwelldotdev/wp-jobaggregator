@@ -59,8 +59,18 @@ wp-content/plugins/job-aggregator/
   config/
     sources.php                    # Feed URLs and non-secret source config
   src/
-    Plugin.php                     # Hooks and cron entrypoint
+    Plugin.php                     # Hooks, cron entrypoint, and manual-run orchestration
     SourceRegistry.php             # Instantiates enabled sources
+    Admin/
+      AdminPages.php               # Admin menus, settings UI, run summaries, monitoring
+    Batch/
+      BatchProcessor.php
+      BatchRunManager.php
+      CheckpointStore.php
+      RunLock.php
+      SourceBatchResult.php
+    Cron/
+      Scheduler.php
     Jobs/
       DuplicateChecker.php
       JobData.php
@@ -74,4 +84,5 @@ wp-content/plugins/job-aggregator/
       Autoloader.php
       HttpClient.php
       Logger.php
+      Settings.php
 ```

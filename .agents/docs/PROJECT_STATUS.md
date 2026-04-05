@@ -21,12 +21,16 @@
 - Custom run-state tables are now part of the plugin runtime:
   - `{prefix}job_aggregator_runs`
   - `{prefix}job_aggregator_run_sources`
-- Source progress/checkpoints, retries, and per-run counters are now persisted in custom tables for future admin UI/reporting.
+- Source progress/checkpoints, retries, and per-run counters are now persisted in custom tables and surfaced in admin screens.
+- WordPress admin UI now exists for:
+  - Manual import trigger.
+  - Run history and per-run source summaries.
+  - Monitoring source status, failures, and queued follow-up batches.
+  - Recurring schedule and queue pacing settings.
 - A standalone `localwp-wrapper` repo at `/home/allwell/Code/wp/localwp-wrapper` with the `localwp` executable symlinked into `~/Code/wp/bin/` and `~/.local/bin/`.
 
 ## What Does Not Exist Yet
 - No live source credentials or production feed URLs are configured.
-- No admin settings UI or manual import trigger exists yet.
 - No dedicated test runner or PHPUnit bootstrap exists yet.
 - No source-specific field mapping beyond generic RSS and a first-pass Jooble parser exists yet.
 - Direct Local `mysql` CLI access still needs OS compatibility libraries if you want to use that binary instead of `wp db ...`.
@@ -38,8 +42,6 @@
 
 ## Immediate Next Build Targets
 1. Configure the first real RSS feed and API key.
-2. Add a manual admin trigger and run summary screen on top of the persisted run/source tables.
-3. Add monitoring views for source status, failures, and queued follow-up batches.
-4. Add per-source mapping overrides for feeds whose fields do not fit the generic RSS parser.
-5. Add PHPUnit scaffolding and fixture-backed parser tests.
-6. Add expiry and archival policy decisions for stale listings.
+2. Add per-source mapping overrides for feeds whose fields do not fit the generic RSS parser.
+3. Add PHPUnit scaffolding and fixture-backed parser tests.
+4. Add expiry and archival policy decisions for stale listings.

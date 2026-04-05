@@ -211,7 +211,7 @@ class BatchProcessor {
 	private function queue_follow_up_or_finish( $run_id ) {
 		if ( $this->checkpoint_store->has_due_work( $run_id ) ) {
 			$this->run_manager->set_has_follow_up( $run_id, true );
-			$this->scheduler->schedule_process_event( $run_id, time() + 5 );
+			$this->scheduler->schedule_process_event( $run_id );
 
 			return;
 		}
@@ -220,7 +220,7 @@ class BatchProcessor {
 			$retry_timestamp = $this->checkpoint_store->earliest_retry_timestamp( $run_id );
 			if ( $retry_timestamp > 0 ) {
 				$this->run_manager->set_has_follow_up( $run_id, true );
-				$this->scheduler->schedule_process_event( $run_id, max( time() + 5, $retry_timestamp ) );
+				$this->scheduler->schedule_process_event( $run_id, max( time() + 1, $retry_timestamp ) );
 			}
 
 			return;

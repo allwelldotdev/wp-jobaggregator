@@ -202,6 +202,39 @@ class BatchRunManager {
 		return $this->wpdb->get_row( $sql, ARRAY_A );
 	}
 
+	public function list_recent_runs( $limit = 20, $offset = 0 ) {
+		$limit  = max( 1, min( 200, (int) $limit ) );
+		$offset = max( 0, (int) $offset );
+		$sql    = $this->wpdb->prepare(
+			"SELECT * FROM {$this->runs_table} ORDER BY id DESC LIMIT %d OFFSET %d",
+			$limit,
+			$offset
+		);
+
+		return $this->wpdb->get_results( $sql, ARRAY_A );
+	}
+
+	public function count_runs() {
+		$sql = "SELECT COUNT(1) FROM {$this->runs_table}";
+
+		return (int) $this->wpdb->get_var( $sql );
+	}
+
+	public function list_follow_up_runs( $limit = 20 ) {
+		$limit = max( 1, min( 200, (int) $limit ) );
+		$sql   = $this->wpdb->prepare(
+			"SELECT * FROM {$this->runs_table}
+			WHERE status = %s
+			  AND has_follow_up = 1
+			ORDER BY last_activity_at DESC, id DESC
+			LIMIT %d",
+			'running',
+			$limit
+		);
+
+		return $this->wpdb->get_results( $sql, ARRAY_A );
+	}
+
 	public function update_activity( $run_id ) {
 		$now = current_time( 'mysql' );
 
