@@ -3,9 +3,13 @@
 namespace JobAggregator\Sources;
 
 interface SourceInterface {
-    public function fetch_jobs();
+	public function initial_checkpoint();
 
-    public function get_key();
+	public function fetch_batch( array $checkpoint );
 
-    public function get_label();
+	public function supports_pagination();
+
+	public function get_key();
+
+	public function get_label();
 }

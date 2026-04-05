@@ -52,13 +52,14 @@ wp-content/
 - `wp-job-manager`: remains the canonical storage/display layer for job posts unless proven insufficient.
 
 ## Data Flow
-1. WP-Cron or a manual admin action triggers aggregation.
-2. Source registry loads enabled RSS/API sources from plugin config.
-3. Each source fetches remote data and maps it into a normalized job DTO.
-4. Duplicate checker decides whether the item is new, updated, or already present.
-5. Post writer creates or updates the `job_listing` post and related meta/taxonomy fields.
-6. Logger stores fetch counts, created/updated/skipped totals, and error details.
-7. A separate expiry routine archives or unpublishes stale listings.
+1. Recurring cron hook (`job_aggregator_start_batch`) starts or resumes an import run.
+2. Run manager writes a run row and source state rows into custom tables.
+3. Single-event cron hook (`job_aggregator_process_batch`) processes one source chunk at a time.
+4. Source adapters return a batch result (`jobs`, `has_more`, next checkpoint).
+5. Duplicate checker and post writer create/update `job_listing` posts for that chunk only.
+6. Checkpoint store persists source progress, retries, and failure details after each chunk.
+7. Processor schedules the next single-event chunk when work remains.
+8. Run manager marks the run `completed` or `partial` when all source work is exhausted.
 
 ## Key Implementation Decisions
 - Use a source interface so new RSS/API providers can be added without changing the aggregation loop.
@@ -66,6 +67,9 @@ wp-content/
 - Hash stable source fields such as source URL, title, and company for deduplication.
 - Keep secrets out of committed files; read API keys from `wp-config.php` constants or equivalent environment-specific config.
 - Prefer a real server cron hitting `wp-cron.php` in production if reliable scheduling is required.
+- Persist operational run/source state in custom tables (`{prefix}job_aggregator_runs`, `{prefix}job_aggregator_run_sources`) for reliable checkpointing and admin visibility.
+- Separate recurring-start scheduling from per-chunk continuation scheduling to keep each request short and reduce timeout pressure.
+- Use per-run lock state to avoid overlapping workers processing the same run concurrently.
 
 ## Testing Strategy
 - Unit tests for source parsers, normalization, and duplicate hashing.

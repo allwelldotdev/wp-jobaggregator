@@ -17,6 +17,11 @@
 - Divi parent theme plus a custom child theme.
 - Runtime/generated directories such as `wp-content/uploads/`, `wp-content/et-cache/`, and `wp-content/wpaas-updates-log/`.
 - A plugin scaffold with cron registration, source registry, RSS and Jooble source classes, duplicate checking, and `job_listing` persistence.
+- Import orchestration now runs in resumable batches using a start hook and a process hook instead of processing all sources in one request.
+- Custom run-state tables are now part of the plugin runtime:
+  - `{prefix}job_aggregator_runs`
+  - `{prefix}job_aggregator_run_sources`
+- Source progress/checkpoints, retries, and per-run counters are now persisted in custom tables for future admin UI/reporting.
 - A standalone `localwp-wrapper` repo at `/home/allwell/Code/wp/localwp-wrapper` with the `localwp` executable symlinked into `~/Code/wp/bin/` and `~/.local/bin/`.
 
 ## What Does Not Exist Yet
@@ -33,7 +38,8 @@
 
 ## Immediate Next Build Targets
 1. Configure the first real RSS feed and API key.
-2. Add a manual admin trigger and run summary screen.
-3. Add per-source mapping overrides for feeds whose fields do not fit the generic RSS parser.
-4. Add PHPUnit scaffolding and fixture-backed parser tests.
-5. Add expiry and archival policy decisions for stale listings.
+2. Add a manual admin trigger and run summary screen on top of the persisted run/source tables.
+3. Add monitoring views for source status, failures, and queued follow-up batches.
+4. Add per-source mapping overrides for feeds whose fields do not fit the generic RSS parser.
+5. Add PHPUnit scaffolding and fixture-backed parser tests.
+6. Add expiry and archival policy decisions for stale listings.

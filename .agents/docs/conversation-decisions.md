@@ -16,6 +16,9 @@
 - Add logging for runs, source failures, and import counts.
 - Add job expiry handling so stale listings do not accumulate indefinitely.
 - Cover source parsing and persistence with automated tests.
+- Use resumable chunked imports so one request processes only one source page/chunk at a time.
+- Persist checkpoints, source status, retries, and run counters in custom plugin tables.
+- Queue follow-up single cron events while work remains instead of keeping one long-running request open.
 
 ## Repo-Specific Interpretation
 - Because `wp-job-manager` is already installed, the practical target is the existing `job_listing` content model.
