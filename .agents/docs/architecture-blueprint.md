@@ -35,8 +35,15 @@ wp-content/
           PostWriter.php
           Expirer.php
         Admin/
-          SettingsPage.php
-          RunLogPage.php
+          AdminPages.php
+          ManualRunController.php
+          SettingsRegistrar.php
+          Pages/
+            DashboardPage.php
+            RunsPage.php
+            MonitoringPage.php
+          Support/
+            AdminView.php
         Support/
           Logger.php
           HttpClient.php

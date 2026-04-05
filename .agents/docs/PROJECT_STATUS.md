@@ -27,6 +27,7 @@
   - Run history and per-run source summaries.
   - Monitoring source status, failures, and queued follow-up batches.
   - Recurring schedule and queue pacing settings.
+- Admin module is now split into focused classes under `src/Admin/` (`Pages/`, `Support/`, settings registrar, and manual run controller) with `AdminPages.php` acting as a thin coordinator.
 - A standalone `localwp-wrapper` repo at `/home/allwell/Code/wp/localwp-wrapper` with the `localwp` executable symlinked into `~/Code/wp/bin/` and `~/.local/bin/`.
 
 ## What Does Not Exist Yet

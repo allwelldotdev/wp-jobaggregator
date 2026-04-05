@@ -62,7 +62,15 @@ wp-content/plugins/job-aggregator/
     Plugin.php                     # Hooks, cron entrypoint, and manual-run orchestration
     SourceRegistry.php             # Instantiates enabled sources
     Admin/
-      AdminPages.php               # Admin menus, settings UI, run summaries, monitoring
+      AdminPages.php               # Slim coordinator for admin hooks + menu wiring
+      ManualRunController.php      # Manual run action handling + admin notices
+      SettingsRegistrar.php        # Settings API registration + settings page rendering
+      Pages/
+        DashboardPage.php
+        RunsPage.php
+        MonitoringPage.php
+      Support/
+        AdminView.php              # Shared table/render helpers used by admin pages
     Batch/
       BatchProcessor.php
       BatchRunManager.php
