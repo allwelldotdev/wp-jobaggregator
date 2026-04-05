@@ -12,8 +12,8 @@
   },
   "scripts": {
     "test": "phpunit",
-    "lint": "phpcs --standard=WordPress src job-aggregator.php",
-    "format": "phpcbf --standard=WordPress src job-aggregator.php"
+    "lint": "phpcs --standard=phpcs.xml.dist",
+    "format": "phpcbf --standard=phpcs.xml.dist"
   },
   "config": {
     "allow-plugins": {
