@@ -30,6 +30,8 @@ wp-content/
             AbstractRssSource.php
             RssFeedSource.php
             MyJobMagRssSource.php
+            RemoteOkRssSource.php
+            WeWorkRemotelyRssSource.php
           API/
             AbstractApiSource.php
             JoobleApiSource.php

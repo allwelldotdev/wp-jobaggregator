@@ -2,7 +2,7 @@
 
 ## Current State
 - Local WordPress site is present at repository root.
-- Git has been initialized, but there are no commits yet.
+- Git has been initialized with active custom-plugin development commits.
 - Original product intent has been captured in `.agents/docs/conversation.yaml`.
 - The site already includes `wp-job-manager`.
 - The active customization layer appears to be `wp-content/themes/divi-child-theme/`.
@@ -17,7 +17,7 @@
 - Divi parent theme plus a custom child theme.
 - Runtime/generated directories such as `wp-content/uploads/`, `wp-content/et-cache/`, and `wp-content/wpaas-updates-log/`.
 - A plugin scaffold with cron registration, source registry, RSS and Jooble source classes, duplicate checking, and `job_listing` persistence.
-- Source architecture now supports format-level + source-level classes under `src/Sources/RSS` and `src/Sources/API`, including MyJobMag-specific RSS normalization.
+- Source architecture now supports format-level + source-level classes under `src/Sources/RSS` and `src/Sources/API`, including source-specific RSS normalization for MyJobMag, RemoteOK, and We Work Remotely.
 - Import orchestration now runs in resumable batches using a start hook and a process hook instead of processing all sources in one request.
 - Custom run-state tables are now part of the plugin runtime:
   - `{prefix}job_aggregator_runs`
@@ -37,7 +37,7 @@
 ## What Does Not Exist Yet
 - No live source credentials or production feed URLs are configured.
 - Integration test harness for full WordPress persistence behavior is still not in place, though parser/normalization unit tests now exist.
-- Broad source-specific mapping coverage beyond MyJobMag RSS and Jooble API is still pending.
+- Broad source-specific mapping coverage beyond MyJobMag RSS, RemoteOK RSS, We Work Remotely RSS, and Jooble API is still pending.
 - Direct Local `mysql` CLI access still needs OS compatibility libraries if you want to use that binary instead of `wp db ...`.
 
 ## Current Decision

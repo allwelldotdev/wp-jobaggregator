@@ -5,7 +5,9 @@ namespace JobAggregator;
 use JobAggregator\Jobs\NormalizationSignalStore;
 use JobAggregator\Sources\API\JoobleApiSource;
 use JobAggregator\Sources\RSS\MyJobMagRssSource;
+use JobAggregator\Sources\RSS\RemoteOkRssSource;
 use JobAggregator\Sources\RSS\RssFeedSource;
+use JobAggregator\Sources\RSS\WeWorkRemotelyRssSource;
 use JobAggregator\Support\HttpClient;
 use JobAggregator\Support\Logger;
 
@@ -116,6 +118,21 @@ class SourceRegistry {
 
 		if ( 'myjobmag' === $key || 'myjobmag' === $driver ) {
 			return new MyJobMagRssSource(
+				$source_config,
+				$this->logger,
+				$this->normalization_signals,
+			);
+		}
+
+		if ( 'remoteok' === $key || 'remoteok' === $driver ) {
+			return new RemoteOkRssSource(
+				$source_config,
+				$this->logger,
+			);
+		}
+
+		if ( 'weworkremotely' === $key || 'weworkremotely' === $driver ) {
+			return new WeWorkRemotelyRssSource(
 				$source_config,
 				$this->logger,
 				$this->normalization_signals,
