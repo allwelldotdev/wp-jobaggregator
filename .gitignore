@@ -54,6 +54,8 @@ wp-cli.local.yml
 /wp-content/plugins/*
 !/wp-content/plugins/job-aggregator/
 !/wp-content/plugins/job-aggregator/**
+/wp-content/plugins/job-aggregator/.phpunit.result.cache
+/wp-content/plugins/job-aggregator/.phpunit.cache/
 
 # Themes: keep only the active child theme code
 /wp-content/themes/*
