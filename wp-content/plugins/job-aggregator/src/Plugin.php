@@ -9,42 +9,54 @@ use JobAggregator\Batch\CheckpointStore;
 use JobAggregator\Batch\RunLock;
 use JobAggregator\Cron\Scheduler;
 use JobAggregator\Jobs\DuplicateChecker;
+use JobAggregator\Jobs\NormalizationSignalStore;
 use JobAggregator\Jobs\PostWriter;
 use JobAggregator\Support\HttpClient;
 use JobAggregator\Support\Logger;
 
+/**
+ * Boots the plugin and wires ingestion, scheduling, persistence, and admin modules together.
+ */
 class Plugin {
-	private $logger;
-	private $scheduler;
-	private $run_manager;
-	private $checkpoint_store;
-	private $batch_processor;
-	private $source_registry;
-	private $admin_pages;
+	private Logger $logger;
+	private Scheduler $scheduler;
+	private BatchRunManager $run_manager;
+	private CheckpointStore $checkpoint_store;
+	private BatchProcessor $batch_processor;
+	private SourceRegistry $source_registry;
+	private AdminPages $admin_pages;
+	private NormalizationSignalStore $normalization_signals;
 
 	public function __construct() {
-		$this->logger           = new Logger();
-		$http                   = new HttpClient();
-		$this->scheduler        = new Scheduler();
-		$this->run_manager      = new BatchRunManager();
-		$this->checkpoint_store = new CheckpointStore();
-		$this->source_registry  = new SourceRegistry( JOB_AGGREGATOR_PATH . 'config/sources.php', $this->logger, $http );
+		$this->logger                = new Logger();
+		$http                        = new HttpClient();
+		$this->scheduler             = new Scheduler();
+		$this->run_manager           = new BatchRunManager();
+		$this->checkpoint_store      = new CheckpointStore();
+		$this->normalization_signals = new NormalizationSignalStore();
+		$this->source_registry       = new SourceRegistry(
+			config_path: JOB_AGGREGATOR_PATH . 'config/sources.php',
+			logger: $this->logger,
+			http: $http,
+			normalization_signals: $this->normalization_signals
+		);
 
 		$this->batch_processor = new BatchProcessor(
-			$this->run_manager,
-			$this->checkpoint_store,
-			$this->source_registry,
-			new PostWriter( new DuplicateChecker(), $this->logger ),
-			$this->scheduler,
-			$this->logger,
-			new RunLock()
+			run_manager: $this->run_manager,
+			checkpoint_store: $this->checkpoint_store,
+			registry: $this->source_registry,
+			post_writer: new PostWriter( new DuplicateChecker(), $this->logger ),
+			scheduler: $this->scheduler,
+			logger: $this->logger,
+			run_lock: new RunLock()
 		);
 		$this->admin_pages     = new AdminPages(
-			$this,
-			$this->run_manager,
-			$this->checkpoint_store,
-			$this->source_registry,
-			$this->scheduler
+			plugin: $this,
+			run_manager: $this->run_manager,
+			checkpoint_store: $this->checkpoint_store,
+			normalization_signals: $this->normalization_signals,
+			source_registry: $this->source_registry,
+			scheduler: $this->scheduler
 		);
 	}
 

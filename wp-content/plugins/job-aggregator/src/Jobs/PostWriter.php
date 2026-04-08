@@ -5,6 +5,9 @@ namespace JobAggregator\Jobs;
 use JobAggregator\Support\Logger;
 use RuntimeException;
 
+/**
+ * Creates or updates WP Job Manager listings and writes related taxonomy/meta fields.
+ */
 class PostWriter {
 	private $duplicate_checker;
 	private $logger;
@@ -71,7 +74,14 @@ class PostWriter {
 		);
 
 		if ( taxonomy_exists( 'job_listing_type' ) && ! empty( $job->employment_types ) ) {
-			wp_set_object_terms( $post_id, $this->ensure_terms( 'job_listing_type', $job->employment_types ), 'job_listing_type', false );
+			wp_set_object_terms( $post_id, $this->ensure_named_terms( 'job_listing_type', $job->employment_types ), 'job_listing_type', false );
+		}
+
+		if ( taxonomy_exists( 'job_listing_category' ) && ! empty( $job->job_categories ) ) {
+			$category_ids = $this->ensure_category_terms( (array) $job->job_categories );
+			if ( ! empty( $category_ids ) ) {
+				wp_set_object_terms( $post_id, $category_ids, 'job_listing_category', false );
+			}
 		}
 
 		$this->logger->info(
@@ -112,7 +122,7 @@ class PostWriter {
 		return $job->source_url;
 	}
 
-	private function ensure_terms( $taxonomy, array $terms ) {
+	private function ensure_named_terms( $taxonomy, array $terms ) {
 		$term_ids = array();
 
 		foreach ( $terms as $term_name ) {
@@ -137,5 +147,51 @@ class PostWriter {
 		}
 
 		return $term_ids;
+	}
+
+	private function ensure_category_terms( array $category_slugs ) {
+		$term_ids = array();
+
+		foreach ( $category_slugs as $category_slug ) {
+			$category_slug = sanitize_title( (string) $category_slug );
+			if ( '' === $category_slug ) {
+				continue;
+			}
+
+			$term = get_term_by( 'slug', $category_slug, 'job_listing_category' );
+
+			if ( ! $term ) {
+				$term_name = 'other-automated' === $category_slug
+					? 'Other (automated)'
+					: ucwords( str_replace( '-', ' ', $category_slug ) );
+
+				$created = wp_insert_term(
+					$term_name,
+					'job_listing_category',
+					array(
+						'slug' => $category_slug,
+					)
+				);
+
+				if ( is_wp_error( $created ) ) {
+					if ( 'term_exists' === $created->get_error_code() ) {
+						$existing_id = (int) $created->get_error_data();
+						if ( $existing_id > 0 ) {
+							$term_ids[] = $existing_id;
+						}
+					}
+
+					continue;
+				}
+
+				$term_ids[] = (int) $created['term_id'];
+
+				continue;
+			}
+
+			$term_ids[] = (int) $term->term_id;
+		}
+
+		return array_values( array_unique( $term_ids ) );
 	}
 }

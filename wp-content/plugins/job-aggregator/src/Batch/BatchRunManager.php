@@ -4,16 +4,21 @@ namespace JobAggregator\Batch;
 
 use wpdb;
 
+/**
+ * Manages batch run records, aggregate counters, and plugin table schema installation.
+ */
 class BatchRunManager {
 	private $wpdb;
 	private $runs_table;
 	private $run_sources_table;
+	private $normalization_signals_table;
 
 	public function __construct( wpdb $database = null ) {
 		global $wpdb;
-		$this->wpdb              = $database ?: $wpdb;
-		$this->runs_table        = $this->wpdb->prefix . 'job_aggregator_runs';
-		$this->run_sources_table = $this->wpdb->prefix . 'job_aggregator_run_sources';
+		$this->wpdb                        = $database ?: $wpdb;
+		$this->runs_table                  = $this->wpdb->prefix . 'job_aggregator_runs';
+		$this->run_sources_table           = $this->wpdb->prefix . 'job_aggregator_run_sources';
+		$this->normalization_signals_table = $this->wpdb->prefix . 'job_aggregator_normalization_signals';
 	}
 
 	public function install_schema() {
@@ -72,8 +77,28 @@ class BatchRunManager {
             KEY status_retry (status,next_retry_at)
         ) {$charset_collate};";
 
+		$normalization_signals_sql = "CREATE TABLE {$this->normalization_signals_table} (
+            id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+            source_key varchar(191) NOT NULL,
+            signal_type varchar(100) NOT NULL,
+            raw_value varchar(191) NOT NULL,
+            normalized_value varchar(191) NOT NULL DEFAULT '',
+            seen_count int(11) unsigned NOT NULL DEFAULT 1,
+            first_seen_at datetime NOT NULL,
+            last_seen_at datetime NOT NULL,
+            example_external_id varchar(191) NOT NULL DEFAULT '',
+            example_title varchar(191) NOT NULL DEFAULT '',
+            created_at datetime NOT NULL,
+            updated_at datetime NOT NULL,
+            PRIMARY KEY  (id),
+            UNIQUE KEY signal_unique (source_key,signal_type,raw_value),
+            KEY signal_type (signal_type),
+            KEY last_seen_at (last_seen_at)
+        ) {$charset_collate};";
+
 		dbDelta( $runs_sql );
 		dbDelta( $run_sources_sql );
+		dbDelta( $normalization_signals_sql );
 	}
 
 	public function start_run( array $sources, $triggered_by = 'cron' ) {

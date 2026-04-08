@@ -26,13 +26,19 @@ wp-content/
         Sources/
           SourceInterface.php
           AbstractSource.php
-          RssFeedSource.php
-          JoobleApiSource.php
+          RSS/
+            AbstractRssSource.php
+            RssFeedSource.php
+            MyJobMagRssSource.php
+          API/
+            AbstractApiSource.php
+            JoobleApiSource.php
         Jobs/
           JobDTO.php
           Normalizer.php
           DuplicateChecker.php
           PostWriter.php
+          NormalizationSignalStore.php
           Expirer.php
         Admin/
           AdminPages.php
@@ -75,6 +81,7 @@ wp-content/
 - Keep secrets out of committed files; read API keys from `wp-config.php` constants or equivalent environment-specific config.
 - Prefer a real server cron hitting `wp-cron.php` in production if reliable scheduling is required.
 - Persist operational run/source state in custom tables (`{prefix}job_aggregator_runs`, `{prefix}job_aggregator_run_sources`) for reliable checkpointing and admin visibility.
+- Persist normalization/mapping drift signals in `{prefix}job_aggregator_normalization_signals` for source-specific mapping iteration.
 - Separate recurring-start scheduling from per-chunk continuation scheduling to keep each request short and reduce timeout pressure.
 - Use per-run lock state to avoid overlapping workers processing the same run concurrently.
 

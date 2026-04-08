@@ -4,6 +4,9 @@ namespace JobAggregator\Admin;
 
 use JobAggregator\Plugin;
 
+/**
+ * Handles secure manual-import actions and related admin notices.
+ */
 class ManualRunController {
 	private $plugin;
 	private $runs_slug;

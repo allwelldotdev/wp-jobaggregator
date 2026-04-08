@@ -2,6 +2,9 @@
 
 namespace JobAggregator\Support;
 
+/**
+ * Records plugin runtime logs into options storage and PHP error logs.
+ */
 class Logger {
 	const OPTION_KEY = 'job_aggregator_run_log';
 

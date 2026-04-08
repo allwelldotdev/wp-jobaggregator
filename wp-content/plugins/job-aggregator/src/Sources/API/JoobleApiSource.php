@@ -1,26 +1,17 @@
 <?php
 
-namespace JobAggregator\Sources;
+namespace JobAggregator\Sources\API;
 
 use JobAggregator\Batch\SourceBatchResult;
 use JobAggregator\Jobs\JobData;
-use JobAggregator\Support\HttpClient;
 use RuntimeException;
 
-class JoobleApiSource extends AbstractSource {
-	private $http;
-
-	public function __construct( array $config, HttpClient $http, $logger ) {
-		parent::__construct( $config, $logger );
-		$this->http = $http;
-	}
-
-	public function supports_pagination() {
-		return true;
-	}
-
+/**
+ * Fetches and normalizes Jooble API results into paginated JobData batches.
+ */
+class JoobleApiSource extends AbstractApiSource {
 	public function initial_checkpoint() {
-		$request = isset( $this->config['request'] ) && is_array( $this->config['request'] ) ? $this->config['request'] : array();
+		$request = $this->request_payload();
 
 		return array(
 			'page' => isset( $request['page'] ) ? max( 1, (int) $request['page'] ) : 1,
@@ -28,15 +19,10 @@ class JoobleApiSource extends AbstractSource {
 	}
 
 	public function fetch_batch( array $checkpoint ) {
-		$constant_name = $this->require_config( 'api_key_constant' );
-		$api_key       = defined( $constant_name ) ? constant( $constant_name ) : '';
+		$api_key  = $this->require_api_key();
+		$endpoint = trailingslashit( untrailingslashit( $this->require_config( 'endpoint' ) ) ) . rawurlencode( $api_key );
+		$payload  = $this->request_payload();
 
-		if ( empty( $api_key ) ) {
-			throw new RuntimeException( sprintf( 'Missing API key constant "%s".', $constant_name ) );
-		}
-
-		$endpoint        = trailingslashit( untrailingslashit( $this->require_config( 'endpoint' ) ) ) . rawurlencode( $api_key );
-		$payload         = isset( $this->config['request'] ) && is_array( $this->config['request'] ) ? $this->config['request'] : array();
 		$payload['page'] = isset( $checkpoint['page'] ) ? max( 1, (int) $checkpoint['page'] ) : 1;
 		$defaults        = $this->defaults();
 		$response        = $this->http->post_json( $endpoint, $payload );

@@ -2,6 +2,9 @@
 
 namespace JobAggregator\Batch;
 
+/**
+ * Prevents concurrent workers from processing the same run at the same time.
+ */
 class RunLock {
 	const OPTION_PREFIX = 'job_aggregator_run_lock_';
 

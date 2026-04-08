@@ -2,6 +2,9 @@
 
 namespace JobAggregator\Jobs;
 
+/**
+ * Detects existing listings by stable source hash so imports update instead of duplicating.
+ */
 class DuplicateChecker {
 	public function find_existing_id( JobData $job ) {
 		$meta_query = array();

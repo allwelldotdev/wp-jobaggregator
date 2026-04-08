@@ -5,6 +5,9 @@ namespace JobAggregator\Sources;
 use JobAggregator\Support\Logger;
 use RuntimeException;
 
+/**
+ * Defines shared config, logging, and retry behavior for all source adapters.
+ */
 abstract class AbstractSource implements SourceInterface {
 	protected $config;
 	protected $logger;

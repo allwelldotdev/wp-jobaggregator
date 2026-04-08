@@ -4,6 +4,9 @@ namespace JobAggregator\Support;
 
 use RuntimeException;
 
+/**
+ * Represents source HTTP failures with transient and retry timing metadata.
+ */
 class HttpRequestException extends RuntimeException {
 	private $status_code;
 	private $is_transient;

@@ -10,6 +10,7 @@ return [
         [
             "enabled" => false,
             "key" => "myjobmag",
+            "driver" => "myjobmag",
             "label" => "MyJobMag Nigeria",
             "url" => "https://www.myjobmag.com/aggregate_feed.xml",
             "limit" => 20,
@@ -25,8 +26,8 @@ return [
         [
             "enabled" => false,
             "driver" => "jooble",
-            "key" => "jooble-nigeria",
-            "label" => "Jooble Nigeria",
+            "key" => "jooble",
+            "label" => "Jooble",
             "api_key_constant" => "JOB_AGGREGATOR_JOOBLE_API_KEY",
             "endpoint" => "https://jooble.org/api",
             "request" => [

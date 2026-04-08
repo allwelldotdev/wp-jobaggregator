@@ -2,6 +2,9 @@
 
 namespace JobAggregator\Jobs;
 
+/**
+ * Represents the normalized job payload shared between sources and WordPress persistence.
+ */
 class JobData {
 	public $source_key        = '';
 	public $external_id       = '';
@@ -15,6 +18,7 @@ class JobData {
 	public $company_tagline   = '';
 	public $location          = '';
 	public $employment_types  = array();
+	public $job_categories    = array( 'other-automated' );
 	public $remote_position   = false;
 	public $salary            = '';
 	public $salary_currency   = '';

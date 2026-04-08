@@ -17,23 +17,27 @@
 - Divi parent theme plus a custom child theme.
 - Runtime/generated directories such as `wp-content/uploads/`, `wp-content/et-cache/`, and `wp-content/wpaas-updates-log/`.
 - A plugin scaffold with cron registration, source registry, RSS and Jooble source classes, duplicate checking, and `job_listing` persistence.
+- Source architecture now supports format-level + source-level classes under `src/Sources/RSS` and `src/Sources/API`, including MyJobMag-specific RSS normalization.
 - Import orchestration now runs in resumable batches using a start hook and a process hook instead of processing all sources in one request.
 - Custom run-state tables are now part of the plugin runtime:
   - `{prefix}job_aggregator_runs`
   - `{prefix}job_aggregator_run_sources`
+  - `{prefix}job_aggregator_normalization_signals`
 - Source progress/checkpoints, retries, and per-run counters are now persisted in custom tables and surfaced in admin screens.
+- Automated imports now default `job_listing_category` assignment to slug `other-automated`, with term auto-create on write if missing.
 - WordPress admin UI now exists for:
   - Manual import trigger.
   - Run history and per-run source summaries.
   - Monitoring source status, failures, and queued follow-up batches.
+  - Monitoring normalization-signal rows for unmatched source values.
   - Recurring schedule and queue pacing settings.
 - Admin module is now split into focused classes under `src/Admin/` (`Pages/`, `Support/`, settings registrar, and manual run controller) with `AdminPages.php` acting as a thin coordinator.
 - A standalone `localwp-wrapper` repo at `/home/allwell/Code/wp/localwp-wrapper` with the `localwp` executable symlinked into `~/Code/wp/bin/` and `~/.local/bin/`.
 
 ## What Does Not Exist Yet
 - No live source credentials or production feed URLs are configured.
-- No dedicated test runner or PHPUnit bootstrap exists yet.
-- No source-specific field mapping beyond generic RSS and a first-pass Jooble parser exists yet.
+- Integration test harness for full WordPress persistence behavior is still not in place, though parser/normalization unit tests now exist.
+- Broad source-specific mapping coverage beyond MyJobMag RSS and Jooble API is still pending.
 - Direct Local `mysql` CLI access still needs OS compatibility libraries if you want to use that binary instead of `wp db ...`.
 
 ## Current Decision
@@ -43,6 +47,6 @@
 
 ## Immediate Next Build Targets
 1. Configure the first real RSS feed and API key.
-2. Add per-source mapping overrides for feeds whose fields do not fit the generic RSS parser.
-3. Add PHPUnit scaffolding and fixture-backed parser tests.
+2. Add more source-specific mapping classes for additional feeds/APIs using the new format-level source layout.
+3. Add integration tests for `PostWriter` taxonomy assignment and normalization-signal persistence against a WordPress test runtime.
 4. Add expiry and archival policy decisions for stale listings.

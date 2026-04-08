@@ -9,6 +9,9 @@ use JobAggregator\Support\HttpRequestException;
 use JobAggregator\Support\Logger;
 use Throwable;
 
+/**
+ * Executes one resumable batch step: fetch source data, persist jobs, and schedule follow-ups.
+ */
 class BatchProcessor {
 	private $run_manager;
 	private $checkpoint_store;

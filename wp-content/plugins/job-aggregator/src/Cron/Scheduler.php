@@ -4,6 +4,9 @@ namespace JobAggregator\Cron;
 
 use JobAggregator\Support\Settings;
 
+/**
+ * Registers and schedules recurring and follow-up WP-Cron events for imports.
+ */
 class Scheduler {
 	const START_HOOK        = 'job_aggregator_start_batch';
 	const PROCESS_HOOK      = 'job_aggregator_process_batch';

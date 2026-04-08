@@ -4,6 +4,9 @@ namespace JobAggregator\Batch;
 
 use wpdb;
 
+/**
+ * Persists per-run source state, checkpoints, retries, and monitoring snapshots.
+ */
 class CheckpointStore {
 	private $wpdb;
 	private $runs_table;

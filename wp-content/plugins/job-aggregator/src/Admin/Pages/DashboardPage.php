@@ -6,6 +6,9 @@ use JobAggregator\Admin\Support\AdminView;
 use JobAggregator\Batch\BatchRunManager;
 use JobAggregator\SourceRegistry;
 
+/**
+ * Renders the dashboard with manual trigger controls and recent run snapshots.
+ */
 class DashboardPage {
 	private $run_manager;
 	private $source_registry;

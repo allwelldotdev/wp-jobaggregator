@@ -2,6 +2,9 @@
 
 namespace JobAggregator\Batch;
 
+/**
+ * Encapsulates normalized jobs and checkpoint data returned by a source batch fetch.
+ */
 class SourceBatchResult {
 	private $jobs;
 	private $has_more;

@@ -5,6 +5,9 @@ namespace JobAggregator\Admin\Support;
 use JobAggregator\Batch\CheckpointStore;
 use JobAggregator\Cron\Scheduler;
 
+/**
+ * Provides reusable admin UI rendering helpers for tables, links, and formatting.
+ */
 class AdminView {
 	private $runs_slug;
 	private $manual_action;
@@ -286,6 +289,52 @@ class AdminView {
 							<td><?php echo esc_html( (string) $snapshot['waiting_count'] ); ?></td>
 							<td><?php echo esc_html( $this->format_mysql_time( $snapshot['next_retry_at'] ) ); ?></td>
 							<td><?php echo esc_html( $next_scheduled ? wp_date( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ), (int) $next_scheduled ) : __( 'Not scheduled', 'job-aggregator' ) ); ?></td>
+						</tr>
+					<?php endforeach; ?>
+				<?php endif; ?>
+			</tbody>
+		</table>
+		<?php
+	}
+
+	public function render_normalization_signals_table( array $rows ) {
+		?>
+		<table class="widefat striped">
+			<thead>
+				<tr>
+					<th><?php esc_html_e( 'Last Seen', 'job-aggregator' ); ?></th>
+					<th><?php esc_html_e( 'Source', 'job-aggregator' ); ?></th>
+					<th><?php esc_html_e( 'Signal Type', 'job-aggregator' ); ?></th>
+					<th><?php esc_html_e( 'Raw Value', 'job-aggregator' ); ?></th>
+					<th><?php esc_html_e( 'Normalized', 'job-aggregator' ); ?></th>
+					<th><?php esc_html_e( 'Seen Count', 'job-aggregator' ); ?></th>
+					<th><?php esc_html_e( 'Example Job', 'job-aggregator' ); ?></th>
+				</tr>
+			</thead>
+			<tbody>
+				<?php if ( empty( $rows ) ) : ?>
+					<tr>
+						<td colspan="7"><?php esc_html_e( 'No normalization signals recorded yet.', 'job-aggregator' ); ?></td>
+					</tr>
+				<?php else : ?>
+					<?php foreach ( $rows as $row ) : ?>
+						<tr>
+							<td><?php echo esc_html( $this->format_mysql_time( isset( $row['last_seen_at'] ) ? $row['last_seen_at'] : '' ) ); ?></td>
+							<td>
+								<code><?php echo esc_html( isset( $row['source_key'] ) ? (string) $row['source_key'] : '' ); ?></code>
+							</td>
+							<td><code><?php echo esc_html( isset( $row['signal_type'] ) ? (string) $row['signal_type'] : '' ); ?></code></td>
+							<td><?php echo esc_html( isset( $row['raw_value'] ) ? (string) $row['raw_value'] : '' ); ?></td>
+							<td><?php echo esc_html( isset( $row['normalized_value'] ) ? (string) $row['normalized_value'] : '' ); ?></td>
+							<td><?php echo esc_html( (string) (int) ( isset( $row['seen_count'] ) ? $row['seen_count'] : 0 ) ); ?></td>
+							<td>
+								<?php if ( ! empty( $row['example_title'] ) ) : ?>
+									<?php echo esc_html( (string) $row['example_title'] ); ?><br />
+								<?php endif; ?>
+								<?php if ( ! empty( $row['example_external_id'] ) ) : ?>
+									<code><?php echo esc_html( (string) $row['example_external_id'] ); ?></code>
+								<?php endif; ?>
+							</td>
 						</tr>
 					<?php endforeach; ?>
 				<?php endif; ?>

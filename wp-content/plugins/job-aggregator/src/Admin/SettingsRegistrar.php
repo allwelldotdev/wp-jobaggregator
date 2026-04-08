@@ -6,6 +6,9 @@ use JobAggregator\Cron\Scheduler;
 use JobAggregator\SourceRegistry;
 use JobAggregator\Support\Settings;
 
+/**
+ * Registers plugin settings and renders the Settings admin screen.
+ */
 class SettingsRegistrar {
 	private $settings_slug;
 	private $scheduler;

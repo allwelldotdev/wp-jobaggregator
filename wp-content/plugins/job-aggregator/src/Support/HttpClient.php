@@ -2,6 +2,9 @@
 
 namespace JobAggregator\Support;
 
+/**
+ * Wraps outbound HTTP requests and normalizes transport errors for sources.
+ */
 class HttpClient {
 	public function get( $url, array $args = array() ) {
 		return $this->request_with_retry(

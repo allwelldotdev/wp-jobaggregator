@@ -7,6 +7,9 @@ use JobAggregator\Batch\BatchRunManager;
 use JobAggregator\Batch\CheckpointStore;
 use JobAggregator\Support\Settings;
 
+/**
+ * Renders run history and detailed per-source outcomes for a selected run.
+ */
 class RunsPage {
 	private $run_manager;
 	private $checkpoint_store;

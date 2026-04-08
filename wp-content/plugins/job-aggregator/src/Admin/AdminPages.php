@@ -9,10 +9,14 @@ use JobAggregator\Admin\Support\AdminView;
 use JobAggregator\Batch\BatchRunManager;
 use JobAggregator\Batch\CheckpointStore;
 use JobAggregator\Cron\Scheduler;
+use JobAggregator\Jobs\NormalizationSignalStore;
 use JobAggregator\Plugin;
 use JobAggregator\SourceRegistry;
 use JobAggregator\Support\Settings;
 
+/**
+ * Registers the plugin admin menu and wires page/controller classes.
+ */
 class AdminPages {
 	const MENU_SLUG       = 'job-aggregator';
 	const RUNS_SLUG       = 'job-aggregator-runs';
@@ -30,6 +34,7 @@ class AdminPages {
 		Plugin $plugin,
 		BatchRunManager $run_manager,
 		CheckpointStore $checkpoint_store,
+		NormalizationSignalStore $normalization_signals,
 		SourceRegistry $source_registry,
 		Scheduler $scheduler
 	) {
@@ -39,7 +44,7 @@ class AdminPages {
 		$this->manual_run_controller = new ManualRunController( $plugin, self::RUNS_SLUG, self::ACTION_START );
 		$this->dashboard_page        = new DashboardPage( $run_manager, $source_registry, $view, self::RUNS_SLUG );
 		$this->runs_page             = new RunsPage( $run_manager, $checkpoint_store, $view, self::RUNS_SLUG );
-		$this->monitoring_page       = new MonitoringPage( $run_manager, $checkpoint_store, $view );
+		$this->monitoring_page       = new MonitoringPage( $run_manager, $checkpoint_store, $normalization_signals, $view );
 	}
 
 	public function register() {

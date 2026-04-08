@@ -2,6 +2,9 @@
 
 namespace JobAggregator\Support;
 
+/**
+ * Resolves plugin class names to files under src/ using PSR-4-like mapping.
+ */
 class Autoloader {
 
 	public static function register() {
