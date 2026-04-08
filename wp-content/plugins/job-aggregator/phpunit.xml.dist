@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit bootstrap="tests/bootstrap.php" colors="true">
+<phpunit bootstrap="tests/bootstrap-unit.php" colors="true">
 	<testsuites>
-		<testsuite name="Job Aggregator">
+		<testsuite name="Job Aggregator Unit">
 			<directory>tests/Unit</directory>
 		</testsuite>
 	</testsuites>

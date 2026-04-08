@@ -3,7 +3,6 @@
   "description": "Custom WordPress job aggregation plugin for importing RSS and API job listings into WP Job Manager.",
   "type": "wordpress-plugin",
   "license": "proprietary",
-  "require": {},
   "require-dev": {
     "dealerdirect/phpcodesniffer-composer-installer": "^1.0",
     "phpunit/phpunit": "^10.5",
@@ -11,7 +10,14 @@
     "wp-coding-standards/wpcs": "^3.1"
   },
   "scripts": {
-    "test": "phpunit",
+    "test": "phpunit -c phpunit.xml.dist",
+    "test:unit": "phpunit -c phpunit.xml.dist",
+    "test:e2e": "phpunit -c phpunit.e2e.xml.dist",
+    "test:all": [
+      "@test:unit",
+      "@test:e2e"
+    ],
+    "test:e2e:live-rss": "wp eval-file tests/scripts/live-rss-smoke.php",
     "lint": "phpcs --standard=phpcs.xml.dist",
     "format": "phpcbf --standard=phpcs.xml.dist"
   },

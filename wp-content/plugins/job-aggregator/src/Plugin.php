@@ -34,8 +34,12 @@ class Plugin {
 		$this->run_manager           = new BatchRunManager();
 		$this->checkpoint_store      = new CheckpointStore();
 		$this->normalization_signals = new NormalizationSignalStore();
+		$config_path                 = apply_filters(
+			'job_aggregator_sources_config_path',
+			JOB_AGGREGATOR_PATH . 'config/sources.php'
+		);
 		$this->source_registry       = new SourceRegistry(
-			config_path: JOB_AGGREGATOR_PATH . 'config/sources.php',
+			config_path: (string) $config_path,
 			logger: $this->logger,
 			http: $http,
 			normalization_signals: $this->normalization_signals

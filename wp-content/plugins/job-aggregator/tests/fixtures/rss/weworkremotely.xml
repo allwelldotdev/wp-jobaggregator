@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:media="http://search.yahoo.com/mrss/">
+  <channel>
+    <title>We Work Remotely Fixture</title>
+    <item>
+      <guid>wwr-001</guid>
+      <title>Acme Corp: Backend Engineer</title>
+      <state>California</state>
+      <type>Full-Time</type>
+      <description><![CDATA[We Work Remotely fixture description.]]></description>
+      <media:content url="https://fixtures.job-aggregator.test/assets/wwr-logo.png" />
+      <link>https://fixtures.job-aggregator.test/jobs/wwr-001</link>
+      <pubDate>Tue, 31 Mar 2026 08:24:37 +0000</pubDate>
+      <expires_at>Thu, 30 Apr 2026 08:24:37 +0000</expires_at>
+    </item>
+  </channel>
+</rss>

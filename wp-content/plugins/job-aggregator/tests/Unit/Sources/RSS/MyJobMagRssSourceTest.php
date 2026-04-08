@@ -1,28 +1,11 @@
 <?php
 
-namespace JobAggregator\Tests\Unit;
+namespace JobAggregator\Tests\Unit\Sources\RSS;
 
-use JobAggregator\Jobs\NormalizationSignalStore;
 use JobAggregator\Sources\RSS\MyJobMagRssSource;
 use JobAggregator\Support\Logger;
+use JobAggregator\Tests\Support\MemoryNormalizationSignalStore;
 use PHPUnit\Framework\TestCase;
-
-class MemoryNormalizationSignalStore extends NormalizationSignalStore {
-	public $records = array();
-
-	public function __construct() {}
-
-	public function record( $source_key, $signal_type, $raw_value, $normalized_value = '', $example_external_id = '', $example_title = '' ) {
-		$this->records[] = array(
-			'source_key'          => (string) $source_key,
-			'signal_type'         => (string) $signal_type,
-			'raw_value'           => (string) $raw_value,
-			'normalized_value'    => (string) $normalized_value,
-			'example_external_id' => (string) $example_external_id,
-			'example_title'       => (string) $example_title,
-		);
-	}
-}
 
 class TestableMyJobMagRssSource extends MyJobMagRssSource {
 	public function is_allowed_location_for_test( $location ) {

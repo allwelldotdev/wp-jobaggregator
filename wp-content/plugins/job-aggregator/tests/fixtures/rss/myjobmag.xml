@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>MyJobMag Fixture</title>
+    <item>
+      <id>mjm-001</id>
+      <guid>mjm-001</guid>
+      <title>Junior Software Engineer</title>
+      <position>Junior Software Engineer</position>
+      <introduction>Build backend services.</introduction>
+      <company>MyJobMag Fixture Co</company>
+      <description><![CDATA[Role description for MyJobMag fixture item.]]></description>
+      <contract>Contract</contract>
+      <working_hours>Full Time</working_hours>
+      <location>Abia</location>
+      <salary>500000</salary>
+      <link>https://fixtures.job-aggregator.test/jobs/mjm-001</link>
+      <pubDate>Tue, 31 Mar 2026 08:24:37 +0000</pubDate>
+      <expiryDate>Thu, 30 Apr 2026 08:24:37 +0000</expiryDate>
+    </item>
+  </channel>
+</rss>
