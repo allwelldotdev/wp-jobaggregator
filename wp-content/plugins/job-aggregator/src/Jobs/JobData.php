@@ -16,6 +16,8 @@ class JobData {
 	public $company_name      = '';
 	public $company_website   = '';
 	public $company_tagline   = '';
+	public $company_logo_url  = null;
+	public $company_logo_id   = null;
 	public $location          = '';
 	public $employment_types  = array();
 	public $job_categories    = array( 'other-automated' );

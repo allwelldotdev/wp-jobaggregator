@@ -72,6 +72,7 @@ class PostWriter {
 				'_job_aggregator_imported_at' => current_time( 'mysql' ),
 			)
 		);
+		$this->persist_company_logo( $post_id, $job );
 
 		if ( taxonomy_exists( 'job_listing_type' ) && ! empty( $job->employment_types ) ) {
 			wp_set_object_terms( $post_id, $this->ensure_named_terms( 'job_listing_type', $job->employment_types ), 'job_listing_type', false );
@@ -120,6 +121,31 @@ class PostWriter {
 		}
 
 		return $job->source_url;
+	}
+
+	private function persist_company_logo( $post_id, JobData $job ) {
+		$attachment_id = is_numeric( $job->company_logo_id ) ? absint( $job->company_logo_id ) : 0;
+		if ( $attachment_id > 0 ) {
+			set_post_thumbnail( $post_id, $attachment_id );
+
+			return;
+		}
+
+		$logo_url = '';
+		if ( is_string( $job->company_logo_url ) ) {
+			$logo_url = trim( $job->company_logo_url );
+		}
+
+		if ( '' === $logo_url ) {
+			return;
+		}
+
+		$sanitized_logo_url = esc_url_raw( $logo_url );
+		if ( '' === $sanitized_logo_url ) {
+			return;
+		}
+
+		update_post_meta( $post_id, '_company_logo', $sanitized_logo_url );
 	}
 
 	private function ensure_named_terms( $taxonomy, array $terms ) {

@@ -18,3 +18,4 @@ Primary code locations:
 
 Runtime rule:
 - Prefer the `localwp` wrapper for PHP, WP-CLI, Composer, and WordPress DB commands in this codebase instead of system binaries.
+- You can use the internet or Context7 to access up-to-date external docs when needed.

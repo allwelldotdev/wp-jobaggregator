@@ -23,6 +23,8 @@ class RssFeedSource extends AbstractRssSource {
 				'company_name'     => ! empty( $defaults['company_name'] ) ? $defaults['company_name'] : ( $author ? (string) $author->get_name() : '' ),
 				'company_website'  => isset( $defaults['company_website'] ) ? (string) $defaults['company_website'] : '',
 				'company_tagline'  => isset( $defaults['company_tagline'] ) ? (string) $defaults['company_tagline'] : '',
+				'company_logo_url' => isset( $defaults['company_logo_url'] ) ? (string) $defaults['company_logo_url'] : null,
+				'company_logo_id'  => isset( $defaults['company_logo_id'] ) ? (int) $defaults['company_logo_id'] : null,
 				'location'         => isset( $defaults['location'] ) ? (string) $defaults['location'] : '',
 				'employment_types' => isset( $defaults['employment_types'] ) ? (array) $defaults['employment_types'] : array(),
 				'remote_position'  => ! empty( $defaults['remote_position'] ),

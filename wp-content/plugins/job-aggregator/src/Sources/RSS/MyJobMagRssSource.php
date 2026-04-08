@@ -103,6 +103,8 @@ class MyJobMagRssSource extends AbstractRssSource {
 			'company_name'     => '' !== $company ? (string) $company : ( isset( $defaults['company_name'] ) ? (string) $defaults['company_name'] : '' ),
 			'company_website'  => isset( $defaults['company_website'] ) ? (string) $defaults['company_website'] : '',
 			'company_tagline'  => isset( $defaults['company_tagline'] ) ? (string) $defaults['company_tagline'] : '',
+			'company_logo_url' => isset( $defaults['company_logo_url'] ) ? (string) $defaults['company_logo_url'] : null,
+			'company_logo_id'  => isset( $defaults['company_logo_id'] ) ? (int) $defaults['company_logo_id'] : null,
 			'location'         => '' !== $location ? (string) $location : ( isset( $defaults['location'] ) ? (string) $defaults['location'] : '' ),
 			'employment_types' => $employment_types,
 			'remote_position'  => $this->is_remote_position(
