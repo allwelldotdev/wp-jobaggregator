@@ -8,7 +8,7 @@ return [
     // Keep secrets in wp-config.php and only reference them here.
     "rss" => [
         [
-            "enabled" => false,
+            "enabled" => true,
             "key" => "myjobmag",
             "driver" => "myjobmag",
             "label" => "MyJobMag Nigeria",
@@ -23,7 +23,7 @@ return [
             ],
         ],
         [
-            "enabled" => false,
+            "enabled" => true,
             "key" => "remoteok",
             "driver" => "remoteok",
             "label" => "RemoteOK",
@@ -38,7 +38,7 @@ return [
             ],
         ],
         [
-            "enabled" => false,
+            "enabled" => true,
             "key" => "weworkremotely",
             "driver" => "weworkremotely",
             "label" => "We Work Remotely",
