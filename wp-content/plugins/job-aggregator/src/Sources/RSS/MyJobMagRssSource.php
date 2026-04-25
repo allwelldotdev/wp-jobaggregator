@@ -39,7 +39,15 @@ class MyJobMagRssSource extends AbstractRssSource {
 		'hybrid'     => 'Hybrid',
 	);
 
+	private static $remote_tokens = array(
+		'remote'         => true,
+		'work remotely'  => true,
+		'wfh'            => true,
+		'work from home' => true,
+	);
+
 	private $normalization_signals;
+	private $last_employment_remote_signal = false;
 
 	public function __construct( array $config, Logger $logger, NormalizationSignalStore $normalization_signals ) {
 		parent::__construct( $config, $logger );
@@ -115,7 +123,7 @@ class MyJobMagRssSource extends AbstractRssSource {
 					$contract,
 					$working,
 				)
-			) || ! empty( $defaults['remote_position'] ),
+			) || $this->last_employment_remote_signal || ! empty( $defaults['remote_position'] ),
 			'published_at'     => $published_timestamp > 0 ? gmdate( 'c', $published_timestamp ) : '',
 			'expires_at'       => $this->derive_expires_at( $expiry_date, $pub_date ),
 		);
@@ -169,26 +177,33 @@ class MyJobMagRssSource extends AbstractRssSource {
 	}
 
 	protected function map_employment_types( $working_hours, $contract, $external_id, $title ) {
-		$working_hours = $this->normalize_text( $working_hours );
-		$contract      = $this->normalize_text( $contract );
+		$working_hours                       = $this->normalize_text( $working_hours );
+		$contract                            = $this->normalize_text( $contract );
+		$this->last_employment_remote_signal = false;
 
-		$employment_types = $this->resolve_employment_types_from_raw( $working_hours );
-		if ( ! empty( $employment_types ) ) {
-			return $employment_types;
+		$working_analysis  = $this->analyze_employment_tokens( $working_hours );
+		$contract_analysis = $this->analyze_employment_tokens( $contract );
+
+		$this->last_employment_remote_signal = ! empty( $working_analysis['remote'] ) || ! empty( $contract_analysis['remote'] );
+
+		if ( ! empty( $working_analysis['employment_types'] ) ) {
+			return $working_analysis['employment_types'];
 		}
 
-		$employment_types = $this->resolve_employment_types_from_raw( $contract );
-		if ( ! empty( $employment_types ) ) {
-			return $employment_types;
+		if ( ! empty( $contract_analysis['employment_types'] ) ) {
+			return $contract_analysis['employment_types'];
 		}
 
-		$raw_for_signal = '' !== $working_hours ? $working_hours : $contract;
-		if ( '' !== $raw_for_signal ) {
+		$unknown_tokens = ! empty( $working_analysis['unknown_tokens'] )
+			? $working_analysis['unknown_tokens']
+			: $contract_analysis['unknown_tokens'];
+
+		foreach ( $unknown_tokens as $unknown_token ) {
 			$this->normalization_signals->record(
 				$this->get_key(),
 				'employment_type_unmatched',
-				$raw_for_signal,
-				$this->normalize_token( $raw_for_signal ),
+				$unknown_token,
+				$this->normalize_token( $unknown_token ),
 				$external_id,
 				$title
 			);
@@ -210,36 +225,56 @@ class MyJobMagRssSource extends AbstractRssSource {
 		return $job_payload;
 	}
 
-	private function resolve_employment_types_from_raw( $raw_value ) {
+	private function analyze_employment_tokens( $raw_value ) {
 		$raw_value = $this->normalize_text( $raw_value );
 		if ( '' === $raw_value ) {
-			return array();
+			return array(
+				'employment_types' => array(),
+				'remote'           => false,
+				'unknown_tokens'   => array(),
+			);
 		}
 
-		$parts      = false !== strpos( $raw_value, ',' ) ? explode( ',', $raw_value ) : array( $raw_value );
-		$recognized = array();
+		$parts          = false !== strpos( $raw_value, ',' ) ? explode( ',', $raw_value ) : array( $raw_value );
+		$recognized     = array();
+		$unknown_tokens = array();
+		$remote         = false;
 
 		foreach ( $parts as $part ) {
 			$token = $this->normalize_token( $part );
+			if ( '' === $token ) {
+				continue;
+			}
+
+			if ( isset( self::$remote_tokens[ $token ] ) ) {
+				$remote = true;
+				continue;
+			}
+
 			if ( isset( self::$employment_type_map[ $token ] ) ) {
 				$recognized[] = self::$employment_type_map[ $token ];
+				continue;
 			}
+
+			$unknown_tokens[] = trim( (string) $part );
 		}
 
 		$recognized = array_values( array_unique( $recognized ) );
-		if ( empty( $recognized ) ) {
-			return array();
-		}
 
 		if ( in_array( self::DEFAULT_EMPLOYMENT_TYPE, $recognized, true ) && count( $recognized ) > 1 ) {
 			foreach ( $recognized as $value ) {
 				if ( self::DEFAULT_EMPLOYMENT_TYPE !== $value ) {
-					return array( $value );
+					$recognized = array( $value );
+					break;
 				}
 			}
 		}
 
-		return $recognized;
+		return array(
+			'employment_types' => $recognized,
+			'remote'           => $remote,
+			'unknown_tokens'   => array_values( array_unique( array_filter( $unknown_tokens ) ) ),
+		);
 	}
 
 	private function normalize_token( $value ) {

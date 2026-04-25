@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>RemoteOK Fixture</title>
+    <item>
+      <guid>remoteok-001</guid>
+      <title>Backend Engineer (Updated)</title>
+      <company>RemoteOK Fixture Co Updated</company>
+      <tags>php,remote</tags>
+      <location>remote</location>
+      <description><![CDATA[RemoteOK fixture description updated for change-detection coverage.]]></description>
+      <image>
+        <url>https://fixtures.job-aggregator.test/assets/remoteok-logo.png</url>
+      </image>
+      <link>https://fixtures.job-aggregator.test/jobs/remoteok-001</link>
+      <pubDate>Tue, 31 Mar 2026 08:24:37 +0000</pubDate>
+      <expiryDate>Thu, 30 Apr 2026 08:24:37 +0000</expiryDate>
+    </item>
+  </channel>
+</rss>

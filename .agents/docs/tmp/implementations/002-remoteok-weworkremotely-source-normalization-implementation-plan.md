@@ -1,4 +1,4 @@
-### Implementation Plan: RemoteOK + WeWorkRemotely Source-Specific Fetch/Normalization
+### 002 Implementation Plan: RemoteOK + WeWorkRemotely Source-Specific Fetch/Normalization
 
 #### Summary
 - [x] Discovery complete: reviewed mandatory docs, current source architecture, MyJobMag implementation-plan pattern, and first 100 lines of both payload fixtures.

@@ -10,6 +10,7 @@
 ## Structural Decisions Derived From The Conversation
 - Use a custom plugin for ingestion logic instead of putting automation in the theme.
 - Use a declarative source registry so new RSS feeds and APIs can be added with minimal code churn.
+- Keep source catalog/default definitions in `config/sources.php`, but control effective runtime source enablement through admin-managed settings overrides.
 - Introduce a shared source contract for RSS and API connectors.
 - Normalize remote payloads into a common internal job shape before persistence.
 - Add duplicate prevention before creating `job_listing` posts.

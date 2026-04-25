@@ -10,6 +10,7 @@ use JobAggregator\Support\Settings;
 class Scheduler {
 	const START_HOOK        = 'job_aggregator_start_batch';
 	const PROCESS_HOOK      = 'job_aggregator_process_batch';
+	const EVERY_TWO_HOURS   = 'job_aggregator_every_2_hours';
 	const EVERY_EIGHT_HOURS = 'job_aggregator_every_8_hours';
 
 	public function register_callbacks( $plugin ) {
@@ -63,6 +64,11 @@ class Scheduler {
 	}
 
 	public function add_custom_schedules( $schedules ) {
+		$schedules[ self::EVERY_TWO_HOURS ] = array(
+			'interval' => 2 * HOUR_IN_SECONDS,
+			'display'  => __( 'Every 2 Hours', 'job-aggregator' ),
+		);
+
 		$schedules[ self::EVERY_EIGHT_HOURS ] = array(
 			'interval' => 8 * HOUR_IN_SECONDS,
 			'display'  => __( 'Every 8 Hours', 'job-aggregator' ),
@@ -76,7 +82,7 @@ class Scheduler {
 		$schedules  = wp_get_schedules();
 
 		if ( empty( $recurrence ) || ! isset( $schedules[ $recurrence ] ) ) {
-			return self::EVERY_EIGHT_HOURS;
+			return self::EVERY_TWO_HOURS;
 		}
 
 		return $recurrence;

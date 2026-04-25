@@ -63,7 +63,7 @@ class ManualRunController {
 			),
 			'no_sources'       => array(
 				'class' => 'notice notice-warning is-dismissible',
-				'text'  => __( 'No enabled sources are configured. Update config/sources.php and try again.', 'job-aggregator' ),
+				'text'  => __( 'No sources are enabled for runtime imports. Enable at least one source in Job Aggregator Settings and try again.', 'job-aggregator' ),
 			),
 			'dependency'       => array(
 				'class' => 'notice notice-error is-dismissible',

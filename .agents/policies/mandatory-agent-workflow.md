@@ -29,7 +29,8 @@ These rules are mandatory for any agent working in this repository.
 
 ## Configuration Rules
 - Keep secrets such as API keys in environment-specific config such as `wp-config.php`.
-- Keep non-sensitive source definitions such as RSS feed URLs, source labels, request defaults, and source-level toggles in `wp-content/plugins/job-aggregator/config/sources.php`.
+- Keep non-sensitive source definitions such as RSS feed URLs, source labels, request defaults, and source metadata in `wp-content/plugins/job-aggregator/config/sources.php`.
+- Runtime source enable/disable state must be managed through `job_aggregator_settings[source_states]` so imports use admin-managed overrides instead of direct config edits.
 - Do not commit live secrets into plugin source files, docs, or test fixtures.
 
 ## Git Scope

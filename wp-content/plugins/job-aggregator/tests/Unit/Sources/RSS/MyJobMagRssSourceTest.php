@@ -104,6 +104,17 @@ class MyJobMagRssSourceTest extends TestCase {
 			array( 'Contract' ),
 			$this->source->map_employment_types_for_test( 'Contract', 'Permanent', 'job-2', 'Contract Role' )
 		);
+		$this->assertSame(
+			array( 'Full Time' ),
+			$this->source->map_employment_types_for_test( 'Full Time, Remote', '', 'job-remote-1', 'Remote Full Time Role' )
+		);
+	}
+
+	public function test_employment_type_mapping_uses_default_for_remote_only_without_signal_noise() {
+		$employment_types = $this->source->map_employment_types_for_test( 'Remote', '', 'job-remote-2', 'Remote Role' );
+
+		$this->assertSame( array( 'Full Time' ), $employment_types );
+		$this->assertCount( 0, $this->signals->records );
 	}
 
 	public function test_employment_type_mapping_defaults_and_records_unmatched_values() {
@@ -113,6 +124,14 @@ class MyJobMagRssSourceTest extends TestCase {
 		$this->assertCount( 1, $this->signals->records );
 		$this->assertSame( 'employment_type_unmatched', $this->signals->records[0]['signal_type'] );
 		$this->assertSame( 'Permanent', $this->signals->records[0]['raw_value'] );
+	}
+
+	public function test_employment_type_mapping_records_only_unknown_tokens_after_remote_handling() {
+		$employment_types = $this->source->map_employment_types_for_test( 'Remote, Seasonal', '', 'job-4', 'Remote Seasonal Role' );
+
+		$this->assertSame( array( 'Full Time' ), $employment_types );
+		$this->assertCount( 1, $this->signals->records );
+		$this->assertSame( 'Seasonal', $this->signals->records[0]['raw_value'] );
 	}
 
 	public function test_salary_mapping_sets_currency_and_unit_only_when_salary_has_value() {

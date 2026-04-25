@@ -75,6 +75,10 @@ class AdminView {
 	}
 
 	public function render_manual_start_form( $disabled ) {
+		$button_attributes = array();
+		if ( $disabled ) {
+			$button_attributes['disabled'] = 'disabled';
+		}
 		?>
 		<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" style="margin: 0 0 16px 0;">
 			<input type="hidden" name="action" value="<?php echo esc_attr( $this->manual_action ); ?>" />
@@ -85,9 +89,7 @@ class AdminView {
 				'primary',
 				'submit',
 				false,
-				array(
-					'disabled' => $disabled ? 'disabled' : null,
-				)
+				$button_attributes
 			);
 			?>
 		</form>

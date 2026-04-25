@@ -52,6 +52,21 @@ return [
                 "remote_position" => true,
             ],
         ],
+        [
+            "enabled" => false,
+            "key" => "hotnigerianjobs",
+            "driver" => "hotnigerianjobs",
+            "label" => "Hot Nigerian Jobs",
+            "url" => "https://www.hotnigerianjobs.com/feed/rss.xml",
+            "limit" => 1000,
+            "batch_size" => 100,
+            "defaults" => [
+                "location" => "Nigeria",
+                "company_name" => "",
+                "employment_types" => ["Full Time"],
+                "remote_position" => false,
+            ],
+        ],
     ],
     "apis" => [
         [

@@ -1,4 +1,4 @@
-## Core Ingestion Test Suite Plan (Current Code State)
+## 004 Core Ingestion Test Suite Plan (Current Code State)
 
 ### Summary
 Build a PHPUnit unit-test harness (with deterministic WordPress stubs) for the plugin’s ingestion core, then add a focused suite that validates all critical ingestion touchpoints at today’s behavior: source loading/parsing, batch orchestration decisions, job upsert mapping, retry handling, scheduling/settings normalization, and run-lock safety.

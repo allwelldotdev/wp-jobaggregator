@@ -78,8 +78,9 @@ wp-content/
 
 ## Key Implementation Decisions
 - Use a source interface so new RSS/API providers can be added without changing the aggregation loop.
+- Treat `config/sources.php` as the source catalog/default definition and apply runtime source on/off state from plugin settings (`job_aggregator_settings[source_states]`).
 - Use a normalized DTO to isolate remote schema differences from WordPress persistence.
-- Hash stable source fields such as source URL, title, and company for deduplication.
+- Match existing posts using a stable identity key (`source_key + external_id` with source-URL fallback) and use a separate content fingerprint to skip unchanged updates.
 - Keep secrets out of committed files; read API keys from `wp-config.php` constants or equivalent environment-specific config.
 - Prefer a real server cron hitting `wp-cron.php` in production if reliable scheduling is required.
 - Persist operational run/source state in custom tables (`{prefix}job_aggregator_runs`, `{prefix}job_aggregator_run_sources`) for reliable checkpointing and admin visibility.

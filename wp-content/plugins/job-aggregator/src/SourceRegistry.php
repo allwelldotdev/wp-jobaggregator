@@ -10,9 +10,10 @@ use JobAggregator\Sources\RSS\RssFeedSource;
 use JobAggregator\Sources\RSS\WeWorkRemotelyRssSource;
 use JobAggregator\Support\HttpClient;
 use JobAggregator\Support\Logger;
+use JobAggregator\Support\Settings;
 
 /**
- * Builds and returns enabled source instances from configuration: `config/sources.php`, for batch processing.
+ * Builds source instances from configuration and resolves runtime-enabled sources from settings overrides.
  */
 class SourceRegistry {
 
@@ -20,7 +21,8 @@ class SourceRegistry {
 	private $logger;
 	private $http;
 	private $normalization_signals;
-	private $sources_by_key;
+	private $configured_sources_by_key;
+	private $configured_source_order;
 
 	public function __construct(
 		$config_path,
@@ -28,84 +30,146 @@ class SourceRegistry {
 		HttpClient $http,
 		NormalizationSignalStore $normalization_signals,
 	) {
-		$this->config_path           = $config_path;
-		$this->logger                = $logger;
-		$this->http                  = $http;
-		$this->normalization_signals = $normalization_signals;
-		$this->sources_by_key        = null;
+		$this->config_path               = $config_path;
+		$this->logger                    = $logger;
+		$this->http                      = $http;
+		$this->normalization_signals     = $normalization_signals;
+		$this->configured_sources_by_key = null;
+		$this->configured_source_order   = array();
 	}
 
 	public function all() {
-		return array_values( $this->build_sources() );
+		return array_values( $this->build_enabled_sources() );
 	}
 
 	public function get( $source_key ) {
-		$sources = $this->build_sources();
+		$source_key = sanitize_key( (string) $source_key );
+		$sources    = $this->build_configured_sources();
 
-		return isset( $sources[ $source_key ] ) ? $sources[ $source_key ] : null;
+		if ( '' === $source_key || ! isset( $sources[ $source_key ] ) ) {
+			return null;
+		}
+
+		return $sources[ $source_key ]['source'];
 	}
 
-	private function build_sources() {
-		if ( null !== $this->sources_by_key ) {
-			return $this->sources_by_key;
+	public function configured() {
+		$configured_sources = $this->build_configured_sources();
+		$effective_states   = $this->effective_source_states();
+		$rows               = array();
+
+		foreach ( $this->configured_source_order as $source_key ) {
+			if ( ! isset( $configured_sources[ $source_key ] ) ) {
+				continue;
+			}
+
+			$entry = $configured_sources[ $source_key ];
+
+			$rows[] = array(
+				'key'               => $source_key,
+				'label'             => $entry['source']->get_label(),
+				'type'              => $entry['type'],
+				'config_enabled'    => ! empty( $entry['config_enabled'] ),
+				'effective_enabled' => ! empty( $effective_states[ $source_key ] ),
+				'source'            => $entry['source'],
+			);
 		}
+
+		return $rows;
+	}
+
+	public function configured_source_states() {
+		$configured_sources = $this->build_configured_sources();
+		$states             = array();
+
+		foreach ( $configured_sources as $source_key => $entry ) {
+			$states[ $source_key ] = ! empty( $entry['config_enabled'] ) ? 1 : 0;
+		}
+
+		return $states;
+	}
+
+	private function build_configured_sources() {
+		if ( null !== $this->configured_sources_by_key ) {
+			return $this->configured_sources_by_key;
+		}
+
+		$this->configured_sources_by_key = array();
+		$this->configured_source_order   = array();
 
 		if ( ! file_exists( $this->config_path ) ) {
-			$this->sources_by_key = array();
-
-			return $this->sources_by_key;
+			return $this->configured_sources_by_key;
 		}
 
-		$config  = require $this->config_path;
-		$sources = array();
+		$config = require $this->config_path;
+		$groups = array(
+			'rss'  => isset( $config['rss'] ) ? (array) $config['rss'] : array(),
+			'apis' => isset( $config['apis'] ) ? (array) $config['apis'] : array(),
+		);
 
-		foreach (
-			isset( $config['rss'] ) ? (array) $config['rss'] : array()
-			as $source_config
-		) {
-			if ( empty( $source_config['enabled'] ) ) {
-				continue;
+		foreach ( $groups as $group_key => $source_configs ) {
+			foreach ( $source_configs as $source_config ) {
+				$source = 'rss' === $group_key
+					? $this->build_rss_source( (array) $source_config )
+					: $this->build_api_source( (array) $source_config );
+				if ( null === $source ) {
+					continue;
+				}
+
+				$source_key = sanitize_key( (string) $source->get_key() );
+				if ( '' === $source_key ) {
+					continue;
+				}
+
+				$config_enabled = ! empty( $source_config['enabled'] );
+
+				$this->configured_sources_by_key[ $source_key ] = array(
+					'source'         => $source,
+					'type'           => 'rss' === $group_key ? 'rss' : 'api',
+					'config_enabled' => $config_enabled,
+				);
+				$this->configured_source_order[]                = $source_key;
 			}
-
-			$source = $this->build_rss_source( $source_config );
-			$key    = $source->get_key();
-
-			if ( '' === $key ) {
-				continue;
-			}
-
-			$sources[ $key ] = $source;
 		}
 
-		foreach (
-			isset( $config['apis'] ) ? (array) $config['apis'] : array()
-			as $source_config
-		) {
-			if ( empty( $source_config['enabled'] ) ) {
+		$this->configured_source_order = array_values(
+			array_unique( $this->configured_source_order )
+		);
+
+		return $this->configured_sources_by_key;
+	}
+
+	private function build_enabled_sources() {
+		$configured_sources = $this->build_configured_sources();
+		$effective_states   = $this->effective_source_states();
+		$enabled            = array();
+
+		foreach ( $configured_sources as $source_key => $entry ) {
+			if ( empty( $effective_states[ $source_key ] ) ) {
 				continue;
 			}
 
-			if ( empty( $source_config['driver'] ) ) {
-				continue;
-			}
-
-			$source = $this->build_api_source( $source_config );
-			if ( null === $source ) {
-				continue;
-			}
-
-			$key = $source->get_key();
-
-			if ( '' === $key ) {
-				continue;
-			}
-
-			$sources[ $key ] = $source;
+			$enabled[ $source_key ] = $entry['source'];
 		}
 
-		$this->sources_by_key = $sources;
+		return $enabled;
+	}
 
-		return $this->sources_by_key;
+	private function effective_source_states() {
+		$configured_states = $this->configured_source_states();
+		$settings          = Settings::all();
+		$overrides         = isset( $settings['source_states'] ) && is_array( $settings['source_states'] )
+			? $settings['source_states']
+			: array();
+		$effective         = array();
+
+		foreach ( $configured_states as $source_key => $config_enabled ) {
+			unset( $config_enabled );
+
+			$effective[ $source_key ] = ! empty( $overrides[ $source_key ] ) ? 1 : 0;
+		}
+
+		return $effective;
 	}
 
 	private function build_rss_source( array $source_config ) {
@@ -143,6 +207,10 @@ class SourceRegistry {
 	}
 
 	private function build_api_source( array $source_config ) {
+		if ( empty( $source_config['driver'] ) ) {
+			return null;
+		}
+
 		$driver = isset( $source_config['driver'] )
 			? strtolower( trim( (string) $source_config['driver'] ) )
 			: '';

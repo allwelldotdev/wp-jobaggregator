@@ -38,7 +38,7 @@ class DashboardPage {
 			<h2><?php esc_html_e( 'Manual Import', 'job-aggregator' ); ?></h2>
 			<?php if ( empty( $enabled_sources ) ) : ?>
 				<p>
-					<?php esc_html_e( 'No enabled sources found in config/sources.php.', 'job-aggregator' ); ?>
+					<?php esc_html_e( 'No sources are currently enabled in Job Aggregator settings.', 'job-aggregator' ); ?>
 				</p>
 			<?php endif; ?>
 			<?php $this->view->render_manual_start_form( empty( $enabled_sources ) ); ?>

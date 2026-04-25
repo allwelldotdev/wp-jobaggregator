@@ -1,4 +1,4 @@
-# Batched Import and Checkpointing Plan
+# 005 Batched Import and Checkpointing Plan
 
 ## Purpose
 Convert the current importer from a single long-running cron task into a resumable batch system that:

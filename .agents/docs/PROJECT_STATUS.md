@@ -18,6 +18,7 @@
 - Runtime/generated directories such as `wp-content/uploads/`, `wp-content/et-cache/`, and `wp-content/wpaas-updates-log/`.
 - A plugin scaffold with cron registration, source registry, RSS and Jooble source classes, duplicate checking, and `job_listing` persistence.
 - Source architecture now supports format-level + source-level classes under `src/Sources/RSS` and `src/Sources/API`, including source-specific RSS normalization for MyJobMag, RemoteOK, and We Work Remotely.
+- Source catalog/default definitions stay in `config/sources.php`, while effective source enablement is now managed in `job_aggregator_settings[source_states]` from the admin Settings screen.
 - Import orchestration now runs in resumable batches using a start hook and a process hook instead of processing all sources in one request.
 - Custom run-state tables are now part of the plugin runtime:
   - `{prefix}job_aggregator_runs`
@@ -25,6 +26,7 @@
   - `{prefix}job_aggregator_normalization_signals`
 - Source progress/checkpoints, retries, and per-run counters are now persisted in custom tables and surfaced in admin screens.
 - Automated imports now default `job_listing_category` assignment to slug `other-automated`, with term auto-create on write if missing.
+- Upsert behavior now separates stable identity matching from change detection so unchanged jobs are skipped without touching post/meta/taxonomy timestamps.
 - WordPress admin UI now exists for:
   - Manual import trigger.
   - Run history and per-run source summaries.

@@ -5,17 +5,22 @@ namespace JobAggregator\Tests\Integration\E2E;
 use JobAggregator\Batch\BatchRunManager;
 use JobAggregator\Cron\Scheduler;
 use JobAggregator\Plugin;
+use JobAggregator\Support\Settings;
 use PHPUnit\Framework\TestCase;
 
 class RssIngestionE2ETest extends TestCase {
 	const SOURCE_META_KEY           = '_job_aggregator_source_key';
 	const TEST_SOURCE_KEY_PREFIX    = 'e2e_';
 	const TEST_CONFIG_RELATIVE_PATH = 'tests/config/sources.integration.php';
+	const TEST_CONFIG_UPDATED_RELATIVE_PATH = 'tests/config/sources.integration.updated.php';
 
 	private $fixture_body_by_url = array();
 	private $config_filter;
 	private $http_filter;
+	private $feed_cache_filter;
 	private $run_ids = array();
+	private $original_settings;
+	private $test_config_relative_path = self::TEST_CONFIG_RELATIVE_PATH;
 
 	protected function setUp(): void {
 		$this->register_job_listing_schema();
@@ -23,6 +28,9 @@ class RssIngestionE2ETest extends TestCase {
 		$this->delete_test_run_rows();
 		$this->delete_test_posts();
 		$this->clear_feed_transients();
+		$this->original_settings = get_option( Settings::OPTION_KEY, null );
+		$this->test_config_relative_path = self::TEST_CONFIG_RELATIVE_PATH;
+		$this->configure_source_states( array( 'e2e_myjobmag', 'e2e_remoteok', 'e2e_weworkremotely' ) );
 		$this->fixture_body_by_url = $this->load_fixture_body_by_url();
 		$this->register_test_filters();
 	}
@@ -34,6 +42,11 @@ class RssIngestionE2ETest extends TestCase {
 		$this->clear_feed_transients();
 		$this->delete_test_posts();
 		$this->delete_test_run_rows();
+		if ( null === $this->original_settings ) {
+			delete_option( Settings::OPTION_KEY );
+		} else {
+			update_option( Settings::OPTION_KEY, $this->original_settings );
+		}
 	}
 
 	public function test_ingests_enabled_rss_sources_into_job_listing_posts() {
@@ -83,16 +96,60 @@ class RssIngestionE2ETest extends TestCase {
 
 		$this->assertSame( 'completed', (string) $second_run['status'] );
 		$this->assertSame( 0, (int) $second_run['created_count'] );
-		$this->assertSame( 3, (int) $second_run['updated_count'] );
+		$this->assertSame( 0, (int) $second_run['updated_count'] );
+		$this->assertSame( 3, (int) $second_run['skipped_count'] );
 		$this->assertSame( 3, count( $second_source_posts ) );
 		$this->assertSame( $first_source_post, $second_source_posts );
+	}
+
+	public function test_reingestion_updates_only_changed_listing_when_fixture_changes() {
+		$first_run = $this->run_import_to_completion();
+
+		$this->assertSame( 'completed', (string) $first_run['status'] );
+		$this->assertSame( 3, (int) $first_run['created_count'] );
+
+		$source_posts_before = $this->get_source_post_map();
+
+		$this->test_config_relative_path = self::TEST_CONFIG_UPDATED_RELATIVE_PATH;
+		$this->clear_feed_transients();
+
+		$second_run         = $this->run_import_to_completion();
+		$source_posts_after = $this->get_source_post_map();
+
+		$this->assertSame( 'completed', (string) $second_run['status'] );
+		$this->assertSame( 0, (int) $second_run['created_count'] );
+		$this->assertSame( 1, (int) $second_run['updated_count'] );
+		$this->assertSame( 2, (int) $second_run['skipped_count'] );
+		$this->assertSame( $source_posts_before, $source_posts_after );
+
+		$remote_post_id = $source_posts_after['e2e_remoteok'];
+		$this->assertSame(
+			'RemoteOK Fixture Co Updated',
+			(string) get_post_meta( $remote_post_id, '_company_name', true )
+		);
+	}
+
+	public function test_source_state_overrides_limit_manual_runs_to_enabled_sources() {
+		$this->configure_source_states( array( 'e2e_remoteok' ) );
+
+		$run = $this->run_import_to_completion();
+
+		$this->assertSame( 'completed', (string) $run['status'] );
+		$this->assertSame( 1, (int) $run['total_sources'] );
+		$this->assertSame( 1, (int) $run['created_count'] );
+		$this->assertSame( 0, (int) $run['updated_count'] );
+		$this->assertSame( 0, (int) $run['error_count'] );
+
+		$post_map = $this->get_source_post_map( array( 'e2e_remoteok' ) );
+		$this->assertCount( 1, $post_map );
+		$this->assertArrayHasKey( 'e2e_remoteok', $post_map );
 	}
 
 	private function run_import_to_completion() {
 		$plugin = new Plugin();
 		$result = $plugin->trigger_manual_batch();
 
-		$this->assertSame( 'started', (string) $result['status'] );
+		$this->assertContains( (string) $result['status'], array( 'started', 'active_run' ) );
 		$this->assertGreaterThan( 0, (int) $result['run_id'] );
 
 		$run_id      = (int) $result['run_id'];
@@ -158,7 +215,7 @@ class RssIngestionE2ETest extends TestCase {
 
 	private function register_test_filters() {
 		$this->config_filter = function () {
-			return JOB_AGGREGATOR_PATH . self::TEST_CONFIG_RELATIVE_PATH;
+			return JOB_AGGREGATOR_PATH . $this->test_config_relative_path;
 		};
 		add_filter( 'job_aggregator_sources_config_path', $this->config_filter );
 
@@ -180,6 +237,11 @@ class RssIngestionE2ETest extends TestCase {
 			);
 		};
 		add_filter( 'pre_http_request', $this->http_filter, 10, 3 );
+
+		$this->feed_cache_filter = static function () {
+			return 0;
+		};
+		add_filter( 'wp_feed_cache_transient_lifetime', $this->feed_cache_filter );
 	}
 
 	private function remove_test_filters() {
@@ -192,6 +254,11 @@ class RssIngestionE2ETest extends TestCase {
 			remove_filter( 'pre_http_request', $this->http_filter, 10 );
 			$this->http_filter = null;
 		}
+
+		if ( null !== $this->feed_cache_filter ) {
+			remove_filter( 'wp_feed_cache_transient_lifetime', $this->feed_cache_filter );
+			$this->feed_cache_filter = null;
+		}
 	}
 
 	private function load_fixture_body_by_url() {
@@ -200,11 +267,12 @@ class RssIngestionE2ETest extends TestCase {
 		return array(
 			'https://fixtures.job-aggregator.test/myjobmag.xml'      => (string) file_get_contents( $fixture_base . 'myjobmag.xml' ),
 			'https://fixtures.job-aggregator.test/remoteok.xml'      => (string) file_get_contents( $fixture_base . 'remoteok.xml' ),
+			'https://fixtures.job-aggregator.test/remoteok-updated.xml' => (string) file_get_contents( $fixture_base . 'remoteok-updated.xml' ),
 			'https://fixtures.job-aggregator.test/weworkremotely.xml' => (string) file_get_contents( $fixture_base . 'weworkremotely.xml' ),
 		);
 	}
 
-	private function get_source_post_map() {
+	private function get_source_post_map( array $source_keys = array( 'e2e_myjobmag', 'e2e_remoteok', 'e2e_weworkremotely' ) ) {
 		$query = new \WP_Query(
 			array(
 				'post_type'      => 'job_listing',
@@ -215,7 +283,7 @@ class RssIngestionE2ETest extends TestCase {
 				'meta_query'     => array(
 					array(
 						'key'     => self::SOURCE_META_KEY,
-						'value'   => array( 'e2e_myjobmag', 'e2e_remoteok', 'e2e_weworkremotely' ),
+						'value'   => array_values( $source_keys ),
 						'compare' => 'IN',
 					),
 				),
@@ -231,6 +299,28 @@ class RssIngestionE2ETest extends TestCase {
 		ksort( $map );
 
 		return $map;
+	}
+
+	private function configure_source_states( array $enabled_source_keys ) {
+		$enabled_map = array();
+		foreach ( $enabled_source_keys as $source_key ) {
+			$enabled_map[ (string) $source_key ] = 1;
+		}
+
+		update_option(
+			Settings::OPTION_KEY,
+			array(
+				'enable_recurring' => 0,
+				'recurrence'       => Scheduler::EVERY_TWO_HOURS,
+				'process_delay'    => 5,
+				'runs_per_page'    => 20,
+				'source_states'    => array(
+					'e2e_myjobmag'       => ! empty( $enabled_map['e2e_myjobmag'] ) ? 1 : 0,
+					'e2e_remoteok'       => ! empty( $enabled_map['e2e_remoteok'] ) ? 1 : 0,
+					'e2e_weworkremotely' => ! empty( $enabled_map['e2e_weworkremotely'] ) ? 1 : 0,
+				),
+			)
+		);
 	}
 
 	private function delete_test_run_rows() {

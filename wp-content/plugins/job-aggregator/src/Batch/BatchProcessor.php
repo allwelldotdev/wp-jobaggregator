@@ -182,10 +182,14 @@ class BatchProcessor {
 
 				try {
 					$upsert_result = $this->post_writer->upsert_with_result( $job );
-					if ( ! empty( $upsert_result['action'] ) && 'created' === $upsert_result['action'] ) {
+					$action        = ! empty( $upsert_result['action'] ) ? (string) $upsert_result['action'] : '';
+
+					if ( 'created' === $action ) {
 						++$metrics['created_count'];
-					} else {
+					} elseif ( 'updated' === $action ) {
 						++$metrics['updated_count'];
+					} else {
+						++$metrics['skipped_count'];
 					}
 				} catch ( Throwable $exception ) {
 					++$metrics['error_count'];

@@ -69,6 +69,24 @@ class SettingsRegistrar {
 			$this->settings_slug,
 			'job_aggregator_schedule_section'
 		);
+
+		add_settings_section(
+			'job_aggregator_sources_section',
+			__( 'Source Controls', 'job-aggregator' ),
+			array( $this, 'render_sources_section' ),
+			$this->settings_slug
+		);
+
+		add_settings_field(
+			'job_aggregator_source_states',
+			__( 'Runtime Source States', 'job-aggregator' ),
+			array( $this, 'render_field_source_states' ),
+			$this->settings_slug,
+			'job_aggregator_sources_section',
+			array(
+				'class' => 'job-aggregator-source-states-row',
+			)
+		);
 	}
 
 	public function handle_settings_updated( $old_value, $new_value ) {
@@ -81,11 +99,29 @@ class SettingsRegistrar {
 		if ( ! current_user_can( 'manage_options' ) ) {
 			return;
 		}
-
-		$enabled_sources = $this->source_registry->all();
 		?>
 		<div class="wrap">
 			<h1><?php esc_html_e( 'Job Aggregator Settings', 'job-aggregator' ); ?></h1>
+			<style>
+				tr.job-aggregator-source-states-row > th,
+				tr.job-aggregator-source-states-row > td {
+					display: block;
+					width: 100%;
+				}
+
+				tr.job-aggregator-source-states-row > th {
+					padding-bottom: 8px;
+				}
+
+				tr.job-aggregator-source-states-row > td {
+					padding-top: 0;
+					padding-left: 0;
+				}
+
+				.job-aggregator-source-states-table thead th {
+					padding: 20px 10px;
+				}
+			</style>
 			<form action="options.php" method="post">
 				<?php
 				settings_fields( 'job_aggregator_settings_group' );
@@ -93,36 +129,16 @@ class SettingsRegistrar {
 				submit_button();
 				?>
 			</form>
-
-			<h2><?php esc_html_e( 'Enabled Sources', 'job-aggregator' ); ?></h2>
-			<table class="widefat striped">
-				<thead>
-					<tr>
-						<th><?php esc_html_e( 'Source Label', 'job-aggregator' ); ?></th>
-						<th><?php esc_html_e( 'Source Key', 'job-aggregator' ); ?></th>
-					</tr>
-				</thead>
-				<tbody>
-					<?php if ( empty( $enabled_sources ) ) : ?>
-						<tr>
-							<td colspan="2"><?php esc_html_e( 'No enabled sources found. Edit config/sources.php to add or enable sources.', 'job-aggregator' ); ?></td>
-						</tr>
-					<?php else : ?>
-						<?php foreach ( $enabled_sources as $source ) : ?>
-							<tr>
-								<td><?php echo esc_html( $source->get_label() ); ?></td>
-								<td><?php echo esc_html( $source->get_key() ); ?></td>
-							</tr>
-						<?php endforeach; ?>
-					<?php endif; ?>
-				</tbody>
-			</table>
 		</div>
 		<?php
 	}
 
 	public function render_schedule_section() {
-		echo '<p>' . esc_html__( 'Control recurring imports and queue cadence. Source definitions stay in config/sources.php.', 'job-aggregator' ) . '</p>';
+		echo '<p>' . esc_html__( 'Control recurring imports and queue cadence. Source definitions live in config/sources.php; runtime enablement is controlled below.', 'job-aggregator' ) . '</p>';
+	}
+
+	public function render_sources_section() {
+		echo '<p>' . esc_html__( 'Use these toggles to include sources in manual and scheduled runs. Sources remain cataloged in config/sources.php.', 'job-aggregator' ) . '</p>';
 	}
 
 	public function render_field_enable_recurring() {
@@ -196,6 +212,69 @@ class SettingsRegistrar {
 		/>
 		<p class="description">
 			<?php esc_html_e( 'How many runs to show on the Runs screen.', 'job-aggregator' ); ?>
+		</p>
+		<?php
+	}
+
+	public function render_field_source_states() {
+		$settings           = Settings::all();
+		$configured_sources = $this->source_registry->configured();
+		$source_states      = isset( $settings['source_states'] ) && is_array( $settings['source_states'] )
+			? $settings['source_states']
+			: array();
+		?>
+		<table class="widefat striped job-aggregator-source-states-table">
+			<thead>
+				<tr>
+					<th><?php esc_html_e( 'Source', 'job-aggregator' ); ?></th>
+					<th><?php esc_html_e( 'Type', 'job-aggregator' ); ?></th>
+					<th><?php esc_html_e( 'Catalog Default', 'job-aggregator' ); ?></th>
+					<th><?php esc_html_e( 'Enabled For Runs', 'job-aggregator' ); ?></th>
+				</tr>
+			</thead>
+			<tbody>
+				<?php if ( empty( $configured_sources ) ) : ?>
+					<tr>
+						<td colspan="4"><?php esc_html_e( 'No sources were found in config/sources.php.', 'job-aggregator' ); ?></td>
+					</tr>
+				<?php else : ?>
+					<?php foreach ( $configured_sources as $source_row ) : ?>
+						<?php
+						$key       = (string) $source_row['key'];
+						$is_active = ! empty( $source_states[ $key ] );
+						?>
+						<tr>
+							<td>
+								<strong><?php echo esc_html( (string) $source_row['label'] ); ?></strong><br />
+								<code><?php echo esc_html( $key ); ?></code>
+							</td>
+							<td><?php echo esc_html( strtoupper( (string) $source_row['type'] ) ); ?></td>
+							<td>
+								<?php echo esc_html( ! empty( $source_row['config_enabled'] ) ? __( 'Enabled', 'job-aggregator' ) : __( 'Disabled', 'job-aggregator' ) ); ?>
+							</td>
+							<td>
+								<input
+									type="hidden"
+									name="<?php echo esc_attr( Settings::OPTION_KEY ); ?>[source_states][<?php echo esc_attr( $key ); ?>]"
+									value="0"
+								/>
+								<label>
+									<input
+										type="checkbox"
+										name="<?php echo esc_attr( Settings::OPTION_KEY ); ?>[source_states][<?php echo esc_attr( $key ); ?>]"
+										value="1"
+										<?php checked( $is_active ); ?>
+									/>
+									<?php echo esc_html( $is_active ? __( 'Enabled', 'job-aggregator' ) : __( 'Disabled', 'job-aggregator' ) ); ?>
+								</label>
+							</td>
+						</tr>
+					<?php endforeach; ?>
+				<?php endif; ?>
+			</tbody>
+		</table>
+		<p class="description">
+			<?php esc_html_e( 'Only enabled sources are processed during manual or recurring imports.', 'job-aggregator' ); ?>
 		</p>
 		<?php
 	}

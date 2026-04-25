@@ -1,4 +1,4 @@
-### Implementation Plan: Source-Specific Fetch/Normalization + MyJobMag RSS Onboarding
+### 003 Implementation Plan: Source-Specific Fetch/Normalization + MyJobMag RSS Onboarding
 
 #### Summary
 - [x] Discovery complete: reviewed workflow/docs, current source architecture, MyJobMag sample payload (`aggregate_feed.json` first 100+ lines), and WP taxonomy state.

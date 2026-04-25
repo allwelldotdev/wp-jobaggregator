@@ -13,6 +13,7 @@ use JobAggregator\Jobs\NormalizationSignalStore;
 use JobAggregator\Jobs\PostWriter;
 use JobAggregator\Support\HttpClient;
 use JobAggregator\Support\Logger;
+use JobAggregator\Support\Settings;
 
 /**
  * Boots the plugin and wires ingestion, scheduling, persistence, and admin modules together.
@@ -44,6 +45,7 @@ class Plugin {
 			http: $http,
 			normalization_signals: $this->normalization_signals
 		);
+		Settings::ensure_source_states( $this->source_registry->configured_source_states() );
 
 		$this->batch_processor = new BatchProcessor(
 			run_manager: $this->run_manager,
@@ -76,6 +78,21 @@ class Plugin {
 	public static function activate() {
 		$run_manager = new BatchRunManager();
 		$run_manager->install_schema();
+
+		$logger                = new Logger();
+		$http                  = new HttpClient();
+		$normalization_signals = new NormalizationSignalStore();
+		$config_path           = apply_filters(
+			'job_aggregator_sources_config_path',
+			JOB_AGGREGATOR_PATH . 'config/sources.php'
+		);
+		$source_registry       = new SourceRegistry(
+			config_path: (string) $config_path,
+			logger: $logger,
+			http: $http,
+			normalization_signals: $normalization_signals
+		);
+		Settings::initialize_for_activation( $source_registry->configured_source_states() );
 
 		$scheduler = new Scheduler();
 		$scheduler->schedule_recurring_start();
@@ -120,12 +137,12 @@ class Plugin {
 
 		$sources = $this->source_registry->all();
 		if ( empty( $sources ) ) {
-			$this->logger->info( 'No enabled sources are available for batch import.' );
+			$this->logger->info( 'No runtime-enabled sources are available for batch import.' );
 
 			return array(
 				'status'  => 'no_sources',
 				'run_id'  => 0,
-				'message' => 'No enabled sources are available for batch import.',
+				'message' => 'No runtime-enabled sources are available for batch import.',
 			);
 		}
 
