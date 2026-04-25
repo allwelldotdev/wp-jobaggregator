@@ -14,6 +14,12 @@
   skills/
     localwp-runtime/
       SKILL.md
+    job-aggregator-source-test-ops/
+      SKILL.md
+    job-aggregator-package-release/
+      SKILL.md
+    job-aggregator-changelog-release/
+      SKILL.md
 AGENTS.md
 .gitignore
 wp-content/

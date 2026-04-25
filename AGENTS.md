@@ -11,6 +11,7 @@ Read next:
 - `.agents/docs/PROJECT_STATUS.md`
 - `.agents/skills/localwp-runtime/SKILL.md` when running PHP, WP-CLI, Composer, or WordPress DB commands
 - `.agents/skills/job-aggregator-source-test-ops/SKILL.md` when adding/enabling RSS or API sources and extending ingestion tests/cleanup workflows
+- `.agents/skills/job-aggregator-changelog-release/SKILL.md` when preparing CHANGELOG-based releases, version tags, and GitHub releases
 - `.agents/docs/conversation.yaml` only when the summaries are insufficient
 
 Primary code locations:
