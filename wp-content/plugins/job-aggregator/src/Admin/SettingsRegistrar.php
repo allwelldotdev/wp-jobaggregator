@@ -26,7 +26,7 @@ class SettingsRegistrar {
 			Settings::OPTION_KEY,
 			array(
 				'type'              => 'array',
-				'sanitize_callback' => array( Settings::class, 'sanitize' ),
+				'sanitize_callback' => array( $this, 'sanitize_settings' ),
 				'default'           => Settings::defaults(),
 			)
 		);
@@ -93,6 +93,13 @@ class SettingsRegistrar {
 		unset( $old_value, $new_value );
 
 		$this->scheduler->schedule_recurring_start( true );
+	}
+
+	public function sanitize_settings( $input ) {
+		return Settings::enforce_configured_source_states(
+			Settings::sanitize( $input ),
+			$this->source_registry->configured_source_states()
+		);
 	}
 
 	public function render_page() {
@@ -240,8 +247,9 @@ class SettingsRegistrar {
 				<?php else : ?>
 					<?php foreach ( $configured_sources as $source_row ) : ?>
 						<?php
-						$key       = (string) $source_row['key'];
-						$is_active = ! empty( $source_states[ $key ] );
+						$key            = (string) $source_row['key'];
+						$config_enabled = ! empty( $source_row['config_enabled'] );
+						$is_active      = $config_enabled && ! empty( $source_states[ $key ] );
 						?>
 						<tr>
 							<td>
@@ -264,9 +272,15 @@ class SettingsRegistrar {
 										name="<?php echo esc_attr( Settings::OPTION_KEY ); ?>[source_states][<?php echo esc_attr( $key ); ?>]"
 										value="1"
 										<?php checked( $is_active ); ?>
+										<?php disabled( ! $config_enabled ); ?>
 									/>
 									<?php echo esc_html( $is_active ? __( 'Enabled', 'job-aggregator' ) : __( 'Disabled', 'job-aggregator' ) ); ?>
 								</label>
+								<?php if ( ! $config_enabled ) : ?>
+									<p class="description">
+										<?php esc_html_e( 'Locked by config/sources.php. Enable the catalog source in code before allowing runtime imports.', 'job-aggregator' ); ?>
+									</p>
+								<?php endif; ?>
 							</td>
 						</tr>
 					<?php endforeach; ?>

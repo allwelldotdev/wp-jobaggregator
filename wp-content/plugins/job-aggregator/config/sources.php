@@ -53,7 +53,7 @@ return [
             ],
         ],
         [
-            "enabled" => false,
+            "enabled" => true,
             "key" => "hotnigerianjobs",
             "driver" => "hotnigerianjobs",
             "label" => "Hot Nigerian Jobs",

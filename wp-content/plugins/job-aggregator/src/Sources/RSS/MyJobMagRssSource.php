@@ -10,6 +10,7 @@ use JobAggregator\Support\Logger;
  * Implements MyJobMag-specific RSS parsing, filtering, and normalization into JobData batches.
  */
 class MyJobMagRssSource extends AbstractRssSource {
+
 	const DEFAULT_EMPLOYMENT_TYPE = 'Full Time';
 
 	private static $allowed_locations = array(
@@ -49,7 +50,11 @@ class MyJobMagRssSource extends AbstractRssSource {
 	private $normalization_signals;
 	private $last_employment_remote_signal = false;
 
-	public function __construct( array $config, Logger $logger, NormalizationSignalStore $normalization_signals ) {
+	public function __construct(
+		array $config,
+		Logger $logger,
+		NormalizationSignalStore $normalization_signals,
+	) {
 		parent::__construct( $config, $logger );
 		$this->normalization_signals = $normalization_signals;
 	}
@@ -71,23 +76,33 @@ class MyJobMagRssSource extends AbstractRssSource {
 		$expiry_date = $this->item_text( $item, 'expiryDate' );
 
 		if ( '' === $external_id ) {
-			$external_id = (string) ( method_exists( $item, 'get_id' ) ? $item->get_id() : '' );
+			$external_id = (string) ( method_exists( $item, 'get_id' )
+				? $item->get_id()
+				: '' );
 		}
 
 		if ( '' === $source_url ) {
-			$source_url = (string) ( method_exists( $item, 'get_link' ) ? $item->get_link() : '' );
+			$source_url = (string) ( method_exists( $item, 'get_link' )
+				? $item->get_link()
+				: '' );
 		}
 
 		if ( '' === $title ) {
-			$title = (string) ( method_exists( $item, 'get_title' ) ? $item->get_title() : '' );
+			$title = (string) ( method_exists( $item, 'get_title' )
+				? $item->get_title()
+				: '' );
 		}
 
 		if ( '' === $description ) {
-			$description = (string) ( method_exists( $item, 'get_content' ) ? $item->get_content() : '' );
+			$description = (string) ( method_exists( $item, 'get_content' )
+				? $item->get_content()
+				: '' );
 		}
 
 		if ( '' === $description ) {
-			$description = (string) ( method_exists( $item, 'get_description' ) ? $item->get_description() : '' );
+			$description = (string) ( method_exists( $item, 'get_description' )
+				? $item->get_description()
+				: '' );
 		}
 
 		if ( '' === $description ) {
@@ -99,7 +114,12 @@ class MyJobMagRssSource extends AbstractRssSource {
 		}
 
 		$published_timestamp = $this->parse_date_timestamp( $pub_date );
-		$employment_types    = $this->map_employment_types( $working, $contract, $external_id, $title );
+		$employment_types    = $this->map_employment_types(
+			$working,
+			$contract,
+			$external_id,
+			$title,
+		);
 
 		$job_payload = array(
 			'source_key'       => $this->get_key(),
@@ -108,23 +128,42 @@ class MyJobMagRssSource extends AbstractRssSource {
 			'description'      => (string) $description,
 			'source_url'       => (string) $source_url,
 			'application_url'  => (string) $source_url,
-			'company_name'     => '' !== $company ? (string) $company : ( isset( $defaults['company_name'] ) ? (string) $defaults['company_name'] : '' ),
-			'company_website'  => isset( $defaults['company_website'] ) ? (string) $defaults['company_website'] : '',
-			'company_tagline'  => isset( $defaults['company_tagline'] ) ? (string) $defaults['company_tagline'] : '',
-			'company_logo_url' => isset( $defaults['company_logo_url'] ) ? (string) $defaults['company_logo_url'] : null,
-			'company_logo_id'  => isset( $defaults['company_logo_id'] ) ? (int) $defaults['company_logo_id'] : null,
-			'location'         => '' !== $location ? (string) $location : ( isset( $defaults['location'] ) ? (string) $defaults['location'] : '' ),
+			'company_name'     =>
+				'' !== $company
+					? (string) $company
+					: ( isset( $defaults['company_name'] )
+						? (string) $defaults['company_name']
+						: '' ),
+			'company_website'  => isset( $defaults['company_website'] )
+				? (string) $defaults['company_website']
+				: '',
+			'company_tagline'  => isset( $defaults['company_tagline'] )
+				? (string) $defaults['company_tagline']
+				: '',
+			'company_logo_url' => isset( $defaults['company_logo_url'] )
+				? (string) $defaults['company_logo_url']
+				: null,
+			'company_logo_id'  => isset( $defaults['company_logo_id'] )
+				? (int) $defaults['company_logo_id']
+				: null,
+			'location'         => $this->map_location( $location, $defaults ),
 			'employment_types' => $employment_types,
-			'remote_position'  => $this->is_remote_position(
-				array(
-					$title,
-					$position,
-					$intro,
-					$contract,
-					$working,
-				)
-			) || $this->last_employment_remote_signal || ! empty( $defaults['remote_position'] ),
-			'published_at'     => $published_timestamp > 0 ? gmdate( 'c', $published_timestamp ) : '',
+			'remote_position'  =>
+				$this->is_remote_position(
+					array(
+						$title,
+						$position,
+						$intro,
+						$contract,
+						$working,
+					)
+				) ||
+				$this->last_employment_remote_signal ||
+				! empty( $defaults['remote_position'] ),
+			'published_at'     =>
+				$published_timestamp > 0
+					? gmdate( 'c', $published_timestamp )
+					: '',
 			'expires_at'       => $this->derive_expires_at( $expiry_date, $pub_date ),
 		);
 
@@ -139,7 +178,10 @@ class MyJobMagRssSource extends AbstractRssSource {
 			return false;
 		}
 
-		$parts = false !== strpos( $location, ',' ) ? explode( ',', $location ) : array( $location );
+		$parts =
+			false !== strpos( $location, ',' )
+				? explode( ',', $location )
+				: array( $location );
 
 		foreach ( $parts as $part ) {
 			$token = $this->normalize_token( $part );
@@ -149,6 +191,23 @@ class MyJobMagRssSource extends AbstractRssSource {
 		}
 
 		return false;
+	}
+
+	protected function map_location( $location, array $defaults ) {
+		$location = $this->normalize_text( $location );
+		$default  = isset( $defaults['location'] )
+			? (string) $defaults['location']
+			: '';
+
+		if ( '' === $location ) {
+			return $default;
+		}
+
+		if ( 'all' === $this->normalize_token( $location ) ) {
+			return $default;
+		}
+
+		return (string) $location;
 	}
 
 	protected function is_remote_position( array $values ) {
@@ -170,13 +229,18 @@ class MyJobMagRssSource extends AbstractRssSource {
 
 		$published_timestamp = $this->parse_date_timestamp( $pub_date );
 		if ( $published_timestamp > 0 ) {
-			return gmdate( 'Y-m-d', $published_timestamp + ( 86400 * 31 ) );
+			return gmdate( 'Y-m-d', $published_timestamp + 86400 * 31 );
 		}
 
 		return '';
 	}
 
-	protected function map_employment_types( $working_hours, $contract, $external_id, $title ) {
+	protected function map_employment_types(
+		$working_hours,
+		$contract,
+		$external_id,
+		$title,
+	) {
 		$working_hours                       = $this->normalize_text( $working_hours );
 		$contract                            = $this->normalize_text( $contract );
 		$this->last_employment_remote_signal = false;
@@ -184,7 +248,9 @@ class MyJobMagRssSource extends AbstractRssSource {
 		$working_analysis  = $this->analyze_employment_tokens( $working_hours );
 		$contract_analysis = $this->analyze_employment_tokens( $contract );
 
-		$this->last_employment_remote_signal = ! empty( $working_analysis['remote'] ) || ! empty( $contract_analysis['remote'] );
+		$this->last_employment_remote_signal =
+			! empty( $working_analysis['remote'] ) ||
+			! empty( $contract_analysis['remote'] );
 
 		if ( ! empty( $working_analysis['employment_types'] ) ) {
 			return $working_analysis['employment_types'];
@@ -205,7 +271,7 @@ class MyJobMagRssSource extends AbstractRssSource {
 				$unknown_token,
 				$this->normalize_token( $unknown_token ),
 				$external_id,
-				$title
+				$title,
 			);
 		}
 
@@ -235,7 +301,10 @@ class MyJobMagRssSource extends AbstractRssSource {
 			);
 		}
 
-		$parts          = false !== strpos( $raw_value, ',' ) ? explode( ',', $raw_value ) : array( $raw_value );
+		$parts          =
+			false !== strpos( $raw_value, ',' )
+				? explode( ',', $raw_value )
+				: array( $raw_value );
 		$recognized     = array();
 		$unknown_tokens = array();
 		$remote         = false;
@@ -261,7 +330,10 @@ class MyJobMagRssSource extends AbstractRssSource {
 
 		$recognized = array_values( array_unique( $recognized ) );
 
-		if ( in_array( self::DEFAULT_EMPLOYMENT_TYPE, $recognized, true ) && count( $recognized ) > 1 ) {
+		if (
+			in_array( self::DEFAULT_EMPLOYMENT_TYPE, $recognized, true ) &&
+			count( $recognized ) > 1
+		) {
 			foreach ( $recognized as $value ) {
 				if ( self::DEFAULT_EMPLOYMENT_TYPE !== $value ) {
 					$recognized = array( $value );
@@ -273,7 +345,9 @@ class MyJobMagRssSource extends AbstractRssSource {
 		return array(
 			'employment_types' => $recognized,
 			'remote'           => $remote,
-			'unknown_tokens'   => array_values( array_unique( array_filter( $unknown_tokens ) ) ),
+			'unknown_tokens'   => array_values(
+				array_unique( array_filter( $unknown_tokens ) ),
+			),
 		);
 	}
 

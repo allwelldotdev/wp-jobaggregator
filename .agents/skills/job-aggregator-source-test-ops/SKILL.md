@@ -26,6 +26,7 @@ Use this skill when:
   - `tests/Unit/Sources/RSS/MyJobMagRssSourceTest.php`
   - `tests/Unit/Sources/RSS/RemoteOkRssSourceTest.php`
   - `tests/Unit/Sources/RSS/WeWorkRemotelyRssSourceTest.php`
+  - `tests/Unit/Sources/RSS/HotNigerianJobsRssSourceTest.php`
 - Shared doubles:
   - `tests/Support/FakeRssItem.php`
   - `tests/Support/MemoryNormalizationSignalStore.php`

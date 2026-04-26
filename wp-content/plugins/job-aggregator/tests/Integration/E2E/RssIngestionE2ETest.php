@@ -30,7 +30,7 @@ class RssIngestionE2ETest extends TestCase {
 		$this->clear_feed_transients();
 		$this->original_settings = get_option( Settings::OPTION_KEY, null );
 		$this->test_config_relative_path = self::TEST_CONFIG_RELATIVE_PATH;
-		$this->configure_source_states( array( 'e2e_myjobmag', 'e2e_remoteok', 'e2e_weworkremotely' ) );
+		$this->configure_source_states( array( 'e2e_myjobmag', 'e2e_remoteok', 'e2e_weworkremotely', 'e2e_hotnigerianjobs' ) );
 		$this->fixture_body_by_url = $this->load_fixture_body_by_url();
 		$this->register_test_filters();
 	}
@@ -53,15 +53,16 @@ class RssIngestionE2ETest extends TestCase {
 		$run = $this->run_import_to_completion();
 
 		$this->assertSame( 'completed', (string) $run['status'] );
-		$this->assertSame( 3, (int) $run['created_count'] );
+		$this->assertSame( 4, (int) $run['created_count'] );
 		$this->assertSame( 0, (int) $run['updated_count'] );
 		$this->assertSame( 0, (int) $run['error_count'] );
 
 		$post_map = $this->get_source_post_map();
-		$this->assertCount( 3, $post_map );
+		$this->assertCount( 4, $post_map );
 		$this->assertArrayHasKey( 'e2e_myjobmag', $post_map );
 		$this->assertArrayHasKey( 'e2e_remoteok', $post_map );
 		$this->assertArrayHasKey( 'e2e_weworkremotely', $post_map );
+		$this->assertArrayHasKey( 'e2e_hotnigerianjobs', $post_map );
 
 		$myjobmag_post_id = $post_map['e2e_myjobmag'];
 		$this->assertSame( 'Abia', get_post_meta( $myjobmag_post_id, '_job_location', true ) );
@@ -78,6 +79,12 @@ class RssIngestionE2ETest extends TestCase {
 		$this->assertSame( 'Acme Corp', get_post_meta( $wwr_post_id, '_company_name', true ) );
 		$this->assertSame( 'Anywhere in the World, California', get_post_meta( $wwr_post_id, '_job_location', true ) );
 
+		$hotnigerianjobs_post_id = $post_map['e2e_hotnigerianjobs'];
+		$this->assertSame( 'Nutritionist / Quality Control (Offshore)', get_the_title( $hotnigerianjobs_post_id ) );
+		$this->assertSame( 'Castel Resources Consultancy Limited', get_post_meta( $hotnigerianjobs_post_id, '_company_name', true ) );
+		$this->assertSame( 'Port Harcourt, Rivers', get_post_meta( $hotnigerianjobs_post_id, '_job_location', true ) );
+		$this->assertSame( '0', get_post_meta( $hotnigerianjobs_post_id, '_remote_position', true ) );
+
 		$category_terms = wp_get_post_terms( $wwr_post_id, 'job_listing_category', array( 'fields' => 'slugs' ) );
 		$this->assertContains( 'other-automated', $category_terms );
 
@@ -89,7 +96,7 @@ class RssIngestionE2ETest extends TestCase {
 		$first_source_post = $this->get_source_post_map();
 
 		$this->assertSame( 'completed', (string) $first_run['status'] );
-		$this->assertSame( 3, (int) $first_run['created_count'] );
+		$this->assertSame( 4, (int) $first_run['created_count'] );
 
 		$second_run          = $this->run_import_to_completion();
 		$second_source_posts = $this->get_source_post_map();
@@ -97,8 +104,8 @@ class RssIngestionE2ETest extends TestCase {
 		$this->assertSame( 'completed', (string) $second_run['status'] );
 		$this->assertSame( 0, (int) $second_run['created_count'] );
 		$this->assertSame( 0, (int) $second_run['updated_count'] );
-		$this->assertSame( 3, (int) $second_run['skipped_count'] );
-		$this->assertSame( 3, count( $second_source_posts ) );
+		$this->assertSame( 4, (int) $second_run['skipped_count'] );
+		$this->assertSame( 4, count( $second_source_posts ) );
 		$this->assertSame( $first_source_post, $second_source_posts );
 	}
 
@@ -106,7 +113,7 @@ class RssIngestionE2ETest extends TestCase {
 		$first_run = $this->run_import_to_completion();
 
 		$this->assertSame( 'completed', (string) $first_run['status'] );
-		$this->assertSame( 3, (int) $first_run['created_count'] );
+		$this->assertSame( 4, (int) $first_run['created_count'] );
 
 		$source_posts_before = $this->get_source_post_map();
 
@@ -119,7 +126,7 @@ class RssIngestionE2ETest extends TestCase {
 		$this->assertSame( 'completed', (string) $second_run['status'] );
 		$this->assertSame( 0, (int) $second_run['created_count'] );
 		$this->assertSame( 1, (int) $second_run['updated_count'] );
-		$this->assertSame( 2, (int) $second_run['skipped_count'] );
+		$this->assertSame( 3, (int) $second_run['skipped_count'] );
 		$this->assertSame( $source_posts_before, $source_posts_after );
 
 		$remote_post_id = $source_posts_after['e2e_remoteok'];
@@ -269,10 +276,11 @@ class RssIngestionE2ETest extends TestCase {
 			'https://fixtures.job-aggregator.test/remoteok.xml'      => (string) file_get_contents( $fixture_base . 'remoteok.xml' ),
 			'https://fixtures.job-aggregator.test/remoteok-updated.xml' => (string) file_get_contents( $fixture_base . 'remoteok-updated.xml' ),
 			'https://fixtures.job-aggregator.test/weworkremotely.xml' => (string) file_get_contents( $fixture_base . 'weworkremotely.xml' ),
+			'https://fixtures.job-aggregator.test/hotnigerianjobs.xml' => (string) file_get_contents( $fixture_base . 'hotnigerianjobs.xml' ),
 		);
 	}
 
-	private function get_source_post_map( array $source_keys = array( 'e2e_myjobmag', 'e2e_remoteok', 'e2e_weworkremotely' ) ) {
+	private function get_source_post_map( array $source_keys = array( 'e2e_myjobmag', 'e2e_remoteok', 'e2e_weworkremotely', 'e2e_hotnigerianjobs' ) ) {
 		$query = new \WP_Query(
 			array(
 				'post_type'      => 'job_listing',
@@ -318,6 +326,7 @@ class RssIngestionE2ETest extends TestCase {
 					'e2e_myjobmag'       => ! empty( $enabled_map['e2e_myjobmag'] ) ? 1 : 0,
 					'e2e_remoteok'       => ! empty( $enabled_map['e2e_remoteok'] ) ? 1 : 0,
 					'e2e_weworkremotely' => ! empty( $enabled_map['e2e_weworkremotely'] ) ? 1 : 0,
+					'e2e_hotnigerianjobs' => ! empty( $enabled_map['e2e_hotnigerianjobs'] ) ? 1 : 0,
 				),
 			)
 		);
@@ -468,7 +477,7 @@ class RssIngestionE2ETest extends TestCase {
 			ARRAY_A
 		);
 
-		$this->assertCount( 3, $rows );
+		$this->assertCount( 4, $rows );
 
 		foreach ( $rows as $row ) {
 			$this->assertSame( 'completed', (string) $row['status'] );

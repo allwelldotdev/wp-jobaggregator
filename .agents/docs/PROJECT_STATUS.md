@@ -17,7 +17,7 @@
 - Divi parent theme plus a custom child theme.
 - Runtime/generated directories such as `wp-content/uploads/`, `wp-content/et-cache/`, and `wp-content/wpaas-updates-log/`.
 - A plugin scaffold with cron registration, source registry, RSS and Jooble source classes, duplicate checking, and `job_listing` persistence.
-- Source architecture now supports format-level + source-level classes under `src/Sources/RSS` and `src/Sources/API`, including source-specific RSS normalization for MyJobMag, RemoteOK, and We Work Remotely.
+- Source architecture now supports format-level + source-level classes under `src/Sources/RSS` and `src/Sources/API`, including source-specific RSS normalization for MyJobMag, RemoteOK, We Work Remotely, and Hot Nigerian Jobs.
 - Source catalog/default definitions stay in `config/sources.php`, while effective source enablement is now managed in `job_aggregator_settings[source_states]` from the admin Settings screen.
 - Import orchestration now runs in resumable batches using a start hook and a process hook instead of processing all sources in one request.
 - Custom run-state tables are now part of the plugin runtime:
@@ -39,7 +39,7 @@
 ## What Does Not Exist Yet
 - No live source credentials or production feed URLs are configured.
 - Integration test harness for full WordPress persistence behavior is still not in place, though parser/normalization unit tests now exist.
-- Broad source-specific mapping coverage beyond MyJobMag RSS, RemoteOK RSS, We Work Remotely RSS, and Jooble API is still pending.
+- Broad source-specific mapping coverage beyond MyJobMag RSS, RemoteOK RSS, We Work Remotely RSS, Hot Nigerian Jobs RSS, and Jooble API is still pending.
 - Direct Local `mysql` CLI access still needs OS compatibility libraries if you want to use that binary instead of `wp db ...`.
 
 ## Current Decision

@@ -165,6 +165,16 @@ class Settings {
 		}
 	}
 
+	public static function enforce_configured_source_states( array $settings, array $configured_source_states ) {
+		$settings                  = wp_parse_args( $settings, self::defaults() );
+		$settings['source_states'] = self::merge_source_states(
+			isset( $settings['source_states'] ) ? $settings['source_states'] : array(),
+			$configured_source_states
+		);
+
+		return $settings;
+	}
+
 	private static function normalize_source_states( $states ) {
 		if ( ! is_array( $states ) ) {
 			return array();
@@ -203,14 +213,14 @@ class Settings {
 		$merged = self::normalize_source_states( $existing_states );
 
 		foreach ( $configured_source_states as $source_key => $config_enabled ) {
-			unset( $config_enabled );
-
 			$key = sanitize_key( (string) $source_key );
 			if ( '' === $key ) {
 				continue;
 			}
 
-			if ( ! array_key_exists( $key, $merged ) ) {
+			if ( empty( $config_enabled ) ) {
+				$merged[ $key ] = 0;
+			} elseif ( ! array_key_exists( $key, $merged ) ) {
 				$merged[ $key ] = 0;
 			}
 		}

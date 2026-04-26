@@ -12,6 +12,10 @@ class TestableMyJobMagRssSource extends MyJobMagRssSource {
 		return $this->is_allowed_location( $location );
 	}
 
+	public function map_location_for_test( $location, array $defaults ) {
+		return $this->map_location( $location, $defaults );
+	}
+
 	public function derive_expires_at_for_test( $expiry_date, $pub_date ) {
 		return $this->derive_expires_at( $expiry_date, $pub_date );
 	}
@@ -55,6 +59,14 @@ class MyJobMagRssSourceTest extends TestCase {
 	public function test_location_filter_rejects_non_target_locations() {
 		$this->assertFalse( $this->source->is_allowed_location_for_test( 'Lagos' ) );
 		$this->assertFalse( $this->source->is_allowed_location_for_test( '' ) );
+	}
+
+	public function test_location_mapping_uses_default_for_all_source_location() {
+		$defaults = array( 'location' => 'Nigeria' );
+
+		$this->assertSame( 'Nigeria', $this->source->map_location_for_test( 'All', $defaults ) );
+		$this->assertSame( 'Nigeria', $this->source->map_location_for_test( ' all ', $defaults ) );
+		$this->assertSame( 'Abia', $this->source->map_location_for_test( 'Abia', $defaults ) );
 	}
 
 	public function test_expires_at_prefers_expiry_date_when_present() {

@@ -4,6 +4,7 @@ namespace JobAggregator\Tests\Unit;
 
 use JobAggregator\Cron\Scheduler;
 use JobAggregator\SourceRegistry;
+use JobAggregator\Sources\RSS\HotNigerianJobsRssSource;
 use JobAggregator\Support\HttpClient;
 use JobAggregator\Support\Logger;
 use JobAggregator\Support\Settings;
@@ -53,17 +54,19 @@ class SourceRegistryTest extends TestCase {
 		$registry = $this->new_registry();
 
 		$configured = $registry->configured();
-		$this->assertCount( 2, $configured );
+		$this->assertCount( 3, $configured );
 		$this->assertSame( 'test_myjobmag', $configured[0]['key'] );
 		$this->assertTrue( $configured[0]['config_enabled'] );
 		$this->assertFalse( $configured[0]['effective_enabled'] );
 		$this->assertSame( 'test_remoteok', $configured[1]['key'] );
 		$this->assertFalse( $configured[1]['config_enabled'] );
-		$this->assertTrue( $configured[1]['effective_enabled'] );
+		$this->assertFalse( $configured[1]['effective_enabled'] );
+		$this->assertSame( 'test_hotnigerianjobs', $configured[2]['key'] );
+		$this->assertFalse( $configured[2]['config_enabled'] );
+		$this->assertFalse( $configured[2]['effective_enabled'] );
 
 		$enabled_sources = $registry->all();
-		$this->assertCount( 1, $enabled_sources );
-		$this->assertSame( 'test_remoteok', $enabled_sources[0]->get_key() );
+		$this->assertCount( 0, $enabled_sources );
 	}
 
 	public function test_configured_source_states_reflect_catalog_enabled_flags() {
@@ -73,9 +76,17 @@ class SourceRegistryTest extends TestCase {
 			array(
 				'test_myjobmag' => 1,
 				'test_remoteok' => 0,
+				'test_hotnigerianjobs' => 0,
 			),
 			$registry->configured_source_states()
 		);
+	}
+
+	public function test_hotnigerianjobs_driver_builds_dedicated_rss_source() {
+		$registry = $this->new_registry();
+		$source   = $registry->get( 'test_hotnigerianjobs' );
+
+		$this->assertInstanceOf( HotNigerianJobsRssSource::class, $source );
 	}
 
 	private function new_registry() {
@@ -110,6 +121,14 @@ return array(
 			'driver'     => 'remoteok',
 			'label'      => 'RemoteOK Test',
 			'url'        => 'https://example.test/remoteok.xml',
+			'batch_size' => 25,
+		),
+		array(
+			'enabled'    => false,
+			'key'        => 'test_hotnigerianjobs',
+			'driver'     => 'hotnigerianjobs',
+			'label'      => 'Hot Nigerian Jobs Test',
+			'url'        => 'https://example.test/hotnigerianjobs.xml',
 			'batch_size' => 25,
 		),
 	),

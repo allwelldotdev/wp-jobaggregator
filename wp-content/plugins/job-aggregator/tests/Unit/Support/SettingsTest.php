@@ -134,4 +134,56 @@ class SettingsTest extends TestCase {
 			$settings['source_states']
 		);
 	}
+
+	public function test_ensure_source_states_forces_catalog_disabled_sources_off() {
+		UnitWpState::$options[ Settings::OPTION_KEY ] = array(
+			'enable_recurring' => 1,
+			'recurrence'       => Scheduler::EVERY_EIGHT_HOURS,
+			'process_delay'    => 5,
+			'runs_per_page'    => 20,
+			'source_states'    => array(
+				'myjobmag' => 1,
+				'remoteok' => 1,
+			),
+		);
+
+		Settings::ensure_source_states(
+			array(
+				'myjobmag' => 1,
+				'remoteok' => 0,
+			)
+		);
+
+		$settings = Settings::all();
+		$this->assertSame(
+			array(
+				'myjobmag' => 1,
+				'remoteok' => 0,
+			),
+			$settings['source_states']
+		);
+	}
+
+	public function test_enforce_configured_source_states_rejects_catalog_disabled_override() {
+		$settings = Settings::enforce_configured_source_states(
+			array(
+				'source_states' => array(
+					'myjobmag' => 1,
+					'remoteok' => 1,
+				),
+			),
+			array(
+				'myjobmag' => 1,
+				'remoteok' => 0,
+			)
+		);
+
+		$this->assertSame(
+			array(
+				'myjobmag' => 1,
+				'remoteok' => 0,
+			),
+			$settings['source_states']
+		);
+	}
 }

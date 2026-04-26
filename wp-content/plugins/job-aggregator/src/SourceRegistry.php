@@ -4,6 +4,7 @@ namespace JobAggregator;
 
 use JobAggregator\Jobs\NormalizationSignalStore;
 use JobAggregator\Sources\API\JoobleApiSource;
+use JobAggregator\Sources\RSS\HotNigerianJobsRssSource;
 use JobAggregator\Sources\RSS\MyJobMagRssSource;
 use JobAggregator\Sources\RSS\RemoteOkRssSource;
 use JobAggregator\Sources\RSS\RssFeedSource;
@@ -164,9 +165,7 @@ class SourceRegistry {
 		$effective         = array();
 
 		foreach ( $configured_states as $source_key => $config_enabled ) {
-			unset( $config_enabled );
-
-			$effective[ $source_key ] = ! empty( $overrides[ $source_key ] ) ? 1 : 0;
+			$effective[ $source_key ] = ! empty( $config_enabled ) && ! empty( $overrides[ $source_key ] ) ? 1 : 0;
 		}
 
 		return $effective;
@@ -200,6 +199,13 @@ class SourceRegistry {
 				$source_config,
 				$this->logger,
 				$this->normalization_signals,
+			);
+		}
+
+		if ( 'hotnigerianjobs' === $key || 'hotnigerianjobs' === $driver ) {
+			return new HotNigerianJobsRssSource(
+				$source_config,
+				$this->logger,
 			);
 		}
 

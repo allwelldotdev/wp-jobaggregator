@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Hot Nigerian Jobs Fixture</title>
+    <item>
+      <title>Nutritionist / Quality Control (Offshore) at Castel Resources Consultancy Limited</title>
+      <link>https://fixtures.job-aggregator.test/jobs/hnj-001</link>
+      <guid>https://fixtures.job-aggregator.test/jobs/hnj-001</guid>
+      <category></category>
+      <description><![CDATA[Castel Resources Consultancy Limited is recruiting to fill the position of: Nutritionist / Quality Control (Offshore). The position is located in Port Harcourt, Rivers State. Interested candidates should possess a Degree in Nutrition/Food Science.]]></description>
+      <pubDate>Thu, 09 Apr 2026 18:34:29 +0100</pubDate>
+    </item>
+    <item>
+      <title>Ibadan Business School Limited Job Recruitment (5 Positions)</title>
+      <link>https://fixtures.job-aggregator.test/jobs/hnj-skip-roundup</link>
+      <guid>https://fixtures.job-aggregator.test/jobs/hnj-skip-roundup</guid>
+      <category></category>
+      <description><![CDATA[Ibadan Business School Limited is recruiting suitable candidates. The position is located in Abia State.]]></description>
+      <pubDate>Thu, 09 Apr 2026 18:49:47 +0100</pubDate>
+    </item>
+    <item>
+      <title>Senior Backend Engineer at Example Limited</title>
+      <link>https://fixtures.job-aggregator.test/jobs/hnj-skip-senior</link>
+      <guid>https://fixtures.job-aggregator.test/jobs/hnj-skip-senior</guid>
+      <category></category>
+      <description><![CDATA[Example Limited is recruiting to fill the position of: Senior Backend Engineer. The position is located in Enugu State.]]></description>
+      <pubDate>Thu, 09 Apr 2026 18:40:34 +0100</pubDate>
+    </item>
+    <item>
+      <title>Customer Acquisition Agent at Lifebank</title>
+      <link>https://fixtures.job-aggregator.test/jobs/hnj-skip-location</link>
+      <guid>https://fixtures.job-aggregator.test/jobs/hnj-skip-location</guid>
+      <category></category>
+      <description><![CDATA[Lifebank is recruiting to fill the position of: Customer Acquisition Agent. The position is located in Onipanu, Lagos State.]]></description>
+      <pubDate>Thu, 09 Apr 2026 18:30:42 +0100</pubDate>
+    </item>
+  </channel>
+</rss>

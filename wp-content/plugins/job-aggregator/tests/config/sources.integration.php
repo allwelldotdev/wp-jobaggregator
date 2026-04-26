@@ -47,6 +47,21 @@ return array(
 				'remote_position'  => true,
 			),
 		),
+		array(
+			'enabled'    => true,
+			'key'        => 'e2e_hotnigerianjobs',
+			'driver'     => 'hotnigerianjobs',
+			'label'      => 'Hot Nigerian Jobs E2E',
+			'url'        => 'https://fixtures.job-aggregator.test/hotnigerianjobs.xml',
+			'limit'      => 25,
+			'batch_size' => 25,
+			'defaults'   => array(
+				'location'         => 'Nigeria',
+				'company_name'     => '',
+				'employment_types' => array( 'Full Time' ),
+				'remote_position'  => false,
+			),
+		),
 	),
 	'apis' => array(),
 );
