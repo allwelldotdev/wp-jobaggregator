@@ -66,9 +66,9 @@ Important source-state behavior:
 
 ## Local Runtime
 
-This codebase is developed against a LocalWP site. Use the `localwp` wrapper for PHP, WP-CLI, Composer, and WordPress DB commands so commands run inside the correct Local site environment.
+This codebase is developed against a LocalWP site. Use the [`localwp`](https://github.com/allwelldotdev/localwp-cli-wrapper) shell wrapper for PHP, WP-CLI, Composer, and WordPress DB commands so commands run inside the correct Local site environment.
 
-Common command prefix:
+Common command prefix using [`localwp`](https://github.com/allwelldotdev/localwp-cli-wrapper):
 
 ```bash
 LOCALWP_SSH_ENTRY=~/.config/Local/ssh-entry/rYLMOKnKH.sh \
@@ -149,7 +149,7 @@ Known lint note: the current codebase permits a non-fatal PHPCS warning for `err
 5. Add a fixture under `tests/fixtures/rss/`.
 6. Extend `tests/config/sources.integration.php` and `tests/config/sources.integration.updated.php` when fixture E2E coverage is needed.
 7. Update `tests/Integration/E2E/RssIngestionE2ETest.php` assertions and cleanup expectations.
-8. Run `composer format`, `composer lint`, and the relevant test suites through `localwp`.
+8. Run `composer format`, `composer lint`, and the relevant test suites through [`localwp`](https://github.com/allwelldotdev/localwp-cli-wrapper).
 
 Test data must clean up after itself. E2E sources should use the `e2e_` source-key prefix.
 
