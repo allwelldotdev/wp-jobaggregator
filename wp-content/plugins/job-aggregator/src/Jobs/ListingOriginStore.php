@@ -11,7 +11,7 @@ class ListingOriginStore {
 	private $wpdb;
 	private $origins_table;
 
-	public function __construct( wpdb $database = null ) {
+	public function __construct( ?wpdb $database = null ) {
 		global $wpdb;
 		$this->wpdb          = $database ?: $wpdb;
 		$this->origins_table = $this->wpdb->prefix . 'job_aggregator_listing_origins';

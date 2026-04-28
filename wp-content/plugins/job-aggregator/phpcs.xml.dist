@@ -2,6 +2,7 @@
 <ruleset name="Job Aggregator">
   <description>Project PHPCS baseline for Job Aggregator plugin.</description>
   <config name="ignore_warnings_on_exit" value="1"/>
+  <config name="testVersion" value="7.4-"/>
 
   <file>src</file>
   <file>job-aggregator.php</file>
@@ -18,4 +19,6 @@
     <exclude name="Squiz.Commenting.FunctionComment"/>
     <exclude name="Squiz.Commenting.VariableComment"/>
   </rule>
+
+  <rule ref="PHPCompatibilityWP"/>
 </ruleset>
