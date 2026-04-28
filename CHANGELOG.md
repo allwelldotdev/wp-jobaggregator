@@ -4,6 +4,35 @@ All notable changes to this project are documented in this file.
 
 This changelog follows Keep a Changelog principles and Semantic Versioning.
 
+## [0.6.0] - 2026-04-28
+
+### Release Summary
+- Plugin: `Job Aggregator`
+- Release type: `Minor`
+- Previous version: `0.5.0`
+- New version: `0.6.0`
+
+### Added
+- Cross-source Nigeria duplicate prevention using normalized title/company matching across runtime-enabled Nigeria-default sources.
+- Listing-origin persistence layer for dedup lookups (`{prefix}job_aggregator_listing_origins`) with index-backed origin reads/writes.
+- Run-retention selector logic and retention settings (`run_retention_days`, `run_keep_min`) to support lifecycle cleanup.
+- Monitoring "Recent Failures" pagination with fixed page size behavior and page navigation support.
+- PHPCompatibility ruleset support in plugin lint tooling via `phpcompatibility/phpcompatibility-wp`.
+
+### Changed
+- MyJobMag title normalization now strips trailing company suffixes using standalone case-insensitive ` at ` splitting.
+- Plugin cleanup flow now uses a two-stage run-history lifecycle (`completed/failed/partial` -> `archived` -> hard delete) for plugin tables.
+- Admin settings now expose WPJM expired-job deletion toggle and retention controls tied to runtime behavior.
+- PHPCS configuration now includes a compatibility baseline (`testVersion`) alongside existing WordPress coding standards.
+
+### Fixed
+- `ListingOriginStore` constructor typing now uses explicit nullable `wpdb` parameter declaration for forward PHP deprecation safety.
+- Cross-source dedup behavior now applies regardless of ingestion order across enabled Nigeria-default sources.
+
+### Compatibility
+- Breaking changes: `None`.
+- Database migration required: `Yes` (new listing-origins table and run lifecycle usage).
+
 ## [0.5.0] - 2026-04-26
 
 ### Release Summary
