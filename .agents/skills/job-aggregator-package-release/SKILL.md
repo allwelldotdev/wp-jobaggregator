@@ -10,6 +10,7 @@ Use this skill when:
 - preparing the plugin for manual upload in WordPress admin
 - preparing the plugin for `wp plugin install <zip>`
 - verifying that the zip contains only runtime files
+- uploading the packaged zip to the matching GitHub release tag asset list
 
 ## Packaging Rules
 
@@ -58,6 +59,30 @@ After packaging:
 - confirm excluded dev files are absent
 - run `git status --short` and confirm the zip is not tracked
 
+## GitHub Release Asset Upload (Optional)
+
+When requested, upload the generated zip to the matching GitHub release tag:
+
+- Release repo: `allwelldotdev/wp-jobaggregator`
+- Tag format: `v<version>` (for example plugin version `0.6.0` -> tag `v0.6.0`)
+- Asset file: `job-aggregator-<version>.zip`
+
+Command:
+
+```bash
+gh release upload v<version> job-aggregator-<version>.zip --repo allwelldotdev/wp-jobaggregator
+```
+
+If the asset already exists, replace it:
+
+```bash
+gh release upload v<version> job-aggregator-<version>.zip --repo allwelldotdev/wp-jobaggregator --clobber
+```
+
+Post-upload verification:
+- run `gh release view v<version> --repo allwelldotdev/wp-jobaggregator --json assets,url`
+- confirm `job-aggregator-<version>.zip` is present in `assets`
+
 ## Install Paths
 
 - WordPress admin upload: `Plugins -> Add New -> Upload Plugin`
@@ -71,3 +96,4 @@ wp plugin install /path/to/job-aggregator-<version>.zip --activate
 
 - If runtime structure changes, update this skill in the same change.
 - If the plugin begins requiring Composer runtime dependencies, stop excluding `vendor/` and re-evaluate the package contents.
+- Do not create release tags or publish release notes in this skill; only upload/verify package assets when requested.
