@@ -15,11 +15,14 @@ class Settings {
 
 	public static function defaults() {
 		return array(
-			'enable_recurring' => 0,
-			'recurrence'       => Scheduler::EVERY_TWO_HOURS,
-			'process_delay'    => 5,
-			'runs_per_page'    => 20,
-			'source_states'    => array(),
+			'enable_recurring'            => 0,
+			'recurrence'                  => Scheduler::EVERY_TWO_HOURS,
+			'process_delay'               => 5,
+			'runs_per_page'               => 20,
+			'delete_expired_job_listings' => 0,
+			'run_retention_days'          => 62,
+			'run_keep_min'                => 750,
+			'source_states'               => array(),
 		);
 	}
 
@@ -32,18 +35,29 @@ class Settings {
 
 		$settings = wp_parse_args( $stored, self::defaults() );
 
-		$settings['enable_recurring'] = empty( $settings['enable_recurring'] )
+		$settings['enable_recurring']            = empty( $settings['enable_recurring'] )
 			? 0
 			: 1;
-		$settings['process_delay']    = max(
+		$settings['delete_expired_job_listings'] = empty( $settings['delete_expired_job_listings'] )
+			? 0
+			: 1;
+		$settings['process_delay']               = max(
 			5,
 			min( 300, (int) $settings['process_delay'] ),
 		);
-		$settings['runs_per_page']    = max(
+		$settings['runs_per_page']               = max(
 			5,
 			min( 100, (int) $settings['runs_per_page'] ),
 		);
-		$settings['source_states']    = self::normalize_source_states(
+		$settings['run_retention_days']          = max(
+			1,
+			min( 3650, (int) $settings['run_retention_days'] ),
+		);
+		$settings['run_keep_min']                = max(
+			0,
+			min( 50000, (int) $settings['run_keep_min'] ),
+		);
+		$settings['source_states']               = self::normalize_source_states(
 			isset( $settings['source_states'] ) ? $settings['source_states'] : array()
 		);
 
@@ -82,27 +96,46 @@ class Settings {
 				: array() );
 
 		return array(
-			'enable_recurring' => empty( $input['enable_recurring'] ) ? 0 : 1,
-			'recurrence'       => $recurrence,
-			'process_delay'    => max(
+			'enable_recurring'            => empty( $input['enable_recurring'] ) ? 0 : 1,
+			'recurrence'                  => $recurrence,
+			'process_delay'               => max(
 				5,
 				min(
 					300,
 					isset( $input['process_delay'] )
 						? (int) $input['process_delay']
-						: (int) $defaults['process_delay'],
+					: (int) $defaults['process_delay'],
 				),
 			),
-			'runs_per_page'    => max(
+			'runs_per_page'               => max(
 				5,
 				min(
 					100,
 					isset( $input['runs_per_page'] )
 						? (int) $input['runs_per_page']
-						: (int) $defaults['runs_per_page'],
+					: (int) $defaults['runs_per_page'],
 				),
 			),
-			'source_states'    => self::normalize_source_states( $source_states ),
+			'delete_expired_job_listings' => empty( $input['delete_expired_job_listings'] ) ? 0 : 1,
+			'run_retention_days'          => max(
+				1,
+				min(
+					3650,
+					isset( $input['run_retention_days'] )
+						? (int) $input['run_retention_days']
+						: (int) $defaults['run_retention_days'],
+				),
+			),
+			'run_keep_min'                => max(
+				0,
+				min(
+					50000,
+					isset( $input['run_keep_min'] )
+						? (int) $input['run_keep_min']
+						: (int) $defaults['run_keep_min'],
+				),
+			),
+			'source_states'               => self::normalize_source_states( $source_states ),
 		);
 	}
 

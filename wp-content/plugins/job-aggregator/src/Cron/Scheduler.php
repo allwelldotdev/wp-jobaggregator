@@ -10,6 +10,7 @@ use JobAggregator\Support\Settings;
 class Scheduler {
 	const START_HOOK        = 'job_aggregator_start_batch';
 	const PROCESS_HOOK      = 'job_aggregator_process_batch';
+	const CLEANUP_HOOK      = 'job_aggregator_cleanup_history';
 	const EVERY_TWO_HOURS   = 'job_aggregator_every_2_hours';
 	const EVERY_EIGHT_HOURS = 'job_aggregator_every_8_hours';
 
@@ -17,6 +18,7 @@ class Scheduler {
 		add_filter( 'cron_schedules', array( $this, 'add_custom_schedules' ) );
 		add_action( self::START_HOOK, array( $plugin, 'start_batch' ) );
 		add_action( self::PROCESS_HOOK, array( $plugin, 'process_batch' ), 10, 1 );
+		add_action( self::CLEANUP_HOOK, array( $plugin, 'cleanup_history' ) );
 	}
 
 	public function schedule_recurring_start( $force_reschedule = false ) {
@@ -58,9 +60,20 @@ class Scheduler {
 		}
 	}
 
+	public function schedule_cleanup_history( $force_reschedule = false ) {
+		$event = wp_get_scheduled_event( self::CLEANUP_HOOK );
+		if ( $event && ! $force_reschedule ) {
+			return;
+		}
+
+		wp_clear_scheduled_hook( self::CLEANUP_HOOK );
+		wp_schedule_event( time() + 600, 'daily', self::CLEANUP_HOOK );
+	}
+
 	public function clear_all_events() {
 		wp_clear_scheduled_hook( self::START_HOOK );
 		wp_clear_scheduled_hook( self::PROCESS_HOOK );
+		wp_clear_scheduled_hook( self::CLEANUP_HOOK );
 	}
 
 	public function add_custom_schedules( $schedules ) {

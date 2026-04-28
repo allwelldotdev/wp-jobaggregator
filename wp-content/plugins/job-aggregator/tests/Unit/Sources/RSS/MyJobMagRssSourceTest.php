@@ -31,6 +31,10 @@ class TestableMyJobMagRssSource extends MyJobMagRssSource {
 	public function apply_salary_mapping_for_test( array $job_payload, $salary_raw ) {
 		return $this->apply_salary_mapping( $job_payload, $salary_raw );
 	}
+
+	public function normalize_title_for_test( $title ) {
+		return $this->normalize_title( $title );
+	}
 }
 
 class MyJobMagRssSourceTest extends TestCase {
@@ -54,6 +58,24 @@ class MyJobMagRssSourceTest extends TestCase {
 		$this->assertTrue( $this->source->is_allowed_location_for_test( 'Abia' ) );
 		$this->assertTrue( $this->source->is_allowed_location_for_test( 'Lagos, Enugu' ) );
 		$this->assertTrue( $this->source->is_allowed_location_for_test( 'all' ) );
+	}
+
+	public function test_title_normalization_splits_standalone_at_delimiter() {
+		$this->assertSame(
+			'Nutritionist / Quality Control (Offshore)',
+			$this->source->normalize_title_for_test( 'Nutritionist / Quality Control (Offshore) at Castel Resources Consultancy Limited' )
+		);
+	}
+
+	public function test_title_normalization_keeps_title_without_standalone_delimiter() {
+		$this->assertSame(
+			'Platform Engineer',
+			$this->source->normalize_title_for_test( 'Platform Engineer' )
+		);
+		$this->assertSame(
+			'Senior Data Analyst',
+			$this->source->normalize_title_for_test( 'Senior Data Analyst' )
+		);
 	}
 
 	public function test_location_filter_rejects_non_target_locations() {

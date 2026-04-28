@@ -50,6 +50,7 @@ class AdminView {
 			'completed'     => __( 'Completed', 'job-aggregator' ),
 			'partial'       => __( 'Partial', 'job-aggregator' ),
 			'failed'        => __( 'Failed', 'job-aggregator' ),
+			'archived'      => __( 'Archived', 'job-aggregator' ),
 			'queued'        => __( 'Queued', 'job-aggregator' ),
 		);
 

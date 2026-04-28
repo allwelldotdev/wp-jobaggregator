@@ -30,6 +30,9 @@ class SettingsTest extends TestCase {
 
 		$this->assertSame( 0, $defaults['enable_recurring'] );
 		$this->assertSame( Scheduler::EVERY_TWO_HOURS, $defaults['recurrence'] );
+		$this->assertSame( 0, $defaults['delete_expired_job_listings'] );
+		$this->assertSame( 62, $defaults['run_retention_days'] );
+		$this->assertSame( 750, $defaults['run_keep_min'] );
 		$this->assertSame( array(), $defaults['source_states'] );
 	}
 
@@ -40,6 +43,9 @@ class SettingsTest extends TestCase {
 				'recurrence'       => Scheduler::EVERY_TWO_HOURS,
 				'process_delay'    => 15,
 				'runs_per_page'    => 30,
+				'delete_expired_job_listings' => 1,
+				'run_retention_days' => 90,
+				'run_keep_min' => 1200,
 				'source_states'    => array(
 					'myjobmag' => '1',
 					'remoteok' => 0,
@@ -51,6 +57,9 @@ class SettingsTest extends TestCase {
 		$this->assertSame( Scheduler::EVERY_TWO_HOURS, $sanitized['recurrence'] );
 		$this->assertSame( 15, $sanitized['process_delay'] );
 		$this->assertSame( 30, $sanitized['runs_per_page'] );
+		$this->assertSame( 1, $sanitized['delete_expired_job_listings'] );
+		$this->assertSame( 90, $sanitized['run_retention_days'] );
+		$this->assertSame( 1200, $sanitized['run_keep_min'] );
 		$this->assertSame(
 			array(
 				'myjobmag' => 1,
@@ -72,6 +81,9 @@ class SettingsTest extends TestCase {
 
 		$this->assertSame( 0, $settings['enable_recurring'] );
 		$this->assertSame( Scheduler::EVERY_TWO_HOURS, $settings['recurrence'] );
+		$this->assertSame( 0, $settings['delete_expired_job_listings'] );
+		$this->assertSame( 62, $settings['run_retention_days'] );
+		$this->assertSame( 750, $settings['run_keep_min'] );
 		$this->assertSame(
 			array(
 				'myjobmag' => 0,
@@ -185,5 +197,17 @@ class SettingsTest extends TestCase {
 			),
 			$settings['source_states']
 		);
+	}
+
+	public function test_sanitize_clamps_retention_settings() {
+		$sanitized = Settings::sanitize(
+			array(
+				'run_retention_days' => -20,
+				'run_keep_min'       => -5,
+			)
+		);
+
+		$this->assertSame( 1, $sanitized['run_retention_days'] );
+		$this->assertSame( 0, $sanitized['run_keep_min'] );
 	}
 }

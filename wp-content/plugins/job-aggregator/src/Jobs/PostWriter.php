@@ -24,7 +24,11 @@ class PostWriter {
 	}
 
 	public function upsert_with_result( JobData $job ) {
-		$existing_id         = $this->duplicate_checker->find_existing_id( $job );
+		$existing_id          = $this->duplicate_checker->find_existing_id( $job );
+		$cross_source_post_id = 0;
+		if ( ! $existing_id ) {
+			$cross_source_post_id = $this->duplicate_checker->find_cross_source_duplicate_id( $job );
+		}
 		$identity_key        = $this->duplicate_checker->build_identity_key( $job );
 		$content_fingerprint = $this->build_content_fingerprint( $job );
 		$postarr             = array(
@@ -49,6 +53,7 @@ class PostWriter {
 			);
 
 			if ( '' !== $existing_fingerprint && hash_equals( $existing_fingerprint, $content_fingerprint ) ) {
+				$this->duplicate_checker->sync_cross_source_origin( $job, $existing_id );
 				$this->logger->info(
 					'Skipped unchanged job listing.',
 					array(
@@ -63,6 +68,23 @@ class PostWriter {
 					'action'  => 'skipped',
 				);
 			}
+		}
+
+		if ( $cross_source_post_id > 0 ) {
+			$this->logger->info(
+				'Skipped cross-source duplicate job listing.',
+				array(
+					'existing_post_id' => $cross_source_post_id,
+					'source_key'       => $job->source_key,
+					'title'            => $job->title,
+					'company_name'     => $job->company_name,
+				)
+			);
+
+			return array(
+				'post_id' => (int) $cross_source_post_id,
+				'action'  => 'skipped',
+			);
 		}
 
 		if ( $existing_id ) {
@@ -120,6 +142,7 @@ class PostWriter {
 				'title'      => $job->title,
 			)
 		);
+		$this->duplicate_checker->sync_cross_source_origin( $job, $post_id );
 
 		return array(
 			'post_id' => (int) $post_id,

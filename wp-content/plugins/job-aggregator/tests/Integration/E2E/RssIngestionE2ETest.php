@@ -3,6 +3,7 @@
 namespace JobAggregator\Tests\Integration\E2E;
 
 use JobAggregator\Batch\BatchRunManager;
+use JobAggregator\Batch\CheckpointStore;
 use JobAggregator\Cron\Scheduler;
 use JobAggregator\Plugin;
 use JobAggregator\Support\Settings;
@@ -13,6 +14,9 @@ class RssIngestionE2ETest extends TestCase {
 	const TEST_SOURCE_KEY_PREFIX    = 'e2e_';
 	const TEST_CONFIG_RELATIVE_PATH = 'tests/config/sources.integration.php';
 	const TEST_CONFIG_UPDATED_RELATIVE_PATH = 'tests/config/sources.integration.updated.php';
+	const TEST_CONFIG_NIGERIA_MYJOBMAG_FIRST_RELATIVE_PATH = 'tests/config/sources.integration.nigeria.myjobmag-first.php';
+	const TEST_CONFIG_NIGERIA_HOT_FIRST_RELATIVE_PATH = 'tests/config/sources.integration.nigeria.hotnigerian-first.php';
+	const TEST_CONFIG_NIGERIA_THREE_SOURCES_RELATIVE_PATH = 'tests/config/sources.integration.nigeria.three-sources.php';
 
 	private $fixture_body_by_url = array();
 	private $config_filter;
@@ -25,6 +29,7 @@ class RssIngestionE2ETest extends TestCase {
 	protected function setUp(): void {
 		$this->register_job_listing_schema();
 		Plugin::activate();
+		$this->clear_active_runs();
 		$this->delete_test_run_rows();
 		$this->delete_test_posts();
 		$this->clear_feed_transients();
@@ -39,6 +44,7 @@ class RssIngestionE2ETest extends TestCase {
 		$this->remove_test_filters();
 		$this->clear_hook_events( Scheduler::START_HOOK );
 		$this->clear_hook_events( Scheduler::PROCESS_HOOK );
+		$this->clear_hook_events( Scheduler::CLEANUP_HOOK );
 		$this->clear_feed_transients();
 		$this->delete_test_posts();
 		$this->delete_test_run_rows();
@@ -150,6 +156,276 @@ class RssIngestionE2ETest extends TestCase {
 		$post_map = $this->get_source_post_map( array( 'e2e_remoteok' ) );
 		$this->assertCount( 1, $post_map );
 		$this->assertArrayHasKey( 'e2e_remoteok', $post_map );
+	}
+
+	public function test_nigeria_cross_source_dedup_skips_second_source_when_myjobmag_runs_first() {
+		$this->test_config_relative_path = self::TEST_CONFIG_NIGERIA_MYJOBMAG_FIRST_RELATIVE_PATH;
+		$this->configure_source_states( array( 'e2e_myjobmag', 'e2e_hotnigerianjobs' ) );
+
+		$run      = $this->run_import_to_completion();
+		$post_map = $this->get_source_post_map( array( 'e2e_myjobmag', 'e2e_hotnigerianjobs' ) );
+
+		$this->assertSame( 'completed', (string) $run['status'] );
+		$this->assertSame( 2, (int) $run['total_sources'] );
+		$this->assertSame( 1, (int) $run['created_count'] );
+		$this->assertSame( 1, (int) $run['skipped_count'] );
+		$this->assertCount( 1, $post_map );
+		$this->assertArrayHasKey( 'e2e_myjobmag', $post_map );
+	}
+
+	public function test_nigeria_cross_source_dedup_skips_second_source_when_hotnigerianjobs_runs_first() {
+		$this->test_config_relative_path = self::TEST_CONFIG_NIGERIA_HOT_FIRST_RELATIVE_PATH;
+		$this->configure_source_states( array( 'e2e_myjobmag', 'e2e_hotnigerianjobs' ) );
+
+		$run      = $this->run_import_to_completion();
+		$post_map = $this->get_source_post_map( array( 'e2e_myjobmag', 'e2e_hotnigerianjobs' ) );
+
+		$this->assertSame( 'completed', (string) $run['status'] );
+		$this->assertSame( 2, (int) $run['total_sources'] );
+		$this->assertSame( 1, (int) $run['created_count'] );
+		$this->assertSame( 1, (int) $run['skipped_count'] );
+		$this->assertCount( 1, $post_map );
+		$this->assertArrayHasKey( 'e2e_hotnigerianjobs', $post_map );
+	}
+
+	public function test_nigeria_cross_source_dedup_blocks_duplicates_across_three_sources() {
+		$this->test_config_relative_path = self::TEST_CONFIG_NIGERIA_THREE_SOURCES_RELATIVE_PATH;
+		$this->configure_source_states( array( 'e2e_myjobmag', 'e2e_hotnigerianjobs', 'e2e_myjobmag_alt' ) );
+
+		$run      = $this->run_import_to_completion();
+		$post_map = $this->get_source_post_map( array( 'e2e_myjobmag', 'e2e_hotnigerianjobs', 'e2e_myjobmag_alt' ) );
+
+		$this->assertSame( 'completed', (string) $run['status'] );
+		$this->assertSame( 3, (int) $run['total_sources'] );
+		$this->assertSame( 1, (int) $run['created_count'] );
+		$this->assertSame( 2, (int) $run['skipped_count'] );
+		$this->assertCount( 1, $post_map );
+		$this->assertArrayHasKey( 'e2e_myjobmag', $post_map );
+	}
+
+	public function test_recent_failures_support_pagination_counts() {
+		global $wpdb;
+
+		$runs_table        = $wpdb->prefix . 'job_aggregator_runs';
+		$run_sources_table = $wpdb->prefix . 'job_aggregator_run_sources';
+		$now               = current_time( 'mysql' );
+
+		$wpdb->insert(
+			$runs_table,
+			array(
+				'status'            => 'completed',
+				'triggered_by'      => 'manual',
+				'started_at'        => $now,
+				'last_activity_at'  => $now,
+				'completed_at'      => $now,
+				'archived_at'       => null,
+				'total_sources'     => 25,
+				'processed_sources' => 25,
+				'created_count'     => 0,
+				'updated_count'     => 0,
+				'skipped_count'     => 0,
+				'error_count'       => 25,
+				'retry_count'       => 0,
+				'has_follow_up'     => 0,
+				'created_at'        => $now,
+				'updated_at'        => $now,
+			),
+			array(
+				'%s',
+				'%s',
+				'%s',
+				'%s',
+				'%s',
+				'%s',
+				'%d',
+				'%d',
+				'%d',
+				'%d',
+				'%d',
+				'%d',
+				'%d',
+				'%d',
+				'%s',
+				'%s',
+			)
+		);
+		$run_id         = (int) $wpdb->insert_id;
+		$this->run_ids[] = $run_id;
+
+		for ( $index = 0; $index < 25; $index++ ) {
+			$error_at = gmdate( 'Y-m-d H:i:s', time() - $index * 60 + (int) ( get_option( 'gmt_offset' ) * HOUR_IN_SECONDS ) );
+
+			$wpdb->insert(
+				$run_sources_table,
+				array(
+					'run_id'             => $run_id,
+					'source_key'         => 'e2e_failure_' . $index,
+					'source_label'       => 'E2E Failure ' . $index,
+					'status'             => 'failed',
+					'last_run_at'        => $now,
+					'last_success_at'    => null,
+					'last_error_at'      => $error_at,
+					'last_error_message' => 'Synthetic failure #' . $index,
+					'attempt_count'      => 1,
+					'retry_count'        => 0,
+					'next_retry_at'      => null,
+					'processed_items'    => 0,
+					'remaining_hint'     => 0,
+					'has_more'           => 0,
+					'checkpoint_payload' => '{}',
+					'created_count'      => 0,
+					'updated_count'      => 0,
+					'skipped_count'      => 0,
+					'error_count'        => 1,
+					'created_at'         => $now,
+					'updated_at'         => $now,
+				),
+				array(
+					'%d',
+					'%s',
+					'%s',
+					'%s',
+					'%s',
+					'%s',
+					'%s',
+					'%s',
+					'%d',
+					'%d',
+					'%s',
+					'%d',
+					'%d',
+					'%d',
+					'%s',
+					'%d',
+					'%d',
+					'%d',
+					'%d',
+					'%s',
+					'%s',
+				)
+			);
+		}
+
+		$checkpoint_store = new CheckpointStore();
+		$page_one         = $checkpoint_store->list_recent_failures( 20, 0 );
+		$page_two         = $checkpoint_store->list_recent_failures( 20, 20 );
+
+		$this->assertSame( 25, $checkpoint_store->count_recent_failures() );
+		$this->assertCount( 20, $page_one );
+		$this->assertCount( 5, $page_two );
+	}
+
+	public function test_cleanup_history_archives_then_hard_deletes_old_runs() {
+		global $wpdb;
+
+		$runs_table        = $wpdb->prefix . 'job_aggregator_runs';
+		$run_sources_table = $wpdb->prefix . 'job_aggregator_run_sources';
+		$now               = current_time( 'mysql' );
+		$old_terminal_at   = gmdate( 'Y-m-d H:i:s', time() - ( 90 * DAY_IN_SECONDS ) + (int) ( get_option( 'gmt_offset' ) * HOUR_IN_SECONDS ) );
+		$baseline_visible_runs = ( new BatchRunManager() )->count_runs();
+
+		$wpdb->insert(
+			$runs_table,
+			array(
+				'status'            => 'completed',
+				'triggered_by'      => 'manual',
+				'started_at'        => $old_terminal_at,
+				'last_activity_at'  => $old_terminal_at,
+				'completed_at'      => $old_terminal_at,
+				'archived_at'       => null,
+				'total_sources'     => 1,
+				'processed_sources' => 1,
+				'created_count'     => 1,
+				'updated_count'     => 0,
+				'skipped_count'     => 0,
+				'error_count'       => 0,
+				'retry_count'       => 0,
+				'has_follow_up'     => 0,
+				'created_at'        => $old_terminal_at,
+				'updated_at'        => $old_terminal_at,
+			)
+		);
+		$run_id         = (int) $wpdb->insert_id;
+		$this->run_ids[] = $run_id;
+
+		$wpdb->insert(
+			$run_sources_table,
+			array(
+				'run_id'             => $run_id,
+				'source_key'         => 'e2e_retention_source',
+				'source_label'       => 'E2E Retention Source',
+				'status'             => 'completed',
+				'last_run_at'        => $old_terminal_at,
+				'last_success_at'    => $old_terminal_at,
+				'last_error_at'      => null,
+				'last_error_message' => '',
+				'attempt_count'      => 1,
+				'retry_count'        => 0,
+				'next_retry_at'      => null,
+				'processed_items'    => 1,
+				'remaining_hint'     => 0,
+				'has_more'           => 0,
+				'checkpoint_payload' => '{}',
+				'created_count'      => 1,
+				'updated_count'      => 0,
+				'skipped_count'      => 0,
+				'error_count'        => 0,
+				'created_at'         => $old_terminal_at,
+				'updated_at'         => $old_terminal_at,
+			)
+		);
+
+		update_option(
+			Settings::OPTION_KEY,
+			array(
+				'enable_recurring'            => 0,
+				'recurrence'                  => Scheduler::EVERY_TWO_HOURS,
+				'process_delay'               => 5,
+				'runs_per_page'               => 20,
+				'delete_expired_job_listings' => 0,
+				'run_retention_days'          => 62,
+				'run_keep_min'                => 0,
+				'source_states'               => array(),
+			)
+		);
+
+		$plugin = new Plugin();
+		$plugin->cleanup_history();
+
+		$run_manager  = new BatchRunManager();
+		$archived_run = $run_manager->get_run_including_archived( $run_id );
+		$this->assertSame( 'archived', (string) $archived_run['status'] );
+		$this->assertSame( $baseline_visible_runs, $run_manager->count_runs() );
+		$recent_run_ids = array_map(
+			static function ( $row ) {
+				return isset( $row['id'] ) ? (int) $row['id'] : 0;
+			},
+			$run_manager->list_recent_runs( 50, 0 )
+		);
+		$this->assertNotContains( $run_id, $recent_run_ids );
+
+		$wpdb->update(
+			$runs_table,
+			array(
+				'archived_at' => gmdate( 'Y-m-d H:i:s', time() - ( 31 * DAY_IN_SECONDS ) + (int) ( get_option( 'gmt_offset' ) * HOUR_IN_SECONDS ) ),
+				'updated_at'  => $now,
+			),
+			array( 'id' => $run_id ),
+			array( '%s', '%s' ),
+			array( '%d' )
+		);
+
+		$plugin->cleanup_history();
+
+		$deleted_run = $run_manager->get_run_including_archived( $run_id );
+		$this->assertEmpty( $deleted_run );
+		$remaining_source_rows = $wpdb->get_var(
+			$wpdb->prepare(
+				"SELECT COUNT(1) FROM {$run_sources_table} WHERE run_id = %d",
+				$run_id
+			)
+		);
+		$this->assertSame( 0, (int) $remaining_source_rows );
 	}
 
 	private function run_import_to_completion() {
@@ -273,6 +549,7 @@ class RssIngestionE2ETest extends TestCase {
 
 		return array(
 			'https://fixtures.job-aggregator.test/myjobmag.xml'      => (string) file_get_contents( $fixture_base . 'myjobmag.xml' ),
+			'https://fixtures.job-aggregator.test/myjobmag-dedup.xml' => (string) file_get_contents( $fixture_base . 'myjobmag-dedup.xml' ),
 			'https://fixtures.job-aggregator.test/remoteok.xml'      => (string) file_get_contents( $fixture_base . 'remoteok.xml' ),
 			'https://fixtures.job-aggregator.test/remoteok-updated.xml' => (string) file_get_contents( $fixture_base . 'remoteok-updated.xml' ),
 			'https://fixtures.job-aggregator.test/weworkremotely.xml' => (string) file_get_contents( $fixture_base . 'weworkremotely.xml' ),
@@ -324,6 +601,7 @@ class RssIngestionE2ETest extends TestCase {
 				'runs_per_page'    => 20,
 				'source_states'    => array(
 					'e2e_myjobmag'       => ! empty( $enabled_map['e2e_myjobmag'] ) ? 1 : 0,
+					'e2e_myjobmag_alt'   => ! empty( $enabled_map['e2e_myjobmag_alt'] ) ? 1 : 0,
 					'e2e_remoteok'       => ! empty( $enabled_map['e2e_remoteok'] ) ? 1 : 0,
 					'e2e_weworkremotely' => ! empty( $enabled_map['e2e_weworkremotely'] ) ? 1 : 0,
 					'e2e_hotnigerianjobs' => ! empty( $enabled_map['e2e_hotnigerianjobs'] ) ? 1 : 0,
@@ -332,12 +610,35 @@ class RssIngestionE2ETest extends TestCase {
 		);
 	}
 
+	private function clear_active_runs() {
+		global $wpdb;
+
+		$runs_table        = $wpdb->prefix . 'job_aggregator_runs';
+		$run_sources_table = $wpdb->prefix . 'job_aggregator_run_sources';
+		$active_run_ids    = $wpdb->get_col(
+			$wpdb->prepare(
+				"SELECT id
+				FROM {$runs_table}
+				WHERE status IN (%s, %s)",
+				'queued',
+				'running'
+			)
+		);
+
+		foreach ( (array) $active_run_ids as $run_id ) {
+			$run_id = (int) $run_id;
+			$wpdb->delete( $run_sources_table, array( 'run_id' => $run_id ), array( '%d' ) );
+			$wpdb->delete( $runs_table, array( 'id' => $run_id ), array( '%d' ) );
+		}
+	}
+
 	private function delete_test_run_rows() {
 		global $wpdb;
 
 		$run_sources_table = $wpdb->prefix . 'job_aggregator_run_sources';
 		$runs_table        = $wpdb->prefix . 'job_aggregator_runs';
 		$signals_table     = $wpdb->prefix . 'job_aggregator_normalization_signals';
+		$origins_table     = $wpdb->prefix . 'job_aggregator_listing_origins';
 
 		$run_ids = $this->run_ids;
 		$source_run_ids = $wpdb->get_col(
@@ -365,6 +666,13 @@ class RssIngestionE2ETest extends TestCase {
 		$wpdb->query(
 			$wpdb->prepare(
 				"DELETE FROM {$run_sources_table}
+				WHERE source_key LIKE %s",
+				self::TEST_SOURCE_KEY_PREFIX . '%'
+			)
+		);
+		$wpdb->query(
+			$wpdb->prepare(
+				"DELETE FROM {$origins_table}
 				WHERE source_key LIKE %s",
 				self::TEST_SOURCE_KEY_PREFIX . '%'
 			)

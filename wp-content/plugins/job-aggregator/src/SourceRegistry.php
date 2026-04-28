@@ -90,6 +90,41 @@ class SourceRegistry {
 		return $states;
 	}
 
+	public function runtime_dedup_groups() {
+		$configured_sources = $this->build_configured_sources();
+		$effective_states   = $this->effective_source_states();
+		$groups             = array(
+			'nigeria' => array(
+				'source_keys' => array(),
+			),
+		);
+
+		foreach ( $configured_sources as $source_key => $entry ) {
+			if ( empty( $effective_states[ $source_key ] ) ) {
+				continue;
+			}
+
+			$defaults_location = isset( $entry['defaults_location'] )
+				? (string) $entry['defaults_location']
+				: '';
+			if ( 'Nigeria' !== $defaults_location ) {
+				continue;
+			}
+
+			$groups['nigeria']['source_keys'][] = $source_key;
+		}
+
+		$groups['nigeria']['source_keys'] = array_values(
+			array_unique( $groups['nigeria']['source_keys'] )
+		);
+
+		if ( empty( $groups['nigeria']['source_keys'] ) ) {
+			return array();
+		}
+
+		return $groups;
+	}
+
 	private function build_configured_sources() {
 		if ( null !== $this->configured_sources_by_key ) {
 			return $this->configured_sources_by_key;
@@ -123,11 +158,15 @@ class SourceRegistry {
 				}
 
 				$config_enabled = ! empty( $source_config['enabled'] );
+				$defaults       = isset( $source_config['defaults'] ) && is_array( $source_config['defaults'] )
+					? $source_config['defaults']
+					: array();
 
 				$this->configured_sources_by_key[ $source_key ] = array(
-					'source'         => $source,
-					'type'           => 'rss' === $group_key ? 'rss' : 'api',
-					'config_enabled' => $config_enabled,
+					'source'            => $source,
+					'type'              => 'rss' === $group_key ? 'rss' : 'api',
+					'config_enabled'    => $config_enabled,
+					'defaults_location' => isset( $defaults['location'] ) ? (string) $defaults['location'] : '',
 				);
 				$this->configured_source_order[]                = $source_key;
 			}

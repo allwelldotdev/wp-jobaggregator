@@ -9,6 +9,7 @@ use JobAggregator\Batch\CheckpointStore;
 use JobAggregator\Batch\RunLock;
 use JobAggregator\Cron\Scheduler;
 use JobAggregator\Jobs\DuplicateChecker;
+use JobAggregator\Jobs\ListingOriginStore;
 use JobAggregator\Jobs\NormalizationSignalStore;
 use JobAggregator\Jobs\PostWriter;
 use JobAggregator\Support\HttpClient;
@@ -51,7 +52,13 @@ class Plugin {
 			run_manager: $this->run_manager,
 			checkpoint_store: $this->checkpoint_store,
 			registry: $this->source_registry,
-			post_writer: new PostWriter( new DuplicateChecker(), $this->logger ),
+			post_writer: new PostWriter(
+				new DuplicateChecker(
+					new ListingOriginStore(),
+					$this->source_registry->runtime_dedup_groups()
+				),
+				$this->logger
+			),
 			scheduler: $this->scheduler,
 			logger: $this->logger,
 			run_lock: new RunLock()
@@ -68,6 +75,8 @@ class Plugin {
 
 	public function boot() {
 		$this->scheduler->register_callbacks( $this );
+		$this->scheduler->schedule_cleanup_history();
+		add_filter( 'job_manager_delete_expired_jobs', array( $this, 'should_delete_expired_job_listings' ) );
 		add_action( 'admin_notices', array( $this, 'render_dependency_notice' ) );
 
 		if ( is_admin() ) {
@@ -96,6 +105,7 @@ class Plugin {
 
 		$scheduler = new Scheduler();
 		$scheduler->schedule_recurring_start();
+		$scheduler->schedule_cleanup_history();
 	}
 
 	public static function deactivate() {
@@ -105,6 +115,24 @@ class Plugin {
 
 	public function start_batch() {
 		$this->queue_batch_run( 'cron' );
+	}
+
+	public function cleanup_history() {
+		$this->run_manager->install_schema();
+		$cleanup_result = $this->run_manager->cleanup_history( Settings::all() );
+		( new ListingOriginStore() )->purge_orphaned_rows();
+		$archived_count = isset( $cleanup_result['archived'] ) ? (int) $cleanup_result['archived'] : 0;
+		$deleted_count  = isset( $cleanup_result['deleted'] ) ? (int) $cleanup_result['deleted'] : 0;
+
+		if ( $archived_count > 0 || $deleted_count > 0 ) {
+			$this->logger->info(
+				'Completed run history retention cleanup.',
+				array(
+					'archived_count' => $archived_count,
+					'deleted_count'  => $deleted_count,
+				)
+			);
+		}
 	}
 
 	public function trigger_manual_batch() {
@@ -198,6 +226,13 @@ class Plugin {
 		}
 
 		echo '<div class="notice notice-error"><p>Job Aggregator requires WP Job Manager and the <code>job_listing</code> post type.</p></div>';
+	}
+
+	public function should_delete_expired_job_listings( $delete_expired_jobs ) {
+		unset( $delete_expired_jobs );
+		$settings = Settings::all();
+
+		return ! empty( $settings['delete_expired_job_listings'] );
 	}
 
 	private function dependencies_available() {

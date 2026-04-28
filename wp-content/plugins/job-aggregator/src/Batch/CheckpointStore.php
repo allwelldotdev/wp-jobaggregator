@@ -219,30 +219,50 @@ class CheckpointStore {
 			INNER JOIN (
 				SELECT source_key, MAX(run_id) AS latest_run_id
 				FROM {$this->run_sources_table}
+				INNER JOIN {$this->runs_table} run_filter ON run_filter.id = run_id
+				WHERE run_filter.status <> %s
 				GROUP BY source_key
 			) latest ON latest.source_key = rs.source_key AND latest.latest_run_id = rs.run_id
-			LEFT JOIN {$this->runs_table} r ON r.id = rs.run_id
+			INNER JOIN {$this->runs_table} r ON r.id = rs.run_id AND r.status <> %s
 			ORDER BY rs.source_label ASC, rs.source_key ASC
 			LIMIT %d",
+			'archived',
+			'archived',
 			$limit
 		);
 
 		return $this->wpdb->get_results( $sql, ARRAY_A );
 	}
 
-	public function list_recent_failures( $limit = 30 ) {
-		$limit = max( 1, min( 500, (int) $limit ) );
-		$sql   = $this->wpdb->prepare(
+	public function list_recent_failures( $limit = 30, $offset = 0 ) {
+		$limit  = max( 1, min( 500, (int) $limit ) );
+		$offset = max( 0, (int) $offset );
+		$sql    = $this->wpdb->prepare(
 			"SELECT rs.*, r.status AS run_status, r.triggered_by, r.started_at
 			FROM {$this->run_sources_table} rs
-			LEFT JOIN {$this->runs_table} r ON r.id = rs.run_id
+			INNER JOIN {$this->runs_table} r ON r.id = rs.run_id AND r.status <> %s
 			WHERE rs.last_error_at IS NOT NULL
 			ORDER BY rs.last_error_at DESC, rs.id DESC
-			LIMIT %d",
-			$limit
+			LIMIT %d OFFSET %d",
+			'archived',
+			$limit,
+			$offset
 		);
 
 		return $this->wpdb->get_results( $sql, ARRAY_A );
+	}
+
+	public function count_recent_failures() {
+		$sql = $this->wpdb->prepare(
+			"SELECT COUNT(1)
+			FROM {$this->run_sources_table} rs
+			INNER JOIN {$this->runs_table} r ON r.id = rs.run_id
+			WHERE rs.last_error_at IS NOT NULL
+			  AND r.status <> %s",
+			'archived'
+		);
+
+		return (int) $this->wpdb->get_var( $sql );
 	}
 
 	public function queue_snapshot_for_run( $run_id ) {

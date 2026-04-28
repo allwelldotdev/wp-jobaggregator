@@ -92,6 +92,7 @@ class MyJobMagRssSource extends AbstractRssSource {
 				? $item->get_title()
 				: '' );
 		}
+		$normalized_title = $this->normalize_title( '' !== $title ? $title : $position );
 
 		if ( '' === $description ) {
 			$description = (string) ( method_exists( $item, 'get_content' )
@@ -124,7 +125,7 @@ class MyJobMagRssSource extends AbstractRssSource {
 		$job_payload = array(
 			'source_key'       => $this->get_key(),
 			'external_id'      => (string) $external_id,
-			'title'            => '' !== $title ? (string) $title : (string) $position,
+			'title'            => $normalized_title,
 			'description'      => (string) $description,
 			'source_url'       => (string) $source_url,
 			'application_url'  => (string) $source_url,
@@ -170,6 +171,22 @@ class MyJobMagRssSource extends AbstractRssSource {
 		$job_payload = $this->apply_salary_mapping( $job_payload, $salary_raw );
 
 		return JobData::from_array( $job_payload );
+	}
+
+	protected function normalize_title( $title ) {
+		$title = $this->normalize_text( $title );
+		if ( '' === $title ) {
+			return '';
+		}
+
+		$parts = preg_split( '/\\s+at\\s+/i', $title, 2 );
+		if ( ! is_array( $parts ) || empty( $parts[0] ) ) {
+			return $title;
+		}
+
+		$normalized = trim( (string) $parts[0] );
+
+		return '' !== $normalized ? $normalized : $title;
 	}
 
 	protected function is_allowed_location( $location ) {

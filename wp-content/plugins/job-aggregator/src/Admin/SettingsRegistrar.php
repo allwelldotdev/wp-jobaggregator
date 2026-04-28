@@ -70,6 +70,30 @@ class SettingsRegistrar {
 			'job_aggregator_schedule_section'
 		);
 
+		add_settings_field(
+			'job_aggregator_delete_expired_job_listings',
+			__( 'WPJM Expired Job Cleanup', 'job-aggregator' ),
+			array( $this, 'render_field_delete_expired_job_listings' ),
+			$this->settings_slug,
+			'job_aggregator_schedule_section'
+		);
+
+		add_settings_field(
+			'job_aggregator_run_retention_days',
+			__( 'Run Retention Days', 'job-aggregator' ),
+			array( $this, 'render_field_run_retention_days' ),
+			$this->settings_slug,
+			'job_aggregator_schedule_section'
+		);
+
+		add_settings_field(
+			'job_aggregator_run_keep_min',
+			__( 'Run Keep Minimum', 'job-aggregator' ),
+			array( $this, 'render_field_run_keep_min' ),
+			$this->settings_slug,
+			'job_aggregator_schedule_section'
+		);
+
 		add_settings_section(
 			'job_aggregator_sources_section',
 			__( 'Source Controls', 'job-aggregator' ),
@@ -93,6 +117,7 @@ class SettingsRegistrar {
 		unset( $old_value, $new_value );
 
 		$this->scheduler->schedule_recurring_start( true );
+		$this->scheduler->schedule_cleanup_history( true );
 	}
 
 	public function sanitize_settings( $input ) {
@@ -219,6 +244,61 @@ class SettingsRegistrar {
 		/>
 		<p class="description">
 			<?php esc_html_e( 'How many runs to show on the Runs screen.', 'job-aggregator' ); ?>
+		</p>
+		<?php
+	}
+
+	public function render_field_delete_expired_job_listings() {
+		$settings = Settings::all();
+		?>
+		<label for="job_aggregator_delete_expired_job_listings">
+			<input
+				type="checkbox"
+				id="job_aggregator_delete_expired_job_listings"
+				name="<?php echo esc_attr( Settings::OPTION_KEY ); ?>[delete_expired_job_listings]"
+				value="1"
+				<?php checked( ! empty( $settings['delete_expired_job_listings'] ) ); ?>
+			/>
+			<?php esc_html_e( 'Allow WP Job Manager to move expired job listings to Trash automatically.', 'job-aggregator' ); ?>
+		</label>
+		<p class="description">
+			<?php esc_html_e( 'Trash-first cleanup: expired listings are trashed first. WordPress permanently removes them later based on EMPTY_TRASH_DAYS.', 'job-aggregator' ); ?>
+		</p>
+		<?php
+	}
+
+	public function render_field_run_retention_days() {
+		$settings = Settings::all();
+		?>
+		<input
+			type="number"
+			id="job_aggregator_run_retention_days"
+			name="<?php echo esc_attr( Settings::OPTION_KEY ); ?>[run_retention_days]"
+			value="<?php echo esc_attr( (string) $settings['run_retention_days'] ); ?>"
+			min="1"
+			max="3650"
+			step="1"
+		/>
+		<p class="description">
+			<?php esc_html_e( 'Terminal runs older than this window can be archived during daily history cleanup.', 'job-aggregator' ); ?>
+		</p>
+		<?php
+	}
+
+	public function render_field_run_keep_min() {
+		$settings = Settings::all();
+		?>
+		<input
+			type="number"
+			id="job_aggregator_run_keep_min"
+			name="<?php echo esc_attr( Settings::OPTION_KEY ); ?>[run_keep_min]"
+			value="<?php echo esc_attr( (string) $settings['run_keep_min'] ); ?>"
+			min="0"
+			max="50000"
+			step="1"
+		/>
+		<p class="description">
+			<?php esc_html_e( 'Always keep at least this many recent terminal runs unarchived, even when older than the retention window.', 'job-aggregator' ); ?>
 		</p>
 		<?php
 	}

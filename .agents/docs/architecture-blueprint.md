@@ -39,9 +39,12 @@ wp-content/
           JobDTO.php
           Normalizer.php
           DuplicateChecker.php
+          ListingOriginStore.php
           PostWriter.php
           NormalizationSignalStore.php
           Expirer.php
+        Batch/
+          RunRetentionSelector.php
         Admin/
           AdminPages.php
           ManualRunController.php
@@ -75,18 +78,22 @@ wp-content/
 6. Checkpoint store persists source progress, retries, and failure details after each chunk.
 7. Processor schedules the next single-event chunk when work remains.
 8. Run manager marks the run `completed` or `partial` when all source work is exhausted.
+9. Daily cleanup hook (`job_aggregator_cleanup_history`) archives old terminal runs and later hard-deletes archived rows past the grace window.
 
 ## Key Implementation Decisions
 - Use a source interface so new RSS/API providers can be added without changing the aggregation loop.
 - Treat `config/sources.php` as the source catalog/default definition and apply runtime source on/off state from plugin settings (`job_aggregator_settings[source_states]`).
 - Use a normalized DTO to isolate remote schema differences from WordPress persistence.
 - Match existing posts using a stable identity key (`source_key + external_id` with source-URL fallback) and use a separate content fingerprint to skip unchanged updates.
+- Add cross-source duplicate blocking for Nigeria runtime groups by normalized title+company matching across source keys.
 - Keep secrets out of committed files; read API keys from `wp-config.php` constants or equivalent environment-specific config.
 - Prefer a real server cron hitting `wp-cron.php` in production if reliable scheduling is required.
 - Persist operational run/source state in custom tables (`{prefix}job_aggregator_runs`, `{prefix}job_aggregator_run_sources`) for reliable checkpointing and admin visibility.
 - Persist normalization/mapping drift signals in `{prefix}job_aggregator_normalization_signals` for source-specific mapping iteration.
+- Persist dedup origins in `{prefix}job_aggregator_listing_origins` so cross-source Nigeria duplicate checks can use indexed lookups.
 - Separate recurring-start scheduling from per-chunk continuation scheduling to keep each request short and reduce timeout pressure.
 - Use per-run lock state to avoid overlapping workers processing the same run concurrently.
+- Use an internal `archived` run status for plugin-table retention and hide archived rows from default run/failure views.
 
 ## Testing Strategy
 - Unit tests for source parsers, normalization, and duplicate hashing.

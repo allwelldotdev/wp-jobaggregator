@@ -44,7 +44,7 @@ class AdminPages {
 		$this->manual_run_controller = new ManualRunController( $plugin, self::RUNS_SLUG, self::ACTION_START );
 		$this->dashboard_page        = new DashboardPage( $run_manager, $source_registry, $view, self::RUNS_SLUG );
 		$this->runs_page             = new RunsPage( $run_manager, $checkpoint_store, $view, self::RUNS_SLUG );
-		$this->monitoring_page       = new MonitoringPage( $run_manager, $checkpoint_store, $normalization_signals, $view );
+		$this->monitoring_page       = new MonitoringPage( $run_manager, $checkpoint_store, $normalization_signals, $view, self::MONITORING_SLUG );
 	}
 
 	public function register() {

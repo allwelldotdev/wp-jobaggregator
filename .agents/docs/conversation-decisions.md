@@ -20,6 +20,11 @@
 - Use resumable chunked imports so one request processes only one source page/chunk at a time.
 - Persist checkpoints, source status, retries, and run counters in custom plugin tables.
 - Queue follow-up single cron events while work remains instead of keeping one long-running request open.
+- Use cross-source dedup for runtime-enabled Nigeria-default sources by normalized `(title, company)` matching while retaining same-source identity upsert logic.
+- Keep a source-origin index table for cross-source dedup lookups so duplicate checks stay stable and queryable over time.
+- Use WPJM-native expired-listing deletion behavior behind an admin toggle (`job_manager_delete_expired_jobs`) so cleanup is trash-first.
+- Apply run history retention with a two-stage lifecycle for plugin tables: `completed/partial/failed -> archived -> hard delete`.
+- Exclude archived runs from default admin run/failure listings and paginate Monitoring recent failures at a fixed page size.
 
 ## Repo-Specific Interpretation
 - Because `wp-job-manager` is already installed, the practical target is the existing `job_listing` content model.

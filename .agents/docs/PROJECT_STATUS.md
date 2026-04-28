@@ -24,15 +24,25 @@
   - `{prefix}job_aggregator_runs`
   - `{prefix}job_aggregator_run_sources`
   - `{prefix}job_aggregator_normalization_signals`
+  - `{prefix}job_aggregator_listing_origins`
 - Source progress/checkpoints, retries, and per-run counters are now persisted in custom tables and surfaced in admin screens.
 - Automated imports now default `job_listing_category` assignment to slug `other-automated`, with term auto-create on write if missing.
 - Upsert behavior now separates stable identity matching from change detection so unchanged jobs are skipped without touching post/meta/taxonomy timestamps.
+- MyJobMag title normalization now strips trailing company suffixes using standalone case-insensitive ` at ` splitting.
+- Cross-source dedup now blocks duplicates for runtime-enabled Nigeria-default sources by normalized title + company matching, independent of ingestion order.
+- Plugin settings now include:
+  - `delete_expired_job_listings` for WPJM-native expired-job trashing behavior.
+  - `run_retention_days` and `run_keep_min` for run-history retention policy control.
+- Plugin runtime now includes daily history cleanup (`job_aggregator_cleanup_history`) with two-stage lifecycle:
+  - old terminal runs are first marked `archived`.
+  - archived runs beyond grace window are hard-deleted with related run-source rows.
 - WordPress admin UI now exists for:
   - Manual import trigger.
   - Run history and per-run source summaries.
   - Monitoring source status, failures, and queued follow-up batches.
   - Monitoring normalization-signal rows for unmatched source values.
   - Recurring schedule and queue pacing settings.
+- Monitoring "Recent Failures" now supports fixed pagination at 20 rows/page.
 - Admin module is now split into focused classes under `src/Admin/` (`Pages/`, `Support/`, settings registrar, and manual run controller) with `AdminPages.php` acting as a thin coordinator.
 - A standalone `localwp-wrapper` repo at `/home/allwell/Code/wp/localwp-wrapper` with the `localwp` executable symlinked into `~/Code/wp/bin/` and `~/.local/bin/`.
 
@@ -51,4 +61,4 @@
 1. Configure the first real RSS feed and API key.
 2. Add more source-specific mapping classes for additional feeds/APIs using the new format-level source layout.
 3. Add integration tests for `PostWriter` taxonomy assignment and normalization-signal persistence against a WordPress test runtime.
-4. Add expiry and archival policy decisions for stale listings.
+4. Add admin UX for viewing and exporting archived run history when needed.
