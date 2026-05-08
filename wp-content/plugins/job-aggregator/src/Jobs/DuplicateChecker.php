@@ -49,7 +49,7 @@ class DuplicateChecker {
 		$query = new \WP_Query(
 			array(
 				'post_type'      => 'job_listing',
-				'post_status'    => 'any',
+				'post_status'    => $this->identity_lookup_post_statuses(),
 				'posts_per_page' => 1,
 				'fields'         => 'ids',
 				'no_found_rows'  => true,
@@ -247,5 +247,19 @@ class DuplicateChecker {
 		}
 
 		return $this->listing_origins;
+	}
+
+	private function identity_lookup_post_statuses() {
+		return array(
+			'publish',
+			'pending',
+			'draft',
+			'future',
+			'private',
+			'expired',
+			'hidden',
+			'preview',
+			'trash',
+		);
 	}
 }

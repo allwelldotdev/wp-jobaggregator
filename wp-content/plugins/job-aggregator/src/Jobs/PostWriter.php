@@ -31,9 +31,13 @@ class PostWriter {
 		}
 		$identity_key        = $this->duplicate_checker->build_identity_key( $job );
 		$content_fingerprint = $this->build_content_fingerprint( $job );
-		$postarr             = array(
+		$post_status         = (string) apply_filters( 'job_aggregator_import_post_status', 'publish', $job );
+		if ( $existing_id > 0 ) {
+			$post_status = $this->resolve_existing_post_status( $existing_id, $job, $post_status );
+		}
+		$postarr = array(
 			'post_type'    => 'job_listing',
-			'post_status'  => apply_filters( 'job_aggregator_import_post_status', 'publish', $job ),
+			'post_status'  => $post_status,
 			'post_title'   => wp_strip_all_tags( $job->title ),
 			'post_content' => $job->description,
 			'post_author'  => (int) apply_filters( 'job_aggregator_import_post_author', 1, $job ),
@@ -335,5 +339,46 @@ class PostWriter {
 		}
 
 		return array_values( array_unique( $term_ids ) );
+	}
+
+	private function resolve_existing_post_status( $post_id, JobData $job, $requested_status ) {
+		$requested_status = trim( (string) $requested_status );
+		if ( 'publish' !== $requested_status ) {
+			return $requested_status;
+		}
+
+		$existing_status = (string) get_post_status( (int) $post_id );
+		if ( '' === $existing_status ) {
+			return $requested_status;
+		}
+
+		if ( ! in_array( $existing_status, array( 'expired', 'trash' ), true ) ) {
+			return $requested_status;
+		}
+
+		if ( $this->job_has_future_expiry( $job ) ) {
+			return $requested_status;
+		}
+
+		return $existing_status;
+	}
+
+	private function job_has_future_expiry( JobData $job ) {
+		$expires_at = trim( (string) $job->expires_at );
+		if ( '' === $expires_at ) {
+			return false;
+		}
+
+		$expires_timestamp = strtotime( $expires_at );
+		if ( false === $expires_timestamp ) {
+			return false;
+		}
+
+		$today_start = strtotime( gmdate( 'Y-m-d' ) );
+		if ( false === $today_start ) {
+			return false;
+		}
+
+		return $expires_timestamp >= $today_start;
 	}
 }

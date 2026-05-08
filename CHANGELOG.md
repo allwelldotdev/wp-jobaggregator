@@ -4,6 +4,34 @@ All notable changes to this project are documented in this file.
 
 This changelog follows Keep a Changelog principles and Semantic Versioning.
 
+## [0.6.1] - 2026-05-08
+
+### Release Summary
+- Plugin: `Job Aggregator`
+- Release type: `Patch`
+- Previous version: `0.6.0`
+- New version: `0.6.1`
+
+### Added
+- Regression E2E coverage for re-ingesting a changed source item after its existing WPJM listing has already entered `expired` status.
+
+### Changed
+- Existing-listing identity lookup now uses an explicit WPJM status list, including `expired`, `hidden`, `preview`, and `trash`, instead of relying on broad `any` status behavior.
+
+### Fixed
+- Re-ingestion no longer republishes existing `expired` or `trash` listings unless the incoming source payload has a future expiry date.
+- Trashed listings are now found by the importer identity lookup so repeat imports update the existing listing record instead of creating a duplicate.
+
+### Metrics
+- Files touched under plugin scope: `4` (`4` modified, `0` added).
+- Net plugin diff before changelog/version metadata: `+102` lines (`102` insertions, `4` deletions across tracked diffs).
+- Test files touched under plugin scope: `1` (`1` modified, `0` added).
+- Areas impacted: WPJM listing upsert status handling, duplicate identity lookup, RSS fixture E2E tests.
+
+### Compatibility
+- Breaking changes: `None`.
+- Database migration required: `No`.
+
 ## [0.6.0] - 2026-04-28
 
 ### Release Summary

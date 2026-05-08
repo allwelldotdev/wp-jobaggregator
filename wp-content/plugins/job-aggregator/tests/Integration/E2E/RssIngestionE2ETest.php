@@ -142,6 +142,35 @@ class RssIngestionE2ETest extends TestCase {
 		);
 	}
 
+	public function test_reingestion_does_not_republish_expired_listing_without_future_expiry() {
+		$first_run = $this->run_import_to_completion();
+
+		$this->assertSame( 'completed', (string) $first_run['status'] );
+		$this->assertSame( 4, (int) $first_run['created_count'] );
+
+		$source_posts    = $this->get_source_post_map();
+		$remote_post_id  = (int) $source_posts['e2e_remoteok'];
+		$updated_post_id = wp_update_post(
+			array(
+				'ID'          => $remote_post_id,
+				'post_status' => 'expired',
+			),
+			true
+		);
+		$this->assertFalse( is_wp_error( $updated_post_id ) );
+		$this->assertSame( 'expired', (string) get_post_status( $remote_post_id ) );
+
+		$this->test_config_relative_path = self::TEST_CONFIG_UPDATED_RELATIVE_PATH;
+		$this->clear_feed_transients();
+
+		$second_run = $this->run_import_to_completion();
+
+		$this->assertSame( 'completed', (string) $second_run['status'] );
+		$this->assertSame( 0, (int) $second_run['created_count'] );
+		$this->assertSame( 1, (int) $second_run['updated_count'] );
+		$this->assertSame( 'expired', (string) get_post_status( $remote_post_id ) );
+	}
+
 	public function test_source_state_overrides_limit_manual_runs_to_enabled_sources() {
 		$this->configure_source_states( array( 'e2e_remoteok' ) );
 
@@ -561,7 +590,17 @@ class RssIngestionE2ETest extends TestCase {
 		$query = new \WP_Query(
 			array(
 				'post_type'      => 'job_listing',
-				'post_status'    => 'any',
+				'post_status'    => array(
+					'publish',
+					'pending',
+					'draft',
+					'future',
+					'private',
+					'expired',
+					'hidden',
+					'preview',
+					'trash',
+				),
 				'posts_per_page' => -1,
 				'fields'         => 'ids',
 				'no_found_rows'  => true,

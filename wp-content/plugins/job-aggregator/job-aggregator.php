@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Job Aggregator
  * Description: Imports jobs from configured RSS feeds and APIs into WP Job Manager listings.
- * Version: 0.6.0
+ * Version: 0.6.1
  * Author: Allwell Agwu-Okoro
  */
 
